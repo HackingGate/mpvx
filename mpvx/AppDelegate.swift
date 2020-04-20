@@ -7,33 +7,37 @@
 //
 
 import Cocoa
-import SwiftUI
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
 
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Create the SwiftUI view that provides the window contents.
-        let contentView = ContentView()
-
-        // Create the window and set the content view. 
-        window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 480, height: 300),
-            styleMask: [.titled, .closable, .miniaturizable, .resizable, .fullSizeContentView],
-            backing: .buffered, defer: false)
-        window.center()
-        window.setFrameAutosaveName("Main Window")
-        window.contentView = NSHostingView(rootView: contentView)
-        window.makeKeyAndOrderFront(nil)
+        openFile(nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 
-
+    @IBAction func openFile(_ sender: AnyObject?) {
+        let panel = NSOpenPanel()
+        panel.canCreateDirectories = false
+        panel.canChooseFiles = true
+        panel.canChooseDirectories = true
+        panel.allowsMultipleSelection = true
+        if panel.runModal() == .OK {
+            for url in panel.urls {
+                NSDocumentController.shared.noteNewRecentDocumentURL(url)
+                let task = Process()
+                task.launchPath = "/usr/local/bin/mpv"
+                task.arguments = [url.absoluteString]
+                let pipe = Pipe()
+                task.standardOutput = pipe
+                task.launch()
+            }
+        }
+    }
 }
 

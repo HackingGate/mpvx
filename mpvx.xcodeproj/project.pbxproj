@@ -8,18 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D0E53244DECC100DF14C1 /* AppDelegate.swift */; };
-		C75D0E56244DECC100DF14C1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D0E55244DECC100DF14C1 /* ContentView.swift */; };
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
-		C75D0E5B244DECC300DF14C1 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5A244DECC300DF14C1 /* Preview Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C75D0E50244DECC100DF14C1 /* mpvx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mpvx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75D0E53244DECC100DF14C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		C75D0E55244DECC100DF14C1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C75D0E57244DECC300DF14C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C75D0E5A244DECC300DF14C1 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C75D0E5D244DECC300DF14C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
@@ -56,22 +52,12 @@
 			isa = PBXGroup;
 			children = (
 				C75D0E53244DECC100DF14C1 /* AppDelegate.swift */,
-				C75D0E55244DECC100DF14C1 /* ContentView.swift */,
 				C75D0E57244DECC300DF14C1 /* Assets.xcassets */,
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
 				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
-				C75D0E59244DECC300DF14C1 /* Preview Content */,
 			);
 			path = mpvx;
-			sourceTree = "<group>";
-		};
-		C75D0E59244DECC300DF14C1 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				C75D0E5A244DECC300DF14C1 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,7 +119,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
-				C75D0E5B244DECC300DF14C1 /* Preview Assets.xcassets in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +130,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C75D0E56244DECC100DF14C1 /* ContentView.swift in Sources */,
 				C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -284,7 +268,7 @@
 				CODE_SIGN_ENTITLEMENTS = mpvx/mpvx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"mpvx/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -305,7 +289,7 @@
 				CODE_SIGN_ENTITLEMENTS = mpvx/mpvx.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"mpvx/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
