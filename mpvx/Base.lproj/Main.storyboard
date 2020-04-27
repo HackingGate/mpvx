@@ -60,7 +60,7 @@
                                     <items>
                                         <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                             <connections>
-                                                <action selector="openFile:" target="Voe-Tx-rLC" id="zIP-26-36T"/>
+                                                <action selector="handleMenuOpen:" target="Voe-Tx-rLC" id="HJx-dw-hXz"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem title="Open Recent" id="tXI-mr-wws">
