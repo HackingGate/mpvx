@@ -11,7 +11,38 @@
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 		C7BCBFFD245EA89F0090391F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BCBFFC245EA89F0090391F /* README.md */; };
+		C7C6F0F4245E9B1B00B6CD1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7C6F0F3245E9B1B00B6CD1B /* Cocoa.framework */; };
+		C7C6F0F7245E9B1B00B6CD1B /* SafariExtensionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C6F0F6245E9B1B00B6CD1B /* SafariExtensionHandler.swift */; };
+		C7C6F0F9245E9B1B00B6CD1B /* SafariExtensionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7C6F0F8245E9B1B00B6CD1B /* SafariExtensionViewController.swift */; };
+		C7C6F0FC245E9B1B00B6CD1B /* SafariExtensionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7C6F0FA245E9B1B00B6CD1B /* SafariExtensionViewController.xib */; };
+		C7C6F0FF245E9B1B00B6CD1B /* script.js in Resources */ = {isa = PBXBuildFile; fileRef = C7C6F0FE245E9B1B00B6CD1B /* script.js */; };
+		C7C6F101245E9B1B00B6CD1B /* ToolbarItemIcon.pdf in Resources */ = {isa = PBXBuildFile; fileRef = C7C6F100245E9B1B00B6CD1B /* ToolbarItemIcon.pdf */; };
+		C7C6F105245E9B1B00B6CD1B /* OpenInMpv.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C7C6F0F1245E9B1B00B6CD1B /* OpenInMpv.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C7C6F103245E9B1B00B6CD1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C75D0E48244DECC100DF14C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C7C6F0F0245E9B1B00B6CD1B;
+			remoteInfo = OpenInMpv;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C7C6F106245E9B1B00B6CD1B /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C7C6F105245E9B1B00B6CD1B /* OpenInMpv.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		C75D0E50244DECC100DF14C1 /* mpvx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mpvx.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,6 +53,15 @@
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
+		C7C6F0F1245E9B1B00B6CD1B /* OpenInMpv.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenInMpv.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7C6F0F3245E9B1B00B6CD1B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		C7C6F0F6245E9B1B00B6CD1B /* SafariExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionHandler.swift; sourceTree = "<group>"; };
+		C7C6F0F8245E9B1B00B6CD1B /* SafariExtensionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionViewController.swift; sourceTree = "<group>"; };
+		C7C6F0FB245E9B1B00B6CD1B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/SafariExtensionViewController.xib; sourceTree = "<group>"; };
+		C7C6F0FD245E9B1B00B6CD1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C7C6F0FE245E9B1B00B6CD1B /* script.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = script.js; sourceTree = "<group>"; };
+		C7C6F100245E9B1B00B6CD1B /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
+		C7C6F102245E9B1B00B6CD1B /* OpenInMpv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenInMpv.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +69,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7C6F0EE245E9B1B00B6CD1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7C6F0F4245E9B1B00B6CD1B /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,6 +88,8 @@
 			children = (
 				C7BCBFFC245EA89F0090391F /* README.md */,
 				C75D0E52244DECC100DF14C1 /* mpvx */,
+				C7C6F0F5245E9B1B00B6CD1B /* OpenInMpv */,
+				C7C6F0F2245E9B1B00B6CD1B /* Frameworks */,
 				C75D0E51244DECC100DF14C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				C75D0E50244DECC100DF14C1 /* mpvx.app */,
+				C7C6F0F1245E9B1B00B6CD1B /* OpenInMpv.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -65,6 +116,28 @@
 			path = mpvx;
 			sourceTree = "<group>";
 		};
+		C7C6F0F2245E9B1B00B6CD1B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C7C6F0F3245E9B1B00B6CD1B /* Cocoa.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C7C6F0F5245E9B1B00B6CD1B /* OpenInMpv */ = {
+			isa = PBXGroup;
+			children = (
+				C7C6F0F6245E9B1B00B6CD1B /* SafariExtensionHandler.swift */,
+				C7C6F0F8245E9B1B00B6CD1B /* SafariExtensionViewController.swift */,
+				C7C6F0FA245E9B1B00B6CD1B /* SafariExtensionViewController.xib */,
+				C7C6F0FD245E9B1B00B6CD1B /* Info.plist */,
+				C7C6F0FE245E9B1B00B6CD1B /* script.js */,
+				C7C6F100245E9B1B00B6CD1B /* ToolbarItemIcon.pdf */,
+				C7C6F102245E9B1B00B6CD1B /* OpenInMpv.entitlements */,
+			);
+			path = OpenInMpv;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -76,15 +149,34 @@
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
+				C7C6F106245E9B1B00B6CD1B /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C7C6F104245E9B1B00B6CD1B /* PBXTargetDependency */,
 			);
 			name = mpvx;
 			productName = mpvx;
 			productReference = C75D0E50244DECC100DF14C1 /* mpvx.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C7C6F0F0245E9B1B00B6CD1B /* OpenInMpv */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7C6F109245E9B1B00B6CD1B /* Build configuration list for PBXNativeTarget "OpenInMpv" */;
+			buildPhases = (
+				C7C6F0ED245E9B1B00B6CD1B /* Sources */,
+				C7C6F0EE245E9B1B00B6CD1B /* Frameworks */,
+				C7C6F0EF245E9B1B00B6CD1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OpenInMpv;
+			productName = OpenInMpv;
+			productReference = C7C6F0F1245E9B1B00B6CD1B /* OpenInMpv.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -97,6 +189,9 @@
 				ORGANIZATIONNAME = HG;
 				TargetAttributes = {
 					C75D0E4F244DECC100DF14C1 = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+					C7C6F0F0245E9B1B00B6CD1B = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
 				};
@@ -115,6 +210,7 @@
 			projectRoot = "";
 			targets = (
 				C75D0E4F244DECC100DF14C1 /* mpvx */,
+				C7C6F0F0245E9B1B00B6CD1B /* OpenInMpv */,
 			);
 		};
 /* End PBXProject section */
@@ -127,6 +223,16 @@
 				C7BCBFFD245EA89F0090391F /* README.md in Resources */,
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7C6F0EF245E9B1B00B6CD1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7C6F101245E9B1B00B6CD1B /* ToolbarItemIcon.pdf in Resources */,
+				C7C6F0FC245E9B1B00B6CD1B /* SafariExtensionViewController.xib in Resources */,
+				C7C6F0FF245E9B1B00B6CD1B /* script.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -162,7 +268,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C7C6F0ED245E9B1B00B6CD1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7C6F0F9245E9B1B00B6CD1B /* SafariExtensionViewController.swift in Sources */,
+				C7C6F0F7245E9B1B00B6CD1B /* SafariExtensionHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7C6F104245E9B1B00B6CD1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C7C6F0F0245E9B1B00B6CD1B /* OpenInMpv */;
+			targetProxy = C7C6F103245E9B1B00B6CD1B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C75D0E5C244DECC300DF14C1 /* Main.storyboard */ = {
@@ -171,6 +294,14 @@
 				C75D0E5D244DECC300DF14C1 /* Base */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C7C6F0FA245E9B1B00B6CD1B /* SafariExtensionViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C7C6F0FB245E9B1B00B6CD1B /* Base */,
+			);
+			name = SafariExtensionViewController.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -296,6 +427,7 @@
 		C75D0E64244DECC300DF14C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mpvx/mpvx.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -320,6 +452,7 @@
 		C75D0E65244DECC300DF14C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = mpvx/mpvx.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -341,6 +474,42 @@
 			};
 			name = Release;
 		};
+		C7C6F107245E9B1B00B6CD1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OpenInMpv/OpenInMpv.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = OpenInMpv/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx.OpenInMpv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		C7C6F108245E9B1B00B6CD1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OpenInMpv/OpenInMpv.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = OpenInMpv/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx.OpenInMpv;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -358,6 +527,15 @@
 			buildConfigurations = (
 				C75D0E64244DECC300DF14C1 /* Debug */,
 				C75D0E65244DECC300DF14C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7C6F109245E9B1B00B6CD1B /* Build configuration list for PBXNativeTarget "OpenInMpv" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7C6F107245E9B1B00B6CD1B /* Debug */,
+				C7C6F108245E9B1B00B6CD1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
