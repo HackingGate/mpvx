@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>OpenInMpv</string>
+	<string>Open in mpv</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,13 +28,6 @@
 		<string>com.apple.Safari.extension</string>
 		<key>NSExtensionPrincipalClass</key>
 		<string>$(PRODUCT_MODULE_NAME).SafariExtensionHandler</string>
-		<key>SFSafariContentScript</key>
-		<array>
-			<dict>
-				<key>Script</key>
-				<string>script.js</string>
-			</dict>
-		</array>
 		<key>SFSafariToolbarItem</key>
 		<dict>
 			<key>Action</key>
@@ -44,21 +37,17 @@
 			<key>Image</key>
 			<string>ToolbarItemIcon.pdf</string>
 			<key>Label</key>
-			<string>Your Button</string>
+			<string>Open in mpv</string>
 		</dict>
 		<key>SFSafariWebsiteAccess</key>
 		<dict>
-			<key>Allowed Domains</key>
-			<array>
-				<string>*.webkit.org</string>
-			</array>
 			<key>Level</key>
-			<string>Some</string>
+			<string>All</string>
 		</dict>
 	</dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 HG. All rights reserved.</string>
+	<string>Copyright © 2020 HackingGate. All rights reserved.</string>
 	<key>NSHumanReadableDescription</key>
-	<string>This is a Safari Extension. You should tell us what your extension does here.</string>
+	<string>Open urls in mpv.</string>
 </dict>
 </plist>
