@@ -11,8 +11,12 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var isOpenFromURLs = false
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        displayOpenPannel()
+        if !isOpenFromURLs {
+            displayOpenPannel()
+        }
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -27,6 +31,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
+        isOpenFromURLs = true
         handleOpen(urls)
     }
 
