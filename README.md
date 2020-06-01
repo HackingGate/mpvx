@@ -33,3 +33,8 @@ I invested the [source code of IINA](https://github.com/iina/iina) and learned t
 But IINA has its own layer of key management which means it requires a lot of work to do.
 
 You can have look at [the PR](https://github.com/typcn/bilibili-mac-client/pull/163/files) I created for [bilibili-mac-client](https://github.com/typcn/bilibili-mac-client) years ago for how to implement both `keyDown` and `keyUp` event.
+
+
+## Alternatives
+
+[mpv-nightly-build](https://github.com/jnozsc/mpv-nightly-build): Unoffical mpv nightly build for macOS
