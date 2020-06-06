@@ -41,8 +41,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.canChooseFiles = true
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        if panel.runModal() == .OK {
-            handleOpen(panel.urls)
+        panel.begin() {
+          if $0 == .OK {
+            self.handleOpen(panel.urls)
+            }
         }
     }
 
