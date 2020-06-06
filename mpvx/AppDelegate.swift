@@ -42,8 +42,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
         panel.begin() {
-          if $0 == .OK {
-            self.handleOpen(panel.urls)
+            if $0 == .OK {
+                self.handleOpen(panel.urls)
             }
         }
     }
