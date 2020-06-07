@@ -20,6 +20,7 @@
 		C75D0E5D244DECC300DF14C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
+		C779D2CC248C648B00EC1705 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +60,7 @@
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
 				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
+				C779D2CC248C648B00EC1705 /* Config.xcconfig */,
 			);
 			path = mpvx;
 			sourceTree = "<group>";
@@ -73,6 +75,7 @@
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
+				C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */,
 			);
 			buildRules = (
 			);
@@ -128,6 +131,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Auto edit mpvx/Config.xcconfig";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "CONFIG_FILE='mpvx/Config.xcconfig'\nVERSION=`git describe --abbrev=0 --tags --match \"[0-9]*\"`\nBUILD=`git rev-list HEAD --count`\nsed -i '' \"s/\\(VERSION *= *\\).*/\\1$VERSION/\" $CONFIG_FILE\nsed -i '' \"s/\\(BUILD *= *\\).*/\\1$BUILD/\" $CONFIG_FILE\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C75D0E4C244DECC100DF14C1 /* Sources */ = {
@@ -273,7 +297,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -282,7 +306,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -297,7 +321,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -306,7 +330,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
