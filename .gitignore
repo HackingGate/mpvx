@@ -90,4 +90,4 @@ fastlane/test_output
 iOSInjectionProject/
 
 # Don't commit new version & build number
-mpvx/Config.xcconfig
+Config.xcconfig
