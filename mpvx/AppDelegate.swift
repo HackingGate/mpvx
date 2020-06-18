@@ -59,7 +59,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func launchMpv(_ args: [String]) {
         let task = Process()
         task.launchPath = "/usr/local/bin/mpv"
-        task.arguments = args
+        let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
+        task.arguments = mpvxArgs + args
         let pipe = Pipe()
         task.standardOutput = pipe
         task.launch()
