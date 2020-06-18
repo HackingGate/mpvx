@@ -11,6 +11,7 @@
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 		C7BCBFFD245EA89F0090391F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BCBFFC245EA89F0090391F /* README.md */; };
+		C7D33DBE249BA5CE00D3815C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +22,7 @@
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
 				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
+				C7D33DBD249BA5CE00D3815C /* Config.xcconfig */,
 			);
 			path = mpvx;
 			sourceTree = "<group>";
@@ -70,6 +73,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C75D0E63244DECC300DF14C1 /* Build configuration list for PBXNativeTarget "mpvx" */;
 			buildPhases = (
+				C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */,
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
@@ -121,6 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7D33DBE249BA5CE00D3815C /* Config.xcconfig in Resources */,
 				C7BCBFFD245EA89F0090391F /* README.md in Resources */,
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
@@ -128,6 +133,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Auto edit mpvx/Config.xcconfig";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./setup.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C75D0E4C244DECC100DF14C1 /* Sources */ = {
@@ -273,7 +299,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -282,7 +308,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -297,7 +323,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -306,7 +332,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
-				MARKETING_VERSION = 0.1.1;
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
