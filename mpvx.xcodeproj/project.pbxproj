@@ -11,7 +11,7 @@
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 		C7BCBFFD245EA89F0090391F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BCBFFC245EA89F0090391F /* README.md */; };
-		C7D33DBE249BA5CE00D3815C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */; };
+		C7D33DBF249BA93C00D3815C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,7 +73,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C75D0E63244DECC300DF14C1 /* Build configuration list for PBXNativeTarget "mpvx" */;
 			buildPhases = (
-				C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */,
+				C779D2CD248C6AFB00EC1705 /* Auto Versioning */,
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
@@ -125,7 +125,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7D33DBE249BA5CE00D3815C /* Config.xcconfig in Resources */,
+				C7D33DBF249BA93C00D3815C /* Config.xcconfig in Resources */,
 				C7BCBFFD245EA89F0090391F /* README.md in Resources */,
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
@@ -135,7 +135,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */ = {
+		C779D2CD248C6AFB00EC1705 /* Auto Versioning */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -144,7 +144,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Auto edit mpvx/Config.xcconfig";
+			name = "Auto Versioning";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -180,6 +180,7 @@
 /* Begin XCBuildConfiguration section */
 		C75D0E61244DECC300DF14C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -240,6 +241,7 @@
 		};
 		C75D0E62244DECC300DF14C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
