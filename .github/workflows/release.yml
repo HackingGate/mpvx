@@ -9,6 +9,8 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Setup
+        run: ./setup.sh
       - name: Build
         run: xcodebuild clean -scheme mpvx build -configuration Release -derivedDataPath build
       - name: Zip the build

@@ -72,10 +72,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C75D0E63244DECC300DF14C1 /* Build configuration list for PBXNativeTarget "mpvx" */;
 			buildPhases = (
+				C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */,
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
-				C779D2CD248C6AFB00EC1705 /* Auto edit mpvx/Config.xcconfig */,
 			);
 			buildRules = (
 			);
@@ -149,7 +149,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "CONFIG_FILE='mpvx/Config.xcconfig'\nVERSION=`git describe --abbrev=0 --tags --match \"[0-9]*\"`\nBUILD=`git rev-list HEAD --count`\nsed -i '' \"s/\\(VERSION *= *\\).*/\\1$VERSION/\" $CONFIG_FILE\nsed -i '' \"s/\\(BUILD *= *\\).*/\\1$BUILD/\" $CONFIG_FILE\n";
+			shellScript = "./setup.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
