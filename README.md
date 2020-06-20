@@ -28,7 +28,7 @@ $ which mpv
 
 I found an issue for IINA. Key control like `.` (step forward) or `,` (step backward) do not support consecutive press. An important feature to me.
 
-I invested the [source code of IINA](https://github.com/iina/iina) and learned to support consecutive press. Use `int mpv_command(mpv_handle *ctx, const char **args);` instead of the more error prone way `int mpv_command_string(mpv_handle *ctx, const char *args);` and pass commands with `keyDown` and `keyUp` events will do it.
+I investigated the [source code of IINA](https://github.com/iina/iina) and learned to support consecutive press. Use `int mpv_command(mpv_handle *ctx, const char **args);` instead of the more error prone way `int mpv_command_string(mpv_handle *ctx, const char *args);` and pass commands with `keyDown` and `keyUp` events will do it.
 
 But IINA has its own layer of key management which means it requires a lot of work to do.
 
