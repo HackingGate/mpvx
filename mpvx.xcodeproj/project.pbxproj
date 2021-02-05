@@ -49,13 +49,13 @@
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7C6F0F1245E9B1B00B6CD1B /* OpenInMpv.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenInMpv.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7C6F0F3245E9B1B00B6CD1B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		C7C6F0F6245E9B1B00B6CD1B /* SafariExtensionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafariExtensionHandler.swift; sourceTree = "<group>"; };
 		C7C6F0FD245E9B1B00B6CD1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7C6F100245E9B1B00B6CD1B /* ToolbarItemIcon.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = ToolbarItemIcon.pdf; sourceTree = "<group>"; };
 		C7C6F102245E9B1B00B6CD1B /* OpenInMpv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenInMpv.entitlements; sourceTree = "<group>"; };
+		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				C7BCBFFC245EA89F0090391F /* README.md */,
+				C7D33DBD249BA5CE00D3815C /* Config.xcconfig */,
 				C75D0E52244DECC100DF14C1 /* mpvx */,
 				C7C6F0F5245E9B1B00B6CD1B /* OpenInMpv */,
 				C7C6F0F2245E9B1B00B6CD1B /* Frameworks */,
@@ -105,7 +106,6 @@
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
 				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
-				C7D33DBD249BA5CE00D3815C /* Config.xcconfig */,
 			);
 			path = mpvx;
 			sourceTree = "<group>";
@@ -459,12 +459,14 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenInMpv/OpenInMpv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				INFOPLIST_FILE = OpenInMpv/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx.OpenInMpv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -477,12 +479,14 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = OpenInMpv/OpenInMpv.entitlements;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				INFOPLIST_FILE = OpenInMpv/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@executable_path/../../../../Frameworks",
 				);
+				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx.OpenInMpv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
