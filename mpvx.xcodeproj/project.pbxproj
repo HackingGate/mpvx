@@ -11,7 +11,6 @@
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 		C7BCBFFD245EA89F0090391F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BCBFFC245EA89F0090391F /* README.md */; };
-		C7D33DBF249BA93C00D3815C /* Config.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -94,7 +93,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1150;
+				LastUpgradeCheck = 1240;
 				ORGANIZATIONNAME = HG;
 				TargetAttributes = {
 					C75D0E4F244DECC100DF14C1 = {
@@ -125,7 +124,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7D33DBF249BA93C00D3815C /* Config.xcconfig in Resources */,
 				C7BCBFFD245EA89F0090391F /* README.md in Resources */,
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
@@ -205,6 +203,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -266,6 +265,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
