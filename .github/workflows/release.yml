@@ -12,7 +12,8 @@ jobs:
       - name: Generate Release Note
         run: |
           LATEST_TAG=`curl ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases\?per_page\=1 | jq '.[0].tag_name' | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+'`
-          RELEASE_NOTE=`git log --pretty="%h - %s" ${LATEST_TAG}..HEAD`
+          NEXT_TAG=`echo ${GITHUB_REF} | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+'`
+          RELEASE_NOTE=`git log --pretty="%h - %s" ${LATEST_TAG}..${NEXT_TAG}`
           echo "RELEASE_NOTE=${RELEASE_NOTE}" >> $GITHUB_ENV
       - uses: maxim-lobanov/setup-xcode@v1
         with:
