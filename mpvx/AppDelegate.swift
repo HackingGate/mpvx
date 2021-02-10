@@ -11,6 +11,8 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    let helpURL = URL(string: "https://github.com/HackingGate/mpvx")!
+    let mpvMannualURL = URL(string: "https://mpv.io/manual/stable/")!
     var isOpenFromURLs = false
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -66,8 +68,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         task.launch()
     }
 
-    @IBAction func handleMenuOpen(_ sender: AnyObject?) {
+    @IBAction func handleMenuOpen(_ sender: Any) {
         displayOpenPannel()
+    }
+
+    @IBAction func showRepo(_ sender: Any) {
+        NSWorkspace.shared.open(helpURL)
+    }
+
+    @IBAction func showMpvMannual(_ sender: Any) {
+        NSWorkspace.shared.open(mpvMannualURL)
     }
 }
 
