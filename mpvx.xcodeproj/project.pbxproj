@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,16 @@
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C7835D742D09EBC500125434 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C75D0E48244DECC100DF14C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C75D0E4F244DECC100DF14C1;
+			remoteInfo = mpvx;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C7010E3F2D09B8E100A06DCE /* setup.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = SOURCE_ROOT; };
@@ -20,12 +30,24 @@
 		C75D0E5D244DECC300DF14C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
+		C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mpvxUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		C7835D712D09EBC500125434 /* mpvxUnitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = mpvxUnitTests; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		C75D0E4D244DECC100DF14C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C7835D6D2D09EBC500125434 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -40,6 +62,7 @@
 			children = (
 				C7BCBFFC245EA89F0090391F /* README.md */,
 				C75D0E52244DECC100DF14C1 /* mpvx */,
+				C7835D712D09EBC500125434 /* mpvxUnitTests */,
 				C75D0E51244DECC100DF14C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,6 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				C75D0E50244DECC100DF14C1 /* mpvx.app */,
+				C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +110,29 @@
 			productReference = C75D0E50244DECC100DF14C1 /* mpvx.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C7835D6F2D09EBC500125434 /* mpvxUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C7835D782D09EBC500125434 /* Build configuration list for PBXNativeTarget "mpvxUnitTests" */;
+			buildPhases = (
+				C7835D6C2D09EBC500125434 /* Sources */,
+				C7835D6D2D09EBC500125434 /* Frameworks */,
+				C7835D6E2D09EBC500125434 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C7835D752D09EBC500125434 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C7835D712D09EBC500125434 /* mpvxUnitTests */,
+			);
+			name = mpvxUnitTests;
+			packageProductDependencies = (
+			);
+			productName = mpvxUnitTests;
+			productReference = C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -93,12 +140,16 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = HG;
 				TargetAttributes = {
 					C75D0E4F244DECC100DF14C1 = {
 						CreatedOnToolsVersion = 11.4.1;
+					};
+					C7835D6F2D09EBC500125434 = {
+						CreatedOnToolsVersion = 16.1;
+						TestTargetID = C75D0E4F244DECC100DF14C1;
 					};
 				};
 			};
@@ -116,6 +167,7 @@
 			projectRoot = "";
 			targets = (
 				C75D0E4F244DECC100DF14C1 /* mpvx */,
+				C7835D6F2D09EBC500125434 /* mpvxUnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -130,6 +182,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C7835D6E2D09EBC500125434 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -141,7 +200,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C7835D6C2D09EBC500125434 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C7835D752D09EBC500125434 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C75D0E4F244DECC100DF14C1 /* mpvx */;
+			targetProxy = C7835D742D09EBC500125434 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C75D0E5C244DECC300DF14C1 /* Main.storyboard */ = {
@@ -326,6 +400,51 @@
 			};
 			name = Release;
 		};
+		C7835D762D09EBC500125434 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 77CB32R5F4;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mpvx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/mpvx";
+			};
+			name = Debug;
+		};
+		C7835D772D09EBC500125434 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 77CB32R5F4;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 15.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUnitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mpvx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/mpvx";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -343,6 +462,15 @@
 			buildConfigurations = (
 				C75D0E64244DECC300DF14C1 /* Debug */,
 				C75D0E65244DECC300DF14C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C7835D782D09EBC500125434 /* Build configuration list for PBXNativeTarget "mpvxUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7835D762D09EBC500125434 /* Debug */,
+				C7835D772D09EBC500125434 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

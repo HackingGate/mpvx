@@ -1,14 +1,7 @@
-//
-//  AppDelegate.swift
-//  mpvx
-//
-//  Created by HG on 2020/04/20.
-//  Copyright © 2020 HG. All rights reserved.
-//
-
 import Cocoa
 
 @main
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let helpURL = URL(string: "https://github.com/HackingGate/mpvx")!
@@ -19,10 +12,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if !isOpenFromURLs {
             displayOpenPannel()
         }
-    }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
@@ -37,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         handleOpen(urls)
     }
 
-    @MainActor func displayOpenPannel() {
+    func displayOpenPannel() {
         let panel = NSOpenPanel()
         panel.canCreateDirectories = false
         panel.canChooseFiles = true
@@ -50,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    @MainActor func handleOpen(_ urls: [URL]) {
+    func handleOpen(_ urls: [URL]) {
         for url in urls {
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         }
