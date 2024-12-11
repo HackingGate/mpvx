@@ -8,7 +8,7 @@
 
 import Cocoa
 
-@NSApplicationMain
+@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     let helpURL = URL(string: "https://github.com/HackingGate/mpvx")!
@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         handleOpen(urls)
     }
 
-    func displayOpenPannel() {
+    @MainActor func displayOpenPannel() {
         let panel = NSOpenPanel()
         panel.canCreateDirectories = false
         panel.canChooseFiles = true
@@ -50,7 +50,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    func handleOpen(_ urls: [URL]) {
+    @MainActor func handleOpen(_ urls: [URL]) {
         for url in urls {
             NSDocumentController.shared.noteNewRecentDocumentURL(url)
         }

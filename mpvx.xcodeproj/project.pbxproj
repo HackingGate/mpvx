@@ -3,17 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D0E53244DECC100DF14C1 /* AppDelegate.swift */; };
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
-		C7BCBFFD245EA89F0090391F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = C7BCBFFC245EA89F0090391F /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C7010E3F2D09B8E100A06DCE /* setup.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = SOURCE_ROOT; };
 		C75D0E50244DECC100DF14C1 /* mpvx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mpvx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75D0E53244DECC100DF14C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C75D0E57244DECC300DF14C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -61,6 +61,7 @@
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
 				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
 				C7D33DBD249BA5CE00D3815C /* Config.xcconfig */,
+				C7010E3F2D09B8E100A06DCE /* setup.sh */,
 			);
 			path = mpvx;
 			sourceTree = "<group>";
@@ -72,7 +73,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C75D0E63244DECC300DF14C1 /* Build configuration list for PBXNativeTarget "mpvx" */;
 			buildPhases = (
-				C779D2CD248C6AFB00EC1705 /* Auto Versioning */,
 				C75D0E4C244DECC100DF14C1 /* Sources */,
 				C75D0E4D244DECC100DF14C1 /* Frameworks */,
 				C75D0E4E244DECC100DF14C1 /* Resources */,
@@ -92,8 +92,9 @@
 		C75D0E48244DECC100DF14C1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1610;
 				ORGANIZATIONNAME = HG;
 				TargetAttributes = {
 					C75D0E4F244DECC100DF14C1 = {
@@ -124,34 +125,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C7BCBFFD245EA89F0090391F /* README.md in Resources */,
 				C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */,
 				C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		C779D2CD248C6AFB00EC1705 /* Auto Versioning */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Auto Versioning";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "./setup.sh\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		C75D0E4C244DECC100DF14C1 /* Sources */ = {
@@ -211,9 +190,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -273,9 +254,11 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -302,6 +285,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -309,11 +293,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -326,6 +310,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
@@ -333,11 +318,11 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.14.4;
+				MACOSX_DEPLOYMENT_TARGET = 11.5;
 				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};

@@ -8,6 +8,10 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
+      - name: Setup Git Hooks
+        run: |
+          brew install lefthook
+          lefthook install
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -21,9 +25,7 @@ jobs:
           git log --pretty="%h - %s" ${LATEST_TAG}..${NEXT_TAG} | tee -a release_note.md
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: latest
-      - name: Setup
-        run: ./setup.sh
+          xcode-version: latest-stable
       - name: Build
         run: xcodebuild clean -scheme mpvx build -configuration Release -derivedDataPath build
       - name: Zip the build

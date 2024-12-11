@@ -1,0 +1,23 @@
+post-commit:
+  parallel: true
+  commands:
+    setup:
+      run: ./setup.sh
+
+post-checkout:
+  parallel: true
+  commands:
+    setup:
+      run: ./setup.sh
+
+post-merge:
+  parallel: true
+  commands:
+    setup:
+      run: ./setup.sh
+
+post-rewrite:
+  parallel: true
+  commands:
+    setup:
+      run: ./setup.sh
