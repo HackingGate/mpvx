@@ -26,6 +26,11 @@ jobs:
           -derivedDataPath build \
           -destination 'platform=macOS' \
           -resultBundlePath artifacts/ResultBundle.xcresult || true
+    - name: Upload Result Bundle
+      uses: actions/upload-artifact@v4
+      with:
+        name: ResultBundle
+        path: artifacts/ResultBundle.xcresult
     - name: Convert with xcresultparser
       run: |
         xcresultparser \
