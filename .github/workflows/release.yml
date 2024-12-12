@@ -22,13 +22,26 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@v1
         with:
           xcode-version: latest-stable
+      - name: Install Dependencies
+        run: |
+          gem install xcpretty
       - name: Setup
         run: |
           ./setup.sh
       - name: Build
         run: |
-          xcodebuild clean -scheme mpvx build -configuration Release -derivedDataPath build \
-          -destination 'generic/platform=macOS'
+          xcodebuild clean build \
+            -scheme mpvx \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination 'generic/platform=macOS' | tee build_output.log | xcpretty --report html --output build_report.html
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-report
+          path: |
+            build_output.log
+            build_report.html
       - name: Zip the build
         run: |
           cd build/Build/Products/Release/

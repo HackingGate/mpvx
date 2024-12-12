@@ -1,0 +1,44 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    - name: Install Dependencies
+      run: |
+        gem install xcpretty
+    - name: Setup
+      run: |
+        ./setup.sh
+    - name: Run Tests
+      run: |
+        xcodebuild clean test \
+          -scheme mpvx \
+          -configuration Debug \
+          -derivedDataPath build \
+          -destination 'platform=macOS' | tee test_output.log | xcpretty --report html --output test_report.html
+    - name: Upload Test Report Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-report
+        path: |
+          test_output.log
+          test_report.html          
+    - name: Generate Coverage Report
+      run: |
+        xcrun xccov view --report --json build/Logs/Test/*.xcresult > coverage.json
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: coverage.json
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: unittests
+        fail_ci_if_error: true
