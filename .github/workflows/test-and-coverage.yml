@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: macos-latest
+    strategy:
+      matrix:
+        arch: [x86_64, arm64]
     steps:
     - uses: actions/checkout@v3
       with:
@@ -24,22 +27,22 @@ jobs:
           -scheme mpvx \
           -configuration Debug \
           -derivedDataPath build \
-          -destination 'platform=macOS' \
-          -resultBundlePath artifacts/ResultBundle.xcresult || true
+          -destination 'platform=macOS,arch=${{ matrix.arch }}' \
+          -resultBundlePath artifacts/ResultBundle-${{ matrix.arch }}.xcresult || true
     - name: Upload Result Bundle
       uses: actions/upload-artifact@v4
       with:
-        name: ResultBundle
-        path: artifacts/ResultBundle.xcresult
+        name: ResultBundle-${{ matrix.arch }}
+        path: artifacts/ResultBundle-${{ matrix.arch }}.xcresult
     - name: Convert with xcresultparser
       run: |
         xcresultparser \
           --output-format cobertura \
-          "artifacts/ResultBundle.xcresult" >"artifacts/coverage.xml"
+          "artifacts/ResultBundle-${{ matrix.arch }}.xcresult" >"artifacts/coverage-${{ matrix.arch }}.xml"
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: artifacts/coverage.xml
+        files: artifacts/coverage-${{ matrix.arch }}.xml
         token: ${{ secrets.CODECOV_TOKEN }}
-        flags: unittests
+        flags: unittests-${{ matrix.arch }}
         fail_ci_if_error: true
