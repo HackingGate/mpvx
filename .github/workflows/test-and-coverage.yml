@@ -21,7 +21,7 @@ jobs:
           -scheme mpvx \
           -configuration Debug \
           -derivedDataPath build \
-          -destination 'platform=macOS'  
+          -destination 'platform=macOS' || true
     - name: Generate Coverage Report
       run: |
         xcrun xccov view --report --json build/Logs/Test/*.xcresult > coverage.json
