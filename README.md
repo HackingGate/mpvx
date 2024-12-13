@@ -1,4 +1,5 @@
 # mpvx
+
 [![Build and Test](https://github.com/HackingGate/mpvx/actions/workflows/test-and-coverage.yml/badge.svg)](https://github.com/HackingGate/mpvx/actions/workflows/test-and-coverage.yml)
 [![codecov](https://codecov.io/gh/HackingGate/mpvx/graph/badge.svg?token=TVGJ0H9CTZ)](https://codecov.io/gh/HackingGate/mpvx)
 [![Release](https://github.com/HackingGate/mpvx/workflows/Release/badge.svg)](https://github.com/HackingGate/mpvx/releases)
@@ -10,14 +11,7 @@ Mac app for mpv inspired by [grsyncx](https://github.com/username0x0a/grsyncx)
 Install command-line interface mpv with [Homebrew](https://brew.sh).
 
 ```bash
-$ brew install mpv
-```
-
-Make sure your mpv is installed in the correct path.
-
-```bash
-$ which mpv
-/usr/local/bin/mpv
+brew install mpv
 ```
 
 ## Screenshot
@@ -35,7 +29,6 @@ I investigated the [source code of IINA](https://github.com/iina/iina) and learn
 But IINA has its own layer of key management which means it requires a lot of work to do.
 
 You can have look at [the PR](https://github.com/typcn/bilibili-mac-client/pull/163/files) I created for [bilibili-mac-client](https://github.com/typcn/bilibili-mac-client) years ago for how to implement both `keyDown` and `keyUp` event.
-
 
 ## Alternatives
 

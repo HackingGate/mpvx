@@ -49,7 +49,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func launchMpv(_ args: [String]) {
         let task = Process()
+        #if arch(arm64)
+        task.launchPath = "/opt/homebrew/bin/mpv"
+        #else
         task.launchPath = "/usr/local/bin/mpv"
+        #endif
         let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
         task.arguments = mpvxArgs + args
         let pipe = Pipe()
