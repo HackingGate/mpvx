@@ -32,7 +32,7 @@ jobs:
     - name: Upload Result Bundle
       uses: actions/upload-artifact@v4
       with:
-        name: ResultBundle-${{ matrix.arch }}
+        name: ResultBundle-${{ matrix.arch }}.xcresult
         path: artifacts/ResultBundle-${{ matrix.arch }}.xcresult
     - name: Convert with xcresultparser
       run: |
