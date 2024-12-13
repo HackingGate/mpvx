@@ -37,15 +37,67 @@ jobs:
       with:
         name: ResultBundle-${{ matrix.arch }}.xcresult
         path: artifacts/ResultBundle-${{ matrix.arch }}.xcresult
-    - name: Convert with xcresultparser
+
+  merge:
+    runs-on: macos-latest
+    needs: build
+    steps:
+    - name: Download Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ResultBundle-x86_64.xcresult
+        path: artifacts
+    - name: Download Artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: ResultBundle-arm64.xcresult
+        path: artifacts
+    - name: Merge Result Bundles
+      run: |
+        xcrun xcresulttool merge \
+          artifacts/ResultBundle-x86_64.xcresult \
+          artifacts/ResultBundle-arm64.xcresult \
+          --output-path artifacts/MergedResult.xcresult
+    - name: Delete Old Artifacts
+      run: |
+        rm -rf artifacts/ResultBundle-*.xcresult
+    - name: Delete Old Artifacts from GitHub
+      run: |
+        curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github.v3+json" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" | jq -r '.artifacts[] | select(.name | startswith("ResultBundle-")) | .id' | while read artifact_id; do
+            echo "Deleting artifact ID: $artifact_id"
+            curl -X DELETE -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
+          done
+    - name: Re-upload Merged Result
+      uses: actions/upload-artifact@v4
+      with:
+        name: MergedResult.xcresult
+        path: artifacts/MergedResult.xcresult
+
+  coverage:
+    runs-on: macos-latest
+    needs: merge
+    steps:
+    - name: Download Merged Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: MergedResult.xcresult
+        path: artifacts
+    - name: Install Dependencies
+      run: |
+        brew install --formula xcresultparser
+    - name: Convert Merged Result to Coverage
       run: |
         xcresultparser \
           --output-format cobertura \
-          "artifacts/ResultBundle-${{ matrix.arch }}.xcresult" >"artifacts/coverage-${{ matrix.arch }}.xml"
+          artifacts/MergedResult.xcresult > artifacts/coverage.xml
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
-        files: artifacts/coverage-${{ matrix.arch }}.xml
+        files: artifacts/coverage.xml
         token: ${{ secrets.CODECOV_TOKEN }}
-        flags: unittests-${{ matrix.arch }}
+        flags: unittests
         fail_ci_if_error: true
