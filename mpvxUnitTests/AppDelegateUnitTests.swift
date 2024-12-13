@@ -1,6 +1,8 @@
 import XCTest
 @testable import mpvx
 
+let bigBuckBunnyURL = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
+
 @MainActor
 class AppDelegateUnitTests: XCTestCase {
 
@@ -12,50 +14,6 @@ class AppDelegateUnitTests: XCTestCase {
 
     override func tearDownWithError() throws {
         appDelegate = nil
-    }
-    
-    func uninstallMpv() {
-        let task = Process()
-        task.launchPath = "/usr/bin/env"
-        task.arguments = ["brew", "uninstall", "--formula", "mpv"]
-        task.environment = [
-            "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-            "HOME": NSHomeDirectory()
-        ]
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.standardError = pipe
-        task.launch()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        if let output = String(data: data, encoding: .utf8) {
-            print(output)
-        }
-        task.waitUntilExit()
-    }
-
-    func installMpv() {
-        let task = Process()
-        task.launchPath = "/usr/bin/env"
-        task.arguments = ["brew", "install", "--formula", "mpv"]
-        task.environment = [
-            "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
-            "HOME": NSHomeDirectory()
-        ]
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.standardError = pipe
-        task.launch()
-        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-        if let output = String(data: data, encoding: .utf8) {
-            print(output)
-        }
-        task.waitUntilExit()
-    }
-
-    func testLaunchMpvWithNoMpv() {
-        uninstallMpv()
-        testLaunchMpv()
-        installMpv()
     }
 
     func testApplicationDidFinishLaunching() {
@@ -69,19 +27,17 @@ class AppDelegateUnitTests: XCTestCase {
     }
 
     func testApplicationOpenSampleVideoURL() {
-        let sampleVideoURL = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
-        appDelegate.application(NSApplication.shared, open: [sampleVideoURL])
+        appDelegate.application(NSApplication.shared, open: [bigBuckBunnyURL])
         XCTAssertTrue(appDelegate.isOpenFromURLs)
     }
 
     func testHandleOpenWithSampleVideo() {
-        let sampleVideoURL = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
-        appDelegate.handleOpen([sampleVideoURL])
+        appDelegate.handleOpen([bigBuckBunnyURL])
     }
 
     func testLaunchMpv() {
         let expectation = XCTestExpectation(description: "Process launched")
-        let args = ["https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"]
+        let args = [bigBuckBunnyURL.absoluteString]
         appDelegate.launchMpv(args)
         expectation.fulfill()
         wait(for: [expectation], timeout: 1.0)

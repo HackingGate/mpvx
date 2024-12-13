@@ -56,12 +56,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else if FileManager.default.fileExists(atPath: secondaryPath) {
             task.launchPath = secondaryPath
         } else {
-            // Pop a window to guide user to install mpv to open the help url
             let alert = NSAlert()
             alert.messageText = "mpv not found"
             alert.informativeText = "Please install mpv first."
             alert.addButton(withTitle: "Open Help")
             alert.addButton(withTitle: "Cancel")
+            alert.buttons[0].setAccessibilityIdentifier("Open Help")
+            alert.buttons[1].setAccessibilityIdentifier("Cancel")
             let response = alert.runModal()
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(helpURL)
