@@ -46,12 +46,12 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: ResultBundle-x86_64.xcresult
-        path: artifacts
+        path: artifacts/ResultBundle-x86_64.xcresult
     - name: Download Artifacts
       uses: actions/download-artifact@v4
       with:
         name: ResultBundle-arm64.xcresult
-        path: artifacts
+        path: artifacts/ResultBundle-arm64.xcresult
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
@@ -91,6 +91,9 @@ jobs:
       with:
         name: MergedResult.xcresult
         path: artifacts
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
     - name: Install Dependencies
       run: |
         brew install --formula xcresultparser
