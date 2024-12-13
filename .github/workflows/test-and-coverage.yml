@@ -90,7 +90,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: MergedResult.xcresult
-        path: artifacts
+        path: artifacts/MergedResult.xcresult
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
