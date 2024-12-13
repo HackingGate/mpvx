@@ -3,7 +3,7 @@ name: Build and Test
 on: [push, pull_request]
 
 jobs:
-  build:
+  build_and_test:
     runs-on: macos-latest
     strategy:
       matrix:
@@ -40,15 +40,15 @@ jobs:
 
   merge:
     runs-on: macos-latest
-    needs: build
+    needs: build_and_test
     steps:
     - name: Download Artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ResultBundle-x86_64.xcresult
         path: artifacts
     - name: Download Artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: ResultBundle-arm64.xcresult
         path: artifacts
@@ -82,7 +82,7 @@ jobs:
     needs: merge
     steps:
     - name: Download Merged Artifact
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: MergedResult.xcresult
         path: artifacts
