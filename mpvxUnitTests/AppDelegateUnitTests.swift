@@ -14,7 +14,7 @@ class AppDelegateUnitTests: XCTestCase {
         appDelegate = nil
     }
     
-    func testUninstallMpv() {
+    func uninstallMpv() {
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = ["brew", "uninstall", "--formula", "mpv"]
@@ -33,11 +33,7 @@ class AppDelegateUnitTests: XCTestCase {
         task.waitUntilExit()
     }
 
-    func testLaunchMpvWithNoMpv() {
-        testLaunchMpv()
-    }
-
-    func testInstallMpv() {
+    func installMpv() {
         let task = Process()
         task.launchPath = "/usr/bin/env"
         task.arguments = ["brew", "install", "--formula", "mpv"]
@@ -54,6 +50,12 @@ class AppDelegateUnitTests: XCTestCase {
             print(output)
         }
         task.waitUntilExit()
+    }
+
+    func testLaunchMpvWithNoMpv() {
+        uninstallMpv()
+        testLaunchMpv()
+        installMpv()
     }
 
     func testApplicationDidFinishLaunching() {
