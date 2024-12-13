@@ -13,6 +13,48 @@ class AppDelegateUnitTests: XCTestCase {
     override func tearDownWithError() throws {
         appDelegate = nil
     }
+    
+    func testUninstallMpv() {
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = ["brew", "uninstall", "--formula", "mpv"]
+        task.environment = [
+            "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+            "HOME": NSHomeDirectory()
+        ]
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.standardError = pipe
+        task.launch()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        if let output = String(data: data, encoding: .utf8) {
+            print(output)
+        }
+        task.waitUntilExit()
+    }
+
+    func testLaunchMpvWithNoMpv() {
+        testLaunchMpv()
+    }
+
+    func testInstallMpv() {
+        let task = Process()
+        task.launchPath = "/usr/bin/env"
+        task.arguments = ["brew", "install", "--formula", "mpv"]
+        task.environment = [
+            "PATH": "/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+            "HOME": NSHomeDirectory()
+        ]
+        let pipe = Pipe()
+        task.standardOutput = pipe
+        task.standardError = pipe
+        task.launch()
+        let data = pipe.fileHandleForReading.readDataToEndOfFile()
+        if let output = String(data: data, encoding: .utf8) {
+            print(output)
+        }
+        task.waitUntilExit()
+    }
 
     func testApplicationDidFinishLaunching() {
         appDelegate.isOpenFromURLs = false
