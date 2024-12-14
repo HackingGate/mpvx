@@ -86,6 +86,9 @@ jobs:
     runs-on: macos-latest
     needs: merge
     steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: Download Merged Artifact
       uses: actions/download-artifact@v4
       with:
