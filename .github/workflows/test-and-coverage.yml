@@ -101,6 +101,7 @@ jobs:
       with:
         path: artifacts/ResultBundle.xcresult
         show-passed-tests: false
+        upload-bundles: never
     - name: Install Dependencies
       run: |
         brew install --formula xcresultparser
