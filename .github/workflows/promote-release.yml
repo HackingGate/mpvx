@@ -1,0 +1,48 @@
+name: Promote Pre-release to Release
+
+on:
+  workflow_run:
+    workflows: [Release]
+    types:
+      - completed
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
+    
+    steps:
+      - name: Wait 24 hours
+        run: sleep 86400
+        
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Get latest pre-release
+        id: get_release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const response = await github.rest.repos.getLatestRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            if (!response.data.prerelease) {
+              console.log('Latest release is not a pre-release. Skipping.');
+              return;
+            }
+            return response.data;
+          result-encoding: string
+          
+      - name: Update to full release
+        if: steps.get_release.outputs.result != ''
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const release = JSON.parse('${{ steps.get_release.outputs.result }}');
+            await github.rest.repos.updateRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              release_id: release.id,
+              prerelease: false
+            });
