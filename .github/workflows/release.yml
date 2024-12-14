@@ -22,8 +22,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: Generate Release Note
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          wget ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases\?per_page\=1 -O releases.json
+          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases\?per_page\=1 -O releases.json
           cat releases.json | jq
           LATEST_TAG=`cat releases.json | jq -r '.[0].tag_name'`
           if [[ $GITHUB_REF == refs/tags/* ]]; then
