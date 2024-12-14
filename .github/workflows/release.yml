@@ -30,12 +30,18 @@ jobs:
           LATEST_TAG=`cat releases.json | jq -r '.[0].tag_name'`
           if [[ $GITHUB_REF == refs/tags/* ]]; then
             NEXT_TAG=`echo ${GITHUB_REF} | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+'`
-            echo "## Changes from ${LATEST_TAG} to ${NEXT_TAG}" | tee release_note.md
-            git log --pretty="%h - %s" ${LATEST_TAG}..${NEXT_TAG} | tee -a release_note.md
+            echo "# Release ${NEXT_TAG}" > release_note.md
+            echo "" >> release_note.md
+            echo "## Changes from \`${LATEST_TAG}\` to \`${NEXT_TAG}\`" >> release_note.md
+            echo "" >> release_note.md
+            git log --pretty="* %h - %s" ${LATEST_TAG}..${NEXT_TAG} | tee -a release_note.md
           else
             HEAD_HASH=`git rev-parse --short HEAD`
-            echo "## Changes from ${LATEST_TAG} to ${HEAD_HASH}" | tee release_note.md
-            git log --pretty="%h - %s" ${LATEST_TAG}..HEAD | tee -a release_note.md
+            echo "# Development Build" > release_note.md
+            echo "" >> release_note.md
+            echo "## Changes from \`${LATEST_TAG}\` to \`${HEAD_HASH}\`" >> release_note.md
+            echo "" >> release_note.md
+            git log --pretty="* %h - %s" ${LATEST_TAG}..HEAD | tee -a release_note.md
           fi
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
