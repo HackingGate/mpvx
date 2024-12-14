@@ -4,10 +4,12 @@ on: push
 
 jobs:
   build_and_test:
-    runs-on: macos-latest
     strategy:
       matrix:
+        os: [macos-13, macos-14, macos-15]
         arch: [x86_64, arm64]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -30,54 +32,66 @@ jobs:
           -scheme mpvx \
           -configuration Debug \
           -derivedDataPath build \
-          -destination 'platform=macOS,arch=${{ matrix.arch }}' \
-          -resultBundlePath artifacts/ResultBundle-${{ matrix.arch }}.xcresult
+          -destination "platform=macOS,arch=${{ matrix.arch }}" \
+          -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
       continue-on-error: true
     - name: Upload Result Bundle
       uses: actions/upload-artifact@v4
       with:
-        name: ResultBundle-${{ matrix.arch }}.xcresult
-        path: artifacts/ResultBundle-${{ matrix.arch }}.xcresult
+        name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+        path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
 
   merge:
     runs-on: macos-latest
     needs: build_and_test
     continue-on-error: true
     steps:
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ResultBundle-x86_64.xcresult
-        path: artifacts/ResultBundle-x86_64.xcresult
-    - name: Download Artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: ResultBundle-arm64.xcresult
-        path: artifacts/ResultBundle-arm64.xcresult
+    - name: Install jq
+      run: brew install jq
+    - name: List and download all .xcresult artifacts
+      run: |
+        # Get a list of all artifacts for the current run
+        ARTS=$(curl -s \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+          | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | [.name, .archive_download_url] | @tsv')
+        mkdir -p artifacts
+        # Loop through each artifact and download it
+        while IFS=$'\t' read -r NAME URL; do
+          echo "Downloading artifact: $NAME"
+          curl -L \
+            -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+            -o "$NAME.zip" "$URL"
+          unzip "$NAME.zip" -d "artifacts/$NAME"
+          rm "$NAME.zip"
+        done <<< "$ARTS"
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
     - name: Merge Result Bundles
       run: |
-        xcrun xcresulttool merge \
-          artifacts/ResultBundle-x86_64.xcresult \
-          artifacts/ResultBundle-arm64.xcresult \
-          --output-path artifacts/ResultBundle.xcresult
-    - name: Delete Old Artifacts
-      run: |
-        rm -rf artifacts/ResultBundle-*.xcresult
-    - name: Delete Old Artifacts from GitHub
+        # Dynamically find all .xcresult directories in artifacts
+        XCBUNDLES=($(find artifacts -type d -name '*.xcresult'))
+        if [ ${#XCBUNDLES[@]} -gt 1 ]; then
+          xcrun xcresulttool merge "${XCBUNDLES[@]}" --output-path artifacts/ResultBundle.xcresult
+        else
+          # If there's only one bundle, just rename it as the merged output
+          mv "${XCBUNDLES[0]}" artifacts/ResultBundle.xcresult
+        fi
+    - name: Cleanup Old Artifacts from GitHub
       run: |
         curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
           -H 'Accept: application/vnd.github+json' \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          "https://api.github.com/repos/${{ github.repository }}/actions/artifacts" | jq -r '.artifacts[] | select(.name | startswith("ResultBundle-")) | .id' | while read artifact_id; do
-            echo "Deleting artifact ID: $artifact_id"
-            curl -X DELETE -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -H 'Accept: application/vnd.github+json' \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
-          done
+          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+          | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | .id' \
+          | while read artifact_id; do
+              echo "Deleting artifact ID: $artifact_id"
+              curl -X DELETE -s \
+                -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                -H 'Accept: application/vnd.github+json' \
+                "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
+            done
     - name: Re-upload Merged Result
       uses: actions/upload-artifact@v4
       with:
