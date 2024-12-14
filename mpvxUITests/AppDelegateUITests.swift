@@ -23,6 +23,7 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+        sleep(5)
         app.terminate()
         sleep(5)
     }
@@ -40,6 +41,7 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+        sleep(5)
         app.terminate()
         sleep(5)
     }
@@ -65,6 +67,7 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+        sleep(5)
         app.terminate()
         sleep(5)
     }
@@ -86,6 +89,7 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+        sleep(5)
         app.terminate()
         sleep(5)
     }
