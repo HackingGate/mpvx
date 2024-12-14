@@ -30,6 +30,8 @@ final class AppDelegateUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=/usr/bin/xcrun"]
         app.open(bigBuckBunnyURL)
+        sleep(5)
+        XCTAssertTrue(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Launch URL with wrong mpv screen"
         attachment.lifetime = .keepAlways
@@ -44,6 +46,7 @@ final class AppDelegateUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=nil"]
         app.open(bigBuckBunnyURL)
+        sleep(5)
         XCTAssertTrue(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Hide Others"].click()
@@ -67,6 +70,7 @@ final class AppDelegateUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=nil"]
         app.open(bigBuckBunnyURL)
+        sleep(5)
         XCTAssertTrue(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
         XCUIApplication().menuBars.menuBarItems["mpvx"].click()
         XCUIApplication().menuItems["Hide Others"].click()
