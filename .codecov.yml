@@ -1,0 +1,19 @@
+coverage:
+  status:
+    default:
+      flag: all_tests
+    project:
+      default:
+        target: auto
+    patch:
+      default:
+        target: auto
+
+comment:
+  layout: "reach, diff, flags, files"
+
+flags:
+  all_tests:
+    paths:
+      - .
+    carryforward: true
