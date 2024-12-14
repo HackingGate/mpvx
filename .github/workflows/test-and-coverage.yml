@@ -94,7 +94,7 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
-    - uses: kishikawakatsumi/xcresulttool@v1
+    - uses: slidoapp/xcresulttool@v3.1.0
       with:
         path: artifacts/ResultBundle.xcresult
         show-passed-tests: false
