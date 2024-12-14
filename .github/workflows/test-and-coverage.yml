@@ -31,12 +31,13 @@ jobs:
           -configuration Debug \
           -derivedDataPath build \
           -destination 'platform=macOS,arch=${{ matrix.arch }}' \
-          -resultBundlePath artifacts/ResultBundle-${{ matrix.arch }}.xcresult || true
+          -resultBundlePath artifacts/ResultBundle-${{ matrix.arch }}.xcresult
     - name: Upload Result Bundle
       uses: actions/upload-artifact@v4
       with:
         name: ResultBundle-${{ matrix.arch }}.xcresult
         path: artifacts/ResultBundle-${{ matrix.arch }}.xcresult
+      if: success() || failure()
 
   merge:
     runs-on: macos-latest
