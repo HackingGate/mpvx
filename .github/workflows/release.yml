@@ -54,10 +54,15 @@ jobs:
           cd build/Build/Products/Release/
           zip -r mpvx.app.zip mpvx.app
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mpvx.app.zip
           path: ./build/Build/Products/Release/mpvx.app.zip
+      - name: Upload release note
+        uses: actions/upload-artifact@v4
+        with:
+          name: release_note.md
+          path: ./release_note.md
       - name: Release
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
