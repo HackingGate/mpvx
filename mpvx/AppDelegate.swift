@@ -4,7 +4,6 @@ import Cocoa
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
     var isOpenFromURLs = false
-
     var mpvPathProvider: MpvPathProviding = MpvPathProvider()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -14,14 +13,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 mpvPathProvider = MpvPathProvider(customMpvPath: path)
                 break
             }
-        }
-
-        if !isOpenFromURLs {
-            displayOpenPannel()
-        }
-
-        if !isOpenFromURLs {
-            displayOpenPannel()
         }
     }
 
