@@ -10,9 +10,22 @@
 		C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D0E53244DECC100DF14C1 /* AppDelegate.swift */; };
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
+		C7EEA6AB2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
+		C7EEA6AC2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
+		C7EEA6AD2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
+		C7EEA6B02D0D1C840061236D /* CommonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */; };
+		C7EEA6B12D0D1C840061236D /* CommonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */; };
+		C7EEA6B22D0D1C840061236D /* CommonConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C70D72412D0C7B570002A34E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C75D0E48244DECC100DF14C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C75D0E4F244DECC100DF14C1;
+			remoteInfo = mpvx;
+		};
 		C7835D742D09EBC500125434 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C75D0E48244DECC100DF14C1 /* Project object */;
@@ -24,22 +37,32 @@
 
 /* Begin PBXFileReference section */
 		C7010E3F2D09B8E100A06DCE /* setup.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = setup.sh; sourceTree = SOURCE_ROOT; };
+		C70D723B2D0C7B570002A34E /* mpvxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mpvxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75D0E50244DECC100DF14C1 /* mpvx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = mpvx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C75D0E53244DECC100DF14C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C75D0E57244DECC300DF14C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C75D0E5D244DECC300DF14C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C75D0E60244DECC300DF14C1 /* mpvx.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = mpvx.entitlements; sourceTree = "<group>"; };
 		C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mpvxUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
+		C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpvPathProvider.swift; sourceTree = "<group>"; };
+		C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonConstants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		C70D723C2D0C7B570002A34E /* mpvxUITests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = mpvxUITests; sourceTree = "<group>"; };
 		C7835D712D09EBC500125434 /* mpvxUnitTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = mpvxUnitTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C70D72382D0C7B570002A34E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C75D0E4D244DECC100DF14C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -63,6 +86,7 @@
 				C7BCBFFC245EA89F0090391F /* README.md */,
 				C75D0E52244DECC100DF14C1 /* mpvx */,
 				C7835D712D09EBC500125434 /* mpvxUnitTests */,
+				C70D723C2D0C7B570002A34E /* mpvxUITests */,
 				C75D0E51244DECC100DF14C1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -72,6 +96,7 @@
 			children = (
 				C75D0E50244DECC100DF14C1 /* mpvx.app */,
 				C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */,
+				C70D723B2D0C7B570002A34E /* mpvxUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -80,10 +105,11 @@
 			isa = PBXGroup;
 			children = (
 				C75D0E53244DECC100DF14C1 /* AppDelegate.swift */,
+				C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */,
+				C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */,
 				C75D0E57244DECC300DF14C1 /* Assets.xcassets */,
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
-				C75D0E60244DECC300DF14C1 /* mpvx.entitlements */,
 				C7D33DBD249BA5CE00D3815C /* Config.xcconfig */,
 				C7010E3F2D09B8E100A06DCE /* setup.sh */,
 			);
@@ -93,6 +119,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C70D723A2D0C7B570002A34E /* mpvxUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C70D72452D0C7B570002A34E /* Build configuration list for PBXNativeTarget "mpvxUITests" */;
+			buildPhases = (
+				C70D72372D0C7B570002A34E /* Sources */,
+				C70D72382D0C7B570002A34E /* Frameworks */,
+				C70D72392D0C7B570002A34E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C70D72422D0C7B570002A34E /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				C70D723C2D0C7B570002A34E /* mpvxUITests */,
+			);
+			name = mpvxUITests;
+			packageProductDependencies = (
+			);
+			productName = mpvxUITests;
+			productReference = C70D723B2D0C7B570002A34E /* mpvxUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		C75D0E4F244DECC100DF14C1 /* mpvx */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C75D0E63244DECC300DF14C1 /* Build configuration list for PBXNativeTarget "mpvx" */;
@@ -140,10 +189,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 1610;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = HG;
 				TargetAttributes = {
+					C70D723A2D0C7B570002A34E = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = C75D0E4F244DECC100DF14C1;
+					};
 					C75D0E4F244DECC100DF14C1 = {
 						CreatedOnToolsVersion = 11.4.1;
 					};
@@ -168,11 +221,19 @@
 			targets = (
 				C75D0E4F244DECC100DF14C1 /* mpvx */,
 				C7835D6F2D09EBC500125434 /* mpvxUnitTests */,
+				C70D723A2D0C7B570002A34E /* mpvxUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C70D72392D0C7B570002A34E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C75D0E4E244DECC100DF14C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -192,10 +253,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C70D72372D0C7B570002A34E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C7EEA6AD2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */,
+				C7EEA6B22D0D1C840061236D /* CommonConstants.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C75D0E4C244DECC100DF14C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7EEA6AB2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */,
+				C7EEA6B02D0D1C840061236D /* CommonConstants.swift in Sources */,
 				C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,12 +276,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7EEA6AC2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */,
+				C7EEA6B12D0D1C840061236D /* CommonConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C70D72422D0C7B570002A34E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C75D0E4F244DECC100DF14C1 /* mpvx */;
+			targetProxy = C70D72412D0C7B570002A34E /* PBXContainerItemProxy */;
+		};
 		C7835D752D09EBC500125434 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = C75D0E4F244DECC100DF14C1 /* mpvx */;
@@ -229,6 +308,49 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C70D72432D0C7B570002A34E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = mpvx;
+			};
+			name = Debug;
+		};
+		C70D72442D0C7B570002A34E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "";
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = mpvx;
+			};
+			name = Release;
+		};
 		C75D0E61244DECC300DF14C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C7D33DBD249BA5CE00D3815C /* Config.xcconfig */;
@@ -367,7 +489,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -392,7 +514,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = "$(VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -412,7 +534,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -435,7 +557,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.5;
+				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUnitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -448,6 +570,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C70D72452D0C7B570002A34E /* Build configuration list for PBXNativeTarget "mpvxUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C70D72432D0C7B570002A34E /* Debug */,
+				C70D72442D0C7B570002A34E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C75D0E4B244DECC100DF14C1 /* Build configuration list for PBXProject "mpvx" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

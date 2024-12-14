@@ -1,8 +1,6 @@
 import XCTest
 @testable import mpvx
 
-let bigBuckBunnyURL = URL(string: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4")!
-
 @MainActor
 class AppDelegateUnitTests: XCTestCase {
 

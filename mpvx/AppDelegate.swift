@@ -3,12 +3,23 @@ import Cocoa
 @main
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    let helpURL = URL(string: "https://github.com/HackingGate/mpvx")!
-    let mpvMannualURL = URL(string: "https://mpv.io/manual/stable/")!
     var isOpenFromURLs = false
 
+    var mpvPathProvider: MpvPathProviding = MpvPathProvider()
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        for arg in CommandLine.arguments {
+            if arg.hasPrefix("\(argMpvBinaryPath)=") {
+                let path = String(arg.dropFirst("\(argMpvBinaryPath)=".count))
+                mpvPathProvider = MpvPathProvider(customMpvPath: path)
+                break
+            }
+        }
+
+        if !isOpenFromURLs {
+            displayOpenPannel()
+        }
+
         if !isOpenFromURLs {
             displayOpenPannel()
         }
@@ -48,17 +59,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func launchMpv(_ args: [String]) {
-        let task = Process()
-        let primaryPath = "/opt/homebrew/bin/mpv"
-        let secondaryPath = "/usr/local/bin/mpv"
-        if FileManager.default.fileExists(atPath: primaryPath) {
-            task.launchPath = primaryPath
-        } else if FileManager.default.fileExists(atPath: secondaryPath) {
-            task.launchPath = secondaryPath
+        if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
+            let task = Process()
+            task.launchPath = mpvInstallPath
+            let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
+            task.arguments = mpvxArgs + args
+            let pipe = Pipe()
+            task.standardOutput = pipe
+            task.launch()
         } else {
             let alert = NSAlert()
             alert.messageText = "mpv not found"
-            alert.informativeText = "Please install mpv first."
+            alert.informativeText = "Please install mpv and relaunch."
             alert.addButton(withTitle: "Open Help")
             alert.addButton(withTitle: "Cancel")
             alert.buttons[0].setAccessibilityIdentifier("Open Help")
@@ -70,13 +82,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if response == .alertSecondButtonReturn {
                 exit(0)
             }
-            return
         }
-        let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
-        task.arguments = mpvxArgs + args
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.launch()
     }
 
     @IBAction func handleMenuOpen(_ sender: Any) {

@@ -41,6 +41,17 @@
                ReferencedContainer = "container:mpvx.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C70D723A2D0C7B570002A34E"
+               BuildableName = "mpvxUITests.xctest"
+               BlueprintName = "mpvxUITests"
+               ReferencedContainer = "container:mpvx.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
