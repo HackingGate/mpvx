@@ -1,6 +1,14 @@
 name: Build and Test
 
-on: push
+on: 
+  push:
+    paths:
+      - '.github/workflows/test-and-coverage.yml'
+      - '.test-and-coverage.yml'
+      - '**/*.sh'
+      - '**/*.swift'
+      - 'mpvx/**'
+      - 'mpvx.xcodeproj/**'
 
 jobs:
   build_and_test:
