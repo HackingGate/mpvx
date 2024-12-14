@@ -79,9 +79,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(helpURL)
             }
-            if response == .alertSecondButtonReturn {
-                exit(0)
-            }
         }
     }
 
