@@ -11,6 +11,7 @@ on:
       - 'mpvx.xcodeproj/**'
     tags:
       - '*'
+  pull_request:
 
 jobs:
   build_and_test:
