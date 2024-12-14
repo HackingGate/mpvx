@@ -3,14 +3,16 @@ import Cocoa
 @main
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
-
-    let helpURL = URL(string: "https://github.com/HackingGate/mpvx")!
-    let mpvMannualURL = URL(string: "https://mpv.io/manual/stable/")!
     var isOpenFromURLs = false
+    var mpvPathProvider: MpvPathProviding = MpvPathProvider()
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        if !isOpenFromURLs {
-            displayOpenPannel()
+        for arg in CommandLine.arguments {
+            if arg.hasPrefix("\(argMpvBinaryPath)=") {
+                let path = String(arg.dropFirst("\(argMpvBinaryPath)=".count))
+                mpvPathProvider = MpvPathProvider(customMpvPath: path)
+                break
+            }
         }
     }
 
@@ -48,13 +50,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func launchMpv(_ args: [String]) {
-        let task = Process()
-        task.launchPath = "/usr/local/bin/mpv"
-        let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
-        task.arguments = mpvxArgs + args
-        let pipe = Pipe()
-        task.standardOutput = pipe
-        task.launch()
+        if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
+            let task = Process()
+            task.launchPath = mpvInstallPath
+            let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
+            task.arguments = mpvxArgs + args
+            let pipe = Pipe()
+            task.standardOutput = pipe
+            task.launch()
+        } else {
+            let alert = NSAlert()
+            alert.messageText = "mpv not found"
+            alert.informativeText = "Please install mpv and relaunch."
+            alert.addButton(withTitle: "Open Help")
+            alert.addButton(withTitle: "Cancel")
+            alert.buttons[0].setAccessibilityIdentifier("Open Help")
+            alert.buttons[1].setAccessibilityIdentifier("Cancel")
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(helpURL)
+            }
+        }
     }
 
     @IBAction func handleMenuOpen(_ sender: Any) {

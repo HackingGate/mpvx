@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1610"
+   LastUpgradeVersion = "1620"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -38,6 +38,17 @@
                BlueprintIdentifier = "C7835D6F2D09EBC500125434"
                BuildableName = "mpvxUnitTests.xctest"
                BlueprintName = "mpvxUnitTests"
+               ReferencedContainer = "container:mpvx.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C70D723A2D0C7B570002A34E"
+               BuildableName = "mpvxUITests.xctest"
+               BlueprintName = "mpvxUITests"
                ReferencedContainer = "container:mpvx.xcodeproj">
             </BuildableReference>
          </TestableReference>

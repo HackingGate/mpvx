@@ -3,6 +3,10 @@ name: Release
 on:
   push:
     tags: '[0-9]+.[0-9]+.[0-9]+'
+  workflow_run:
+    workflows: ["Build and Test"]
+    types:
+      - completed
 
 jobs:
   build:
@@ -27,8 +31,11 @@ jobs:
           ./setup.sh
       - name: Build
         run: |
-          xcodebuild clean -scheme mpvx build -configuration Release -derivedDataPath build \
-          -destination 'generic/platform=macOS'
+          xcodebuild clean build \
+            -scheme mpvx \
+            -configuration Release \
+            -derivedDataPath build \
+            -destination 'generic/platform=macOS'
       - name: Zip the build
         run: |
           cd build/Build/Products/Release/
