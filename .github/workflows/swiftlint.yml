@@ -9,8 +9,9 @@ on:
 
 jobs:
   SwiftLint:
-    runs-on: ubuntu-latest
+    runs-on: ghcr.io/cirruslabs/macos-runner:sonoma
     steps:
       - uses: actions/checkout@v4
-      - name: GitHub Action for SwiftLint
-        uses: norio-nomura/action-swiftlint@3.2.1
+      - uses: cirruslabs/swiftlint-action@v1
+        with:
+          version: latest
