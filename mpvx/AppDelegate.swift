@@ -6,7 +6,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var isOpenFromURLs = false
     var mpvPathProvider: MpvPathProviding = MpvPathProvider()
 
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
+    func applicationWillFinishLaunching(_ aNotification: Notification) {
         for arg in CommandLine.arguments {
             if arg.hasPrefix("\(argMpvBinaryPath)=") {
                 let path = String(arg.dropFirst("\(argMpvBinaryPath)=".count))

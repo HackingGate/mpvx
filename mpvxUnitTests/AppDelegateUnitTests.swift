@@ -14,9 +14,9 @@ class AppDelegateUnitTests: XCTestCase {
         appDelegate = nil
     }
 
-    func testApplicationDidFinishLaunching() {
+    func testApplicationWillFinishLaunching() {
         appDelegate.isOpenFromURLs = false
-        appDelegate.applicationDidFinishLaunching(Notification(name: Notification.Name("TestNotification")))
+        appDelegate.applicationWillFinishLaunching(Notification(name: Notification.Name("TestNotification")))
     }
 
     func testApplicationShouldHandleReopen() {
