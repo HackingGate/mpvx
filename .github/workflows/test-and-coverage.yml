@@ -9,8 +9,6 @@ on:
       - '**/*.swift'
       - 'mpvx/**'
       - 'mpvx.xcodeproj/**'
-    tags:
-      - '*'
   pull_request:
 
 jobs:
