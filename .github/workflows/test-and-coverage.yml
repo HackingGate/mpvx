@@ -46,6 +46,7 @@ jobs:
       with:
         name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
         path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+      if: always()
 
   merge:
     runs-on: macos-latest
