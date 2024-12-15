@@ -45,7 +45,6 @@ jobs:
           -derivedDataPath build \
           -destination "platform=macOS,arch=${{ matrix.arch }}" \
           -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
-      continue-on-error: true
     - name: Upload Result Bundle
       uses: actions/upload-artifact@v4
       with:
@@ -62,12 +61,11 @@ jobs:
         files: artifacts/coverage-${{ matrix.os }}-${{ matrix.arch }}.xml
         token: ${{ secrets.CODECOV_TOKEN }}
         flags: ${{ matrix.os }}-${{ matrix.arch }}-tests
-        fail_ci_if_error: true
+        fail_ci_if_error: false
 
   merge:
     runs-on: macos-latest
     needs: build_and_test
-    continue-on-error: true
     steps:
     - name: List and download all .xcresult artifacts
       run: |
@@ -122,7 +120,6 @@ jobs:
   coverage:
     runs-on: macos-latest
     needs: merge
-    continue-on-error: true
     steps:
     - uses: actions/checkout@v3
       with:
