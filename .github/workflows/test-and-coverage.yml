@@ -51,9 +51,6 @@ jobs:
       with:
         name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
         path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
-    - name: Install Dependencies
-      run: |
-        brew install --formula xcresultparser
     - name: Convert Merged Result to Coverage
       run: |
         xcresultparser \
