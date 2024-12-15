@@ -9,7 +9,6 @@ on:
       - '**/*.swift'
       - 'mpvx/**'
       - 'mpvx.xcodeproj/**'
-  pull_request:
 
 jobs:
   build_and_test:
