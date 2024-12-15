@@ -29,6 +29,18 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
     }
+    
+    func testLaunchMpvLaunchFail() {
+        app.open(URL(string: "https://example.com")!)
+        sleep(5)
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Launch wrong URL screen"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        XCUIApplication().menuBars.menuBarItems["mpvx"].click()
+        XCUIApplication().menuItems["Quit mpvx"].click()
+        XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+    }
 
     func testLaunchMpvWithCustomMpv() {
         app.launchArguments = ["\(argMpvBinaryPath)=/usr/bin/xcrun"]

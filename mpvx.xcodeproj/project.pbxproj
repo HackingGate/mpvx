@@ -10,6 +10,7 @@
 		C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C75D0E53244DECC100DF14C1 /* AppDelegate.swift */; };
 		C75D0E58244DECC300DF14C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E57244DECC300DF14C1 /* Assets.xcassets */; };
 		C75D0E5E244DECC300DF14C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C75D0E5C244DECC300DF14C1 /* Main.storyboard */; };
+		C7B340D62D0F056D006BE752 /* MpvLauncher.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7B340D52D0F056D006BE752 /* MpvLauncher.swift */; };
 		C7EEA6AB2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
 		C7EEA6AC2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
 		C7EEA6AD2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */; };
@@ -45,6 +46,7 @@
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mpvxUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C795FCD12D103AA80091B101 /* mpvx.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = mpvx.xctestplan; sourceTree = "<group>"; };
+		C7B340D52D0F056D006BE752 /* MpvLauncher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpvLauncher.swift; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpvPathProvider.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				C75D0E53244DECC100DF14C1 /* AppDelegate.swift */,
 				C7EEA6AF2D0D1C840061236D /* CommonConstants.swift */,
 				C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */,
+				C7B340D52D0F056D006BE752 /* MpvLauncher.swift */,
 				C75D0E57244DECC300DF14C1 /* Assets.xcassets */,
 				C75D0E5C244DECC300DF14C1 /* Main.storyboard */,
 				C75D0E5F244DECC300DF14C1 /* Info.plist */,
@@ -269,6 +272,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7EEA6AB2D0D1AEF0061236D /* MpvPathProvider.swift in Sources */,
+				C7B340D62D0F056D006BE752 /* MpvLauncher.swift in Sources */,
 				C7EEA6B02D0D1C840061236D /* CommonConstants.swift in Sources */,
 				C75D0E54244DECC100DF14C1 /* AppDelegate.swift in Sources */,
 			);

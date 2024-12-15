@@ -3,10 +3,16 @@ import Cocoa
 @main
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var isOpenFromURLs = false
-    var mpvPathProvider: MpvPathProviding = MpvPathProvider()
+    internal var isOpenFromURLs = false
+    private var mpvPathProvider: MpvPathProviding = MpvPathProvider()
+    private lazy var mpvLauncher: MpvLauncher = {
+        return createMpvLauncher()
+    }()
+    internal var panel = NSOpenPanel()
+    internal var isPanelOpen = false
+    private var urlsToOpen: [URL] = []
 
-    func applicationWillFinishLaunching(_ aNotification: Notification) {
+    private func createMpvLauncher() -> MpvLauncher {
         for arg in CommandLine.arguments {
             if arg.hasPrefix("\(argMpvBinaryPath)=") {
                 let path = String(arg.dropFirst("\(argMpvBinaryPath)=".count))
@@ -14,10 +20,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 break
             }
         }
+        return MpvLauncher(mpvPathProvider: mpvPathProvider)
+    }
+
+    func applicationDidBecomeActive(_ notification: Notification) {
+        if !isPanelOpen && !mpvLauncher.isRunning {
+            displayOpenPannel()
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        if (!flag) {
+        if (!flag && !isPanelOpen && !mpvLauncher.isRunning) {
             displayOpenPannel()
         }
         return true
@@ -25,51 +38,33 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func application(_ application: NSApplication, open urls: [URL]) {
         isOpenFromURLs = true
-        handleOpen(urls)
+        mpvLauncher.launch(with: urls, completion: AppDelegate.commonCompletionHandler)
     }
 
     func displayOpenPannel() {
-        let panel = NSOpenPanel()
+        isPanelOpen = true
         panel.canCreateDirectories = false
         panel.canChooseFiles = true
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
-        panel.begin() {
-            if $0 == .OK {
-                self.handleOpen(panel.urls)
-            }
-        }
+        panel.begin(completionHandler: pannelCompletionHandler)
     }
 
-    func handleOpen(_ urls: [URL]) {
-        for url in urls {
-            NSDocumentController.shared.noteNewRecentDocumentURL(url)
+    func pannelCompletionHandler(_ response: NSApplication.ModalResponse) {
+        if response == .OK {
+            mpvLauncher.launch(with: panel.urls, completion: AppDelegate.commonCompletionHandler)
         }
-        let args = urls.map( { ($0.absoluteString) } )
-        launchMpv(args)
+        isPanelOpen = false
     }
 
-    func launchMpv(_ args: [String]) {
-        if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
-            let task = Process()
-            task.launchPath = mpvInstallPath
-            let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
-            task.arguments = mpvxArgs + args
-            let pipe = Pipe()
-            task.standardOutput = pipe
-            task.launch()
-        } else {
-            let alert = NSAlert()
-            alert.messageText = "mpv not found"
-            alert.informativeText = "Please install mpv and relaunch."
-            alert.addButton(withTitle: "Open Help")
-            alert.addButton(withTitle: "Cancel")
-            alert.buttons[0].setAccessibilityIdentifier("Open Help")
-            alert.buttons[1].setAccessibilityIdentifier("Cancel")
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                NSWorkspace.shared.open(helpURL)
-            }
+    static func commonCompletionHandler(result: CompletionType) {
+        switch result {
+        case .terminated(let status):
+            print("Mpv terminated with status: \(status)")
+        case .failure(let error):
+            print("Mpv launch failed with error: \(error)")
+        case .notFound:
+            print("Mpv not found. Please ensure it is installed.")
         }
     }
 
@@ -85,4 +80,3 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         NSWorkspace.shared.open(mpvMannualURL)
     }
 }
-

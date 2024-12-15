@@ -13,10 +13,10 @@ class AppDelegateUnitTests: XCTestCase {
     override func tearDownWithError() throws {
         appDelegate = nil
     }
-
-    func testApplicationWillFinishLaunching() {
-        appDelegate.isOpenFromURLs = false
-        appDelegate.applicationWillFinishLaunching(Notification(name: Notification.Name("TestNotification")))
+    
+    func testApplicationDidBecomeActive() {
+        appDelegate.applicationDidBecomeActive(Notification(name: Notification.Name("")))
+        XCTAssertTrue(appDelegate.isPanelOpen)
     }
 
     func testApplicationShouldHandleReopen() {
@@ -29,20 +29,9 @@ class AppDelegateUnitTests: XCTestCase {
         XCTAssertTrue(appDelegate.isOpenFromURLs)
     }
 
-    func testHandleOpenWithSampleVideo() {
-        appDelegate.handleOpen([bigBuckBunnyURL])
-    }
-
-    func testLaunchMpv() {
-        let expectation = XCTestExpectation(description: "Process launched")
-        let args = [bigBuckBunnyURL.absoluteString]
-        appDelegate.launchMpv(args)
-        expectation.fulfill()
-        wait(for: [expectation], timeout: 1.0)
-    }
-
     func testHandleMenuOpen() {
         appDelegate.handleMenuOpen(self)
+        XCTAssertTrue(appDelegate.isPanelOpen)
     }
 
     func testShowRepo() {
@@ -51,5 +40,17 @@ class AppDelegateUnitTests: XCTestCase {
 
     func testShowMpvMannual() {
         appDelegate.showMpvMannual(self)
+    }
+    
+    func testPannelCompletionHandlerWithOK() {
+        appDelegate.isPanelOpen = true
+        appDelegate.pannelCompletionHandler(.OK)
+        XCTAssertFalse(appDelegate.isPanelOpen)
+    }
+    
+    func testPannelCompletionHandlerWithCancel() {
+        appDelegate.isPanelOpen = true
+        appDelegate.pannelCompletionHandler(.cancel)
+        XCTAssertFalse(appDelegate.isPanelOpen)
     }
 }
