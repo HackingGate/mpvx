@@ -37,7 +37,7 @@ class AppDelegateUnitTests: XCTestCase {
     }
 
     func testShowRepo() {
-        appDelegate.showRepo(self)
+        appDelegate.showMpvxRepo(self)
     }
 
     func testShowMpvMannual() {

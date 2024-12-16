@@ -54,7 +54,7 @@ class AppDelegate: NSObject {
         displayOpenPannel()
     }
 
-    @IBAction func showRepo(_ sender: Any) {
+    @IBAction func showMpvxRepo(_ sender: Any) {
         NSWorkspace.shared.open(helpURL)
     }
 
