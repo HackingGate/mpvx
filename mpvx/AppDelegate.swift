@@ -27,7 +27,7 @@ class AppDelegate: NSObject {
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
         panel.begin { [weak self] response in
-            if let panel = self?.panel{
+            if let panel = self?.panel {
                 self?.pannelCompletionHandler(response, urls: panel.urls)
             }
         }
