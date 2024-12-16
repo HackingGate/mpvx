@@ -2,18 +2,24 @@ import XCTest
 
 @MainActor
 final class AppDelegateUITests: XCTestCase {
-    let mpvPathProvider: MpvPathProviding = MpvPathProvider()
-
-    override class var runsForEachTargetApplicationUIConfiguration: Bool {
-        true
-    }
+    var app: XCUIApplication!
 
     override func setUpWithError() throws {
-        continueAfterFailure = false
+        continueAfterFailure = true
+    }
+
+    override func setUp() {
+        super.setUp()
+        app = XCUIApplication()
+        app.launch()
+    }
+
+    override func tearDown() {
+        app.terminate()
+        super.tearDown()
     }
 
     func testLaunchMpv() {
-        let app = XCUIApplication()
         app.open(bigBuckBunnyURL)
         sleep(5)
         let attachment = XCTAttachment(screenshot: app.screenshot())
@@ -26,7 +32,6 @@ final class AppDelegateUITests: XCTestCase {
     }
 
     func testLaunchMpvWithCustomMpv() {
-        let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=/usr/bin/xcrun"]
         app.open(bigBuckBunnyURL)
         sleep(5)
@@ -41,7 +46,6 @@ final class AppDelegateUITests: XCTestCase {
     }
 
     func testLaunchMpvWithNoMpvOpenHelp() {
-        let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=nil"]
         app.open(bigBuckBunnyURL)
         sleep(5)
@@ -62,9 +66,8 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
     }
-    
+
     func testLaunchMpvWithNoMpvCancel() {
-        let app = XCUIApplication()
         app.launchArguments = ["\(argMpvBinaryPath)=nil"]
         app.open(bigBuckBunnyURL)
         sleep(5)
