@@ -11,7 +11,6 @@ final class AppDelegateUITests: XCTestCase {
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
-        app.launch()
     }
 
     override func tearDown() {
