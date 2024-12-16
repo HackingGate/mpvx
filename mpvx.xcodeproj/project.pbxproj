@@ -44,6 +44,7 @@
 		C75D0E5D244DECC300DF14C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C75D0E5F244DECC300DF14C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7835D702D09EBC500125434 /* mpvxUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = mpvxUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C795FCD12D103AA80091B101 /* mpvx.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = mpvx.xctestplan; sourceTree = "<group>"; };
 		C7BCBFFC245EA89F0090391F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		C7D33DBD249BA5CE00D3815C /* Config.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = SOURCE_ROOT; };
 		C7EEA6AA2D0D1AEF0061236D /* MpvPathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MpvPathProvider.swift; sourceTree = "<group>"; };
@@ -83,6 +84,7 @@
 		C75D0E47244DECC100DF14C1 = {
 			isa = PBXGroup;
 			children = (
+				C795FCD12D103AA80091B101 /* mpvx.xctestplan */,
 				C7BCBFFC245EA89F0090391F /* README.md */,
 				C75D0E52244DECC100DF14C1 /* mpvx */,
 				C7835D712D09EBC500125434 /* mpvxUnitTests */,
