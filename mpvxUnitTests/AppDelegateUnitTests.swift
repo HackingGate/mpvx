@@ -16,7 +16,7 @@ class AppDelegateUnitTests: XCTestCase {
     
     func testApplicationDidBecomeActive() {
         appDelegate.applicationDidBecomeActive(Notification(name: Notification.Name("")))
-        XCTAssertTrue(appDelegate.isPanelOpen)
+        XCTAssertTrue(appDelegate.panel.isVisible)
     }
 
     func testApplicationShouldHandleReopen() {
@@ -26,12 +26,14 @@ class AppDelegateUnitTests: XCTestCase {
 
     func testApplicationOpenSampleVideoURL() {
         appDelegate.application(NSApplication.shared, open: [bigBuckBunnyURL])
-        XCTAssertTrue(appDelegate.isOpenFromURLs)
+        sleep(5)
+        XCTAssertFalse(appDelegate.panel.isVisible)
     }
 
     func testHandleMenuOpen() {
         appDelegate.handleMenuOpen(self)
-        XCTAssertTrue(appDelegate.isPanelOpen)
+        sleep(5)
+        XCTAssertTrue(appDelegate.panel.isVisible)
     }
 
     func testShowRepo() {
@@ -43,14 +45,13 @@ class AppDelegateUnitTests: XCTestCase {
     }
     
     func testPannelCompletionHandlerWithOK() {
-        appDelegate.isPanelOpen = true
-        appDelegate.pannelCompletionHandler(.OK)
-        XCTAssertFalse(appDelegate.isPanelOpen)
+        appDelegate.pannelCompletionHandler(.OK, urls: [bigBuckBunnyURL])
+        sleep(5)
+        XCTAssertFalse(appDelegate.panel.isVisible)
     }
     
     func testPannelCompletionHandlerWithCancel() {
-        appDelegate.isPanelOpen = true
-        appDelegate.pannelCompletionHandler(.cancel)
-        XCTAssertFalse(appDelegate.isPanelOpen)
+        appDelegate.pannelCompletionHandler(.cancel, urls: [])
+        XCTAssertFalse(appDelegate.panel.isVisible)
     }
 }

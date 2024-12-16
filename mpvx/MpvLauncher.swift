@@ -9,14 +9,14 @@ enum CompletionType {
 @MainActor
 class MpvLauncher {
     private var mpvTask: Process?
-    var mpvPathProvider: MpvPathProviding
-    
-    init(mpvPathProvider: MpvPathProviding = MpvPathProvider()) {
+    var mpvPathProvider: any MpvPathProviding
+
+    init(mpvPathProvider: any MpvPathProviding = MpvPathProvider()) {
         self.mpvPathProvider = mpvPathProvider
     }
-    
+
     private var isLaunching = false
-    
+
     var isRunning: Bool {
         guard let mpvTask else { return isLaunching }
         return isLaunching || mpvTask.isRunning
@@ -29,6 +29,14 @@ class MpvLauncher {
         }
         let args = urls.map { $0.absoluteString }
         launchMpv(args, completion: completion)
+    }
+
+    func stop() {
+        guard let task = mpvTask, task.isRunning else {
+            print("No running task to terminate.")
+            return
+        }
+        task.terminate()
     }
 
     private func launchMpv(_ args: [String], completion: @escaping @Sendable (CompletionType) -> Void) {

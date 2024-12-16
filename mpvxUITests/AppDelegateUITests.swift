@@ -29,7 +29,7 @@ final class AppDelegateUITests: XCTestCase {
         XCUIApplication().menuItems["Quit mpvx"].click()
         XCTAssertFalse(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
     }
-    
+
     func testLaunchMpvLaunchFail() {
         app.open(URL(string: "https://example.com")!)
         sleep(5)
