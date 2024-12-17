@@ -2,7 +2,7 @@ import Cocoa
 
 enum CompletionType {
     case terminated(status: Int32)
-    case failure(error: String)
+    case failure(error: any Error)
     case notFound
 }
 
@@ -62,27 +62,11 @@ class MpvLauncher {
             } catch {
                 mpvTask = nil
                 isLaunching = false
-                completion(.failure(error: error.localizedDescription))
-                let alert = NSAlert()
-                alert.messageText = "Failed to launch mpv"
-                alert.informativeText = error.localizedDescription
-                alert.addButton(withTitle: "OK")
-                alert.runModal()
+                completion(.failure(error: error))
             }
         } else {
             isLaunching = false
             completion(.notFound)
-            let alert = NSAlert()
-            alert.messageText = "mpv not found"
-            alert.informativeText = "Please install mpv and relaunch."
-            alert.addButton(withTitle: "Open Help")
-            alert.addButton(withTitle: "Cancel")
-            alert.buttons[0].setAccessibilityIdentifier("Open Help")
-            alert.buttons[1].setAccessibilityIdentifier("Cancel")
-            let response = alert.runModal()
-            if response == .alertFirstButtonReturn {
-                NSWorkspace.shared.open(helpURL)
-            }
         }
     }
 }

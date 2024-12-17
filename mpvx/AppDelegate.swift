@@ -46,7 +46,17 @@ class AppDelegate: NSObject {
         case .failure(let error):
             print("Mpv launch failed with error: \(error)")
         case .notFound:
-            print("Mpv not found. Please ensure it is installed.")
+            let alert = NSAlert()
+            alert.messageText = "mpv not found"
+            alert.informativeText = "Please install mpv and relaunch."
+            alert.addButton(withTitle: "Open Help")
+            alert.addButton(withTitle: "Cancel")
+            alert.buttons[0].setAccessibilityIdentifier("Open Help")
+            alert.buttons[1].setAccessibilityIdentifier("Cancel")
+            let response = alert.runModal()
+            if response == .alertFirstButtonReturn {
+                NSWorkspace.shared.open(helpURL)
+            }
         }
     }
 
