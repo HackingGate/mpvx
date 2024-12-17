@@ -35,16 +35,28 @@ class AppDelegate: NSObject {
 
     internal func pannelCompletionHandler(_ response: NSApplication.ModalResponse, urls: [URL]) {
         if response == .OK {
-            mpvLauncher.launch(with: urls, completion: AppDelegate.commonCompletionHandler)
+            Task(priority: .userInitiated) {
+                await mpvLauncher.launch(with: urls) { result in
+                    DispatchQueue.main.async {
+                        self.handleLaunchResult(result: result, urls: urls)
+                    }
+                }
+            }
         }
     }
 
-    static func commonCompletionHandler(result: CompletionType) {
+    private func handleLaunchResult(result: CompletionType, urls: [URL]) {
         switch result {
-        case .terminated(let status):
-            print("Mpv terminated with status: \(status)")
+        case .terminated(_):
+            for url in urls {
+                NSDocumentController.shared.noteNewRecentDocumentURL(url)
+            }
         case .failure(let error):
-            print("Mpv launch failed with error: \(error)")
+            let alert = NSAlert()
+            alert.messageText = "Failed to launch mpv"
+            alert.informativeText = error.localizedDescription
+            alert.addButton(withTitle: "OK")
+            alert.runModal()
         case .notFound:
             let alert = NSAlert()
             alert.messageText = "mpv not found"
@@ -75,23 +87,38 @@ class AppDelegate: NSObject {
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
-        if !panel.isVisible && !mpvLauncher.isRunning, let _ = mpvLauncher.mpvPathProvider.mpvInstallPath() {
-            displayOpenPannel()
+        Task {
+            let isRunning = await mpvLauncher.isRunning
+            if !panel.isVisible && !isRunning, let _ = await mpvLauncher.mpvPathProvider.mpvInstallPath() {
+                displayOpenPannel()
+            }
         }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        if !flag && !panel.isVisible && !mpvLauncher.isRunning, let _ = mpvLauncher.mpvPathProvider.mpvInstallPath() {
-            displayOpenPannel()
+        Task {
+            let isRunning = await mpvLauncher.isRunning
+            if !flag && !panel.isVisible && !isRunning, let _ = await mpvLauncher.mpvPathProvider.mpvInstallPath() {
+                displayOpenPannel()
+            }
         }
+
         return true
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        mpvLauncher.launch(with: urls, completion: AppDelegate.commonCompletionHandler)
+        Task(priority: .userInitiated) {
+            await mpvLauncher.launch(with: urls) { result in
+                DispatchQueue.main.async {
+                    self.handleLaunchResult(result: result, urls: urls)
+                }
+            }
+        }
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        mpvLauncher.stop()
+        Task {
+            await mpvLauncher.stop()
+        }
     }
 }

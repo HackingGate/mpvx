@@ -6,8 +6,7 @@ enum CompletionType {
     case notFound
 }
 
-@MainActor
-class MpvLauncher {
+actor MpvLauncher {
     private var mpvTask: Process?
     var mpvPathProvider: any MpvPathProviding
 
@@ -17,16 +16,20 @@ class MpvLauncher {
 
     private var isLaunching = false
 
+    private func setLaunchingState(to state: Bool) {
+        isLaunching = state
+    }
+
     var isRunning: Bool {
         guard let mpvTask else { return isLaunching }
         return isLaunching || mpvTask.isRunning
     }
 
-    func launch(with urls: [URL], completion: @escaping @Sendable (CompletionType) -> Void) {
+    func launch(
+        with urls: [URL],
+        completion: @Sendable @escaping (CompletionType) -> Void
+    ) {
         isLaunching = true
-        for url in urls {
-            NSDocumentController.shared.noteNewRecentDocumentURL(url)
-        }
         let args = urls.map { $0.absoluteString }
         launchMpv(args, completion: completion)
     }
@@ -39,7 +42,10 @@ class MpvLauncher {
         task.terminate()
     }
 
-    private func launchMpv(_ args: [String], completion: @escaping @Sendable (CompletionType) -> Void) {
+    private func launchMpv(
+        _ args: [String],
+        completion: @escaping @Sendable (CompletionType) -> Void
+    ) {
         if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
             let task = Process()
             task.launchPath = mpvInstallPath
@@ -47,12 +53,13 @@ class MpvLauncher {
             task.arguments = mpvxArgs + args
             let pipe = Pipe()
             task.standardOutput = pipe
-            task.terminationHandler = { [weak self] _ in
+            task.terminationHandler = { task in
                 let terminationStatus = task.terminationStatus
                 print(terminationStatus)
                 print(task.terminationReason)
-                Task { @MainActor [weak self] in
-                    self?.isLaunching = false
+                Task { [weak self] in
+                    guard let self = self else { return }
+                    await self.setLaunchingState(to: false)
                     completion(.terminated(status: terminationStatus))
                 }
             }
