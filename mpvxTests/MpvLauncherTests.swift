@@ -15,14 +15,14 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
         Task {
-            launcher.launch(with: [bigBuckBunnyURL]) { result in
+            await launcher.launch(with: [bigBuckBunnyURL]) { result in
                 if case .terminated(let status) = result {
                     XCTAssertEqual(status, 4)
                     expectation.fulfill()
                 }
             }
             sleep(5)
-            launcher.stop()
+            await launcher.stop()
         }
         await fulfillment(of: [expectation])
     }
@@ -33,7 +33,7 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher(mpvPathProvider: mockPathProvider)
         let expectation = self.expectation(description: "Launch should fail")
         Task {
-            launcher.launch(with: [bigBuckBunnyURL]) { result in
+            await launcher.launch(with: [bigBuckBunnyURL]) { result in
                 if case .failure(let error) = result {
                     XCTAssertEqual(error.localizedDescription, "The file “mpv” doesn’t exist.")
                     expectation.fulfill()
@@ -48,7 +48,7 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher(mpvPathProvider: mockPathProvider)
         let expectation = self.expectation(description: "Launch should fail")
         Task {
-            launcher.launch(with: [bigBuckBunnyURL]) { result in
+            await launcher.launch(with: [bigBuckBunnyURL]) { result in
                 if case .notFound = result {
                     expectation.fulfill()
                 }

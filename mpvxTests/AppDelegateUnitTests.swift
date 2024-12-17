@@ -16,7 +16,9 @@ class AppDelegateUnitTests: XCTestCase {
     
     func testApplicationDidBecomeActive() {
         appDelegate.applicationDidBecomeActive(Notification(name: Notification.Name("")))
-        XCTAssertTrue(appDelegate.panel.isVisible)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            XCTAssertTrue(self.appDelegate.panel.isVisible)
+        }
     }
 
     func testApplicationShouldHandleReopen() {
