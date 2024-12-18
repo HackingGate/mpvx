@@ -8,7 +8,7 @@ enum CompletionType {
 
 actor MpvLauncher {
     private var mpvTask: Process?
-    var mpvPathProvider: any MpvPathProviding
+    private var mpvPathProvider: any MpvPathProviding
 
     init(mpvPathProvider: any MpvPathProviding = MpvPathProvider()) {
         self.mpvPathProvider = mpvPathProvider

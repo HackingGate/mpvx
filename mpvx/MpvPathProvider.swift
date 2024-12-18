@@ -22,7 +22,7 @@ struct MpvPathProvider: MpvPathProviding {
         self.fileChecker = fileChecker
     }
 
-    func mpvInstallPath() -> String? {
+    internal func mpvInstallPath() -> String? {
         if let customMpvPath = customMpvPath {
             return fileChecker.fileExists(atPath: customMpvPath) ? customMpvPath : nil
         }

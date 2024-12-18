@@ -21,19 +21,19 @@ class AppDelegate: NSObject {
         return MpvLauncher(mpvPathProvider: mpvPathProvider)
     }
 
-    internal func displayOpenPannel() {
+    internal func displayOpenPanel() {
         panel.canCreateDirectories = false
         panel.canChooseFiles = true
         panel.canChooseDirectories = true
         panel.allowsMultipleSelection = true
         panel.begin { [weak self] response in
             if let panel = self?.panel {
-                self?.pannelCompletionHandler(response, urls: panel.urls)
+                self?.panelCompletionHandler(response, urls: panel.urls)
             }
         }
     }
 
-    internal func pannelCompletionHandler(_ response: NSApplication.ModalResponse, urls: [URL]) {
+    internal func panelCompletionHandler(_ response: NSApplication.ModalResponse, urls: [URL]) {
         if response == .OK {
             Task(priority: .userInitiated) {
                 await mpvLauncher.launch(with: urls) { result in
@@ -73,7 +73,7 @@ class AppDelegate: NSObject {
     }
 
     @IBAction func handleMenuOpen(_ sender: Any) {
-        displayOpenPannel()
+        displayOpenPanel()
     }
 
     @IBAction func showMpvxRepo(_ sender: Any) {
@@ -89,8 +89,8 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         Task {
             let isRunning = await mpvLauncher.isRunning
-            if !panel.isVisible && !isRunning, let _ = await mpvLauncher.mpvPathProvider.mpvInstallPath() {
-                displayOpenPannel()
+            if !panel.isVisible && !isRunning {
+                displayOpenPanel()
             }
         }
     }
@@ -98,8 +98,8 @@ extension AppDelegate: NSApplicationDelegate {
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
         Task {
             let isRunning = await mpvLauncher.isRunning
-            if !flag && !panel.isVisible && !isRunning, let _ = await mpvLauncher.mpvPathProvider.mpvInstallPath() {
-                displayOpenPannel()
+            if !flag && !panel.isVisible && !isRunning {
+                displayOpenPanel()
             }
         }
 
