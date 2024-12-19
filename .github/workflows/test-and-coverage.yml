@@ -47,6 +47,21 @@ jobs:
         name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
         path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
       if: always()
+    - name: Install Dependencies
+      run: |
+        brew install --formula xcresultparser
+    - name: Convert Merged Result to Coverage
+      run: |
+        xcresultparser \
+          --output-format cobertura \
+          artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult > artifacts/coverage-${{ matrix.os }}-${{ matrix.arch }}.xml
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: artifacts/coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: ${{ matrix.os }}_${{ matrix.arch }}_tests
+        fail_ci_if_error: true
 
   merge:
     runs-on: macos-latest
