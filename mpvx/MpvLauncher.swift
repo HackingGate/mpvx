@@ -3,11 +3,17 @@ import Cocoa
 enum CompletionType {
     case terminated(status: Int32)
     case failure(error: any Error)
-    case notFound
+    case mpvPathNotFound
+}
+
+enum MpvError: Error {
+    case mpvTaskNotFound
 }
 
 actor MpvLauncher {
-    private var mpvTask: Process?
+    private lazy var mpvTask: Process = {
+        return Process()
+    }()
     private var mpvPathProvider: any MpvPathProviding
 
     init(mpvPathProvider: any MpvPathProviding = MpvPathProvider()) {
@@ -21,7 +27,6 @@ actor MpvLauncher {
     }
 
     var isRunning: Bool {
-        guard let mpvTask else { return isLaunching }
         return isLaunching || mpvTask.isRunning
     }
 
@@ -35,11 +40,7 @@ actor MpvLauncher {
     }
 
     func stop() {
-        guard let task = mpvTask, task.isRunning else {
-            print("No running task to terminate.")
-            return
-        }
-        task.terminate()
+        mpvTask.terminate()
     }
 
     private func launchMpv(
@@ -47,33 +48,29 @@ actor MpvLauncher {
         completion: @escaping @Sendable (CompletionType) -> Void
     ) {
         if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
-            let task = Process()
-            task.launchPath = mpvInstallPath
+            mpvTask.launchPath = mpvInstallPath
             let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
-            task.arguments = mpvxArgs + args
+            mpvTask.arguments = mpvxArgs + args
             let pipe = Pipe()
-            task.standardOutput = pipe
-            task.terminationHandler = { task in
+            mpvTask.standardOutput = pipe
+            mpvTask.terminationHandler = { task in
                 let terminationStatus = task.terminationStatus
                 print(terminationStatus)
                 print(task.terminationReason)
                 Task { [weak self] in
-                    guard let self = self else { return }
-                    await self.setLaunchingState(to: false)
+                    await self?.setLaunchingState(to: false)
                     completion(.terminated(status: terminationStatus))
                 }
             }
             do {
-                try task.run()
-                mpvTask = task
+                try mpvTask.run()
             } catch {
-                mpvTask = nil
                 isLaunching = false
                 completion(.failure(error: error))
             }
         } else {
             isLaunching = false
-            completion(.notFound)
+            completion(.mpvPathNotFound)
         }
     }
 }

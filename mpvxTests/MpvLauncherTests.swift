@@ -11,7 +11,7 @@ struct MockMpvPathProvider: MpvPathProviding {
 
 @MainActor
 class MpvLauncherTests: XCTestCase {
-    func testLaunchSuccessAndTerminated() async {
+    func testLaunchSuccessAndTermination() async {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
         Task {
@@ -24,7 +24,7 @@ class MpvLauncherTests: XCTestCase {
             sleep(5)
             await launcher.stop()
         }
-        await fulfillment(of: [expectation])
+        await fulfillment(of: [expectation], timeout: 10.0)
     }
 
     func testLaunchFailedNonExistingPath() async {
@@ -40,7 +40,7 @@ class MpvLauncherTests: XCTestCase {
                 }
             }
         }
-        await fulfillment(of: [expectation])
+        await fulfillment(of: [expectation], timeout: 5.0)
     }
 
     func testLaunchFailedWithNoPath() async {
@@ -49,11 +49,11 @@ class MpvLauncherTests: XCTestCase {
         let expectation = self.expectation(description: "Launch should fail")
         Task {
             await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .notFound = result {
+                if case .mpvPathNotFound = result {
                     expectation.fulfill()
                 }
             }
         }
-        await fulfillment(of: [expectation])
+        await fulfillment(of: [expectation], timeout: 5.0)
     }
 }

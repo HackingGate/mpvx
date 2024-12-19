@@ -21,7 +21,7 @@ class AppDelegateUnitTests: XCTestCase {
         let expectation = self.expectation(description: "Check panel visibility")
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             XCTAssertNotNil(self.appDelegate)
-            XCTAssertTrue(self.appDelegate.panel.isVisible, "Panel should be visible")
+            XCTAssertTrue(self.appDelegate.panel.isVisible)
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 5.0)
@@ -52,13 +52,13 @@ class AppDelegateUnitTests: XCTestCase {
         appDelegate.showMpvMannual(self)
     }
     
-    func testpanelCompletionHandlerWithOK() {
+    func testPanelCompletionHandlerWithOK() {
         appDelegate.panelCompletionHandler(.OK, urls: [bigBuckBunnyURL])
         sleep(5)
         XCTAssertFalse(appDelegate.panel.isVisible)
     }
     
-    func testpanelCompletionHandlerWithCancel() {
+    func testPanelCompletionHandlerWithCancel() {
         appDelegate.panelCompletionHandler(.cancel, urls: [])
         XCTAssertFalse(appDelegate.panel.isVisible)
     }

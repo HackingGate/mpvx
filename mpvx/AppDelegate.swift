@@ -57,7 +57,7 @@ class AppDelegate: NSObject {
             alert.informativeText = error.localizedDescription
             alert.addButton(withTitle: "OK")
             alert.runModal()
-        case .notFound:
+        case .mpvPathNotFound:
             let alert = NSAlert()
             alert.messageText = "mpv not found"
             alert.informativeText = "Please install mpv and relaunch."
