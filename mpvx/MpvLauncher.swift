@@ -7,7 +7,7 @@ enum CompletionType {
 }
 
 enum MpvError: Error {
-    case mpvTaskNotFound
+    case mpvAlreadyRunning
 }
 
 actor MpvLauncher {
@@ -41,6 +41,8 @@ actor MpvLauncher {
 
     func stop() {
         mpvTask.terminate()
+        mpvTask.waitUntilExit()
+        mpvTask = Process()
     }
 
     private func launchMpv(
@@ -48,6 +50,10 @@ actor MpvLauncher {
         completion: @escaping @Sendable (CompletionType) -> Void
     ) {
         if let mpvExecutableURL = mpvPathProvider.mpvExecutableURL() {
+            if mpvTask.isRunning {
+                completion(.failure(error: MpvError.mpvAlreadyRunning))
+                return
+            }
             mpvTask.executableURL = mpvExecutableURL
             let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
             mpvTask.arguments = mpvxArgs + args
