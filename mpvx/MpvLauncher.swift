@@ -47,8 +47,8 @@ actor MpvLauncher {
         _ args: [String],
         completion: @escaping @Sendable (CompletionType) -> Void
     ) {
-        if let mpvInstallPath = mpvPathProvider.mpvInstallPath() {
-            mpvTask.launchPath = mpvInstallPath
+        if let mpvExecutableURL = mpvPathProvider.mpvExecutableURL() {
+            mpvTask.executableURL = mpvExecutableURL
             let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
             mpvTask.arguments = mpvxArgs + args
             let pipe = Pipe()

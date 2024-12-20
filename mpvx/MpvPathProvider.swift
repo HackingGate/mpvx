@@ -2,17 +2,18 @@ import Foundation
 
 protocol FileExistenceChecking {
     func fileExists(atPath path: String) -> Bool
+    func isReadableFile(atPath path: String) -> Bool
 }
 
 extension FileManager: FileExistenceChecking {}
 
 protocol MpvPathProviding {
-    func mpvInstallPath() -> String?
+    func mpvExecutableURL() -> URL?
 }
 
 struct MpvPathProvider: MpvPathProviding {
-    let primaryHomebrewMpvBinaryPath = "/opt/homebrew/bin/mpv"
-    let secondaryHomebrewMpvBinaryPath = "/usr/local/bin/mpv"
+    private let primaryHomebrewMpvExecutableURL = URL(fileURLWithPath: "/opt/homebrew/bin/mpv")
+    private let secondaryHomebrewMpvExecutableURL = URL(fileURLWithPath: "/usr/local/bin/mpv")
 
     private let fileChecker: FileExistenceChecking
     private let customMpvPath: String?
@@ -22,15 +23,16 @@ struct MpvPathProvider: MpvPathProviding {
         self.fileChecker = fileChecker
     }
 
-    internal func mpvInstallPath() -> String? {
-        if let customMpvPath = customMpvPath {
-            return fileChecker.fileExists(atPath: customMpvPath) ? customMpvPath : nil
+    internal func mpvExecutableURL() -> URL? {
+        if let customLaunchPath = customMpvPath {
+            let customExecutableURL = URL(fileURLWithPath: customLaunchPath)
+            return fileChecker.fileExists(atPath: customExecutableURL.path()) ? customExecutableURL : nil
         }
-        if fileChecker.fileExists(atPath: primaryHomebrewMpvBinaryPath) {
-            return primaryHomebrewMpvBinaryPath
+        if fileChecker.isReadableFile(atPath: primaryHomebrewMpvExecutableURL.path()) {
+            return primaryHomebrewMpvExecutableURL
         }
-        if fileChecker.fileExists(atPath: secondaryHomebrewMpvBinaryPath) {
-            return secondaryHomebrewMpvBinaryPath
+        if fileChecker.fileExists(atPath: secondaryHomebrewMpvExecutableURL.path()) {
+            return secondaryHomebrewMpvExecutableURL
         }
         return nil
     }

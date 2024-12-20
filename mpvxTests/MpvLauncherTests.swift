@@ -4,8 +4,11 @@ import XCTest
 struct MockMpvPathProvider: MpvPathProviding {
     var customMpvPath: String?
 
-    func mpvInstallPath() -> String? {
-        return customMpvPath
+    func mpvExecutableURL() -> URL? {
+        if let customMpvPath = customMpvPath {
+            return URL(fileURLWithPath: customMpvPath)
+        }
+        return nil
     }
 }
 
