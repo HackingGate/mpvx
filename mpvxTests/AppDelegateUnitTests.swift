@@ -3,7 +3,6 @@ import XCTest
 
 @MainActor
 class AppDelegateUnitTests: XCTestCase {
-
     var appDelegate: AppDelegate!
 
     override func setUpWithError() throws {
@@ -16,6 +15,34 @@ class AppDelegateUnitTests: XCTestCase {
         try super.tearDownWithError()
     }
 
+    // MARK: - AppDelegate+Actions tests
+    func testHandleMenuOpen() {
+        appDelegate.handleMenuOpen(self)
+        sleep(5)
+        XCTAssertTrue(appDelegate.panel.isVisible)
+    }
+
+    func testShowRepo() {
+        appDelegate.showMpvxRepo(self)
+    }
+
+    func testShowMpvMannual() {
+        appDelegate.showMpvMannual(self)
+    }
+
+    // MARK: - AppDelegate+Handlers tests
+    func testPanelCompletionHandlerWithOK() {
+        appDelegate.handleCompletion(.OK, urls: [bigBuckBunnyURL])
+        sleep(5)
+        XCTAssertFalse(appDelegate.panel.isVisible)
+    }
+
+    func testPanelCompletionHandlerWithCancel() {
+        appDelegate.handleCompletion(.cancel, urls: [])
+        XCTAssertFalse(appDelegate.panel.isVisible)
+    }
+
+    // MARK: - AppDelegate+NSApplicationDelegate tests
     func testApplicationDidBecomeActive() {
         appDelegate.applicationDidBecomeActive(Notification(name: Notification.Name("")))
         let expectation = self.expectation(description: "Check panel visibility")
@@ -35,31 +62,6 @@ class AppDelegateUnitTests: XCTestCase {
     func testApplicationOpenSampleVideoURL() {
         appDelegate.application(NSApplication.shared, open: [bigBuckBunnyURL])
         sleep(5)
-        XCTAssertFalse(appDelegate.panel.isVisible)
-    }
-
-    func testHandleMenuOpen() {
-        appDelegate.handleMenuOpen(self)
-        sleep(5)
-        XCTAssertTrue(appDelegate.panel.isVisible)
-    }
-
-    func testShowRepo() {
-        appDelegate.showMpvxRepo(self)
-    }
-
-    func testShowMpvMannual() {
-        appDelegate.showMpvMannual(self)
-    }
-    
-    func testPanelCompletionHandlerWithOK() {
-        appDelegate.handleCompletion(.OK, urls: [bigBuckBunnyURL])
-        sleep(5)
-        XCTAssertFalse(appDelegate.panel.isVisible)
-    }
-    
-    func testPanelCompletionHandlerWithCancel() {
-        appDelegate.handleCompletion(.cancel, urls: [])
         XCTAssertFalse(appDelegate.panel.isVisible)
     }
 }
