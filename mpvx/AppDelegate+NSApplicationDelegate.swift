@@ -29,10 +29,4 @@ extension AppDelegate: NSApplicationDelegate {
             }
         }
     }
-
-    func applicationWillTerminate(_ notification: Notification) {
-        Task {
-            await mpvLauncher.stop()
-        }
-    }
 }
