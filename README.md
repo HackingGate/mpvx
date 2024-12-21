@@ -8,17 +8,27 @@ Mac app for mpv inspired by [grsyncx](https://github.com/username0x0a/grsyncx)
 
 ## Requirements
 
+### MPV Homebrew Installation (Recommended)
+
 Install the command-line interface mpv with [Homebrew](https://brew.sh).
 
 ```bash
 brew install mpv
 ```
 
-Please ensure mpv is installed in one of the following paths:
+The mpvx app will automatically check the following paths, which means it supports both Apple Silicon and Intel:
 
 ```text
 /opt/homebrew/bin/mpv
 /usr/local/bin/mpv
+```
+
+### Standalone MPV Executable
+
+You can specify the `--mpvx-mpv-binary-path=` argument to indicate the MPV executable you'd like to use. For example:
+
+```bash
+/Applications/mpvx.app/Contents/MacOS/mpvx --mpvx-mpv-binary-path=/Applications/mpv.app/Contents/MacOS/mpv
 ```
 
 ## Screenshot
@@ -39,6 +49,6 @@ However, IINA has its own layer of key management, which means it requires a lot
 
 That is why I created this simpler project that handles media resource opening and launches vanilla mpv from the Homebrew formula.
 
-## Alternatives
+## Looking for iOS?
 
-[mpv-nightly-build](https://github.com/jnozsc/mpv-nightly-build): Unoffical mpv nightly build for macOS
+[Outplayer](https://itunes.apple.com/us/app/outplayer/id1449923287): powered by mpv
