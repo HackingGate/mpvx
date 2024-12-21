@@ -36,8 +36,8 @@ actor MpvLauncher {
         if mpvTask.isRunning {
             mpvTask.terminate()
             mpvTask.waitUntilExit()
-            mpvTask = Process()
         }
+        mpvTask = Process()
     }
 
     private func launchMpv(
