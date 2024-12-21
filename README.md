@@ -45,7 +45,7 @@ I investigated the [source code of IINA](https://github.com/iina/iina) and learn
 
 You can have look at [the PR](https://github.com/typcn/bilibili-mac-client/pull/163/files) I created for [bilibili-mac-client](https://github.com/typcn/bilibili-mac-client) years ago for how to implement both `keyDown` and `keyUp` event.
 
-However, IINA has its own layer of key management, which means it requires a lot of work to implement.
+However, IINA has its own layer of key management, which means it requires a lot of work to implement that I don't have time to do.
 
 That is why I created this simpler project that handles media resource opening and launches vanilla mpv from the Homebrew formula.
 
