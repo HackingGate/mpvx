@@ -42,7 +42,7 @@ class MpvLauncherTests: XCTestCase {
             sleep(5)
             await launcher.launch(with: [bigBuckBunnyURL]) { result in
                 if case .failure(let error) = result {
-                    XCTAssertEqual(error as! MpvError, MpvError.mpvAlreadyRunning)
+                    XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvAlreadyRunning)
                     expectation.fulfill()
                 }
             }

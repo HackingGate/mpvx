@@ -6,40 +6,6 @@ enum CompletionType {
     case mpvPathNotFound
 }
 
-enum MpvError: Error {
-    case mpvAlreadyRunning
-}
-
-extension MpvError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .mpvAlreadyRunning:
-            return NSLocalizedString("MPV is already running.", comment: "Error when MPV is launched more than once.")
-        }
-    }
-
-    var failureReason: String? {
-        switch self {
-        case .mpvAlreadyRunning:
-            return NSLocalizedString("Another instance of MPV is still active.", comment: "Explanation why MPV can't run.")
-        }
-    }
-
-    var recoverySuggestion: String? {
-        switch self {
-        case .mpvAlreadyRunning:
-            return NSLocalizedString("Please close the existing MPV instance and try again.", comment: "Suggested action for user.")
-        }
-    }
-
-    var helpAnchor: String? {
-        switch self {
-        case .mpvAlreadyRunning:
-            return NSLocalizedString("mpvAlreadyRunningHelp", comment: "Help anchor for more information.")
-        }
-    }
-}
-
 actor MpvLauncher {
     private lazy var mpvTask: Process = {
         return Process()
@@ -81,7 +47,7 @@ actor MpvLauncher {
     ) {
         if let mpvExecutableURL = mpvPathProvider.mpvExecutableURL() {
             if mpvTask.isRunning {
-                completion(.failure(error: MpvError.mpvAlreadyRunning))
+                completion(.failure(error: MpvLauncherError.mpvAlreadyRunning))
                 return
             }
             mpvTask.executableURL = mpvExecutableURL
