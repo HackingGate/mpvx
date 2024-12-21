@@ -14,14 +14,8 @@ actor MpvLauncher {
         self.mpvPathProvider = mpvPathProvider
     }
 
-    private var isLaunching = false
-
-    private func setLaunchingState(to state: Bool) {
-        isLaunching = state
-    }
-
     var isRunning: Bool {
-        return isLaunching || mpvTask.isRunning
+        mpvTask.isRunning
     }
 
     func launch(
@@ -34,15 +28,16 @@ actor MpvLauncher {
         if mpvTask.isRunning {
             throw MpvLauncherError.mpvAlreadyRunning
         }
-        isLaunching = true
         let args = urls.map { $0.absoluteString }
         try launchMpv(mpvExecutableURL, args, completion: completion)
     }
 
     func stop() {
-        mpvTask.terminate()
-        mpvTask.waitUntilExit()
-        mpvTask = Process()
+        if mpvTask.isRunning {
+            mpvTask.terminate()
+            mpvTask.waitUntilExit()
+            mpvTask = Process()
+        }
     }
 
     private func launchMpv(
@@ -60,11 +55,10 @@ actor MpvLauncher {
             print(terminationStatus)
             print(task.terminationReason)
             Task { [weak self] in
-                await self?.setLaunchingState(to: false)
+                await self?.stop()
                 completion(.terminated(status: terminationStatus))
             }
         }
         try mpvTask.run()
-        isLaunching = false
     }
 }
