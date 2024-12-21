@@ -57,10 +57,21 @@ jobs:
             -configuration Release \
             -derivedDataPath build \
             -destination 'generic/platform=macOS'
-      - name: Create .dmg
+      - name: Install create-dmg
+        run: |
+          brew install create-dmg
+      - name: Create .dmg with Applications folder
         run: |
           mkdir -p dist
-          hdiutil create -volname "mpvx" -srcfolder ./build/Build/Products/Release/mpvx.app -ov -format UDZO ./dist/mpvx.dmg
+          create-dmg \
+            --volname "mpvx" \
+            --window-pos 200 200 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --app-drop-link 400 200 \
+            --icon "mpvx.app" 200 200 \
+            ./dist/mpvx.dmg \
+            ./build/Build/Products/Release/mpvx.app
       - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
         with:
