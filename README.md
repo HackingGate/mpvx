@@ -51,4 +51,4 @@ That is why I created this simpler project that handles media resource opening a
 
 ## Looking for iOS?
 
-[Outplayer](https://itunes.apple.com/us/app/outplayer/id1449923287): powered by mpv
+[Outplayer](https://outplayer.app/) by Stephen Salerno: video player for iOS powered by mpv
