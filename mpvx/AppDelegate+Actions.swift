@@ -8,7 +8,7 @@ extension AppDelegate {
         panel.allowsMultipleSelection = true
         panel.begin { [weak self] response in
             if let panel = self?.panel {
-                self?.handleCompletion(response, urls: panel.urls)
+                self?.handlePanelCompletion(response, urls: panel.urls)
             }
         }
     }

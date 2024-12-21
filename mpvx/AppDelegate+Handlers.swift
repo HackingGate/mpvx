@@ -1,7 +1,7 @@
 import Cocoa
 
 extension AppDelegate {
-    internal func handleCompletion(_ response: NSApplication.ModalResponse, urls: [URL]) {
+    internal func handlePanelCompletion(_ response: NSApplication.ModalResponse, urls: [URL]) {
         if response == .OK {
             Task(priority: .userInitiated) {
                 do {

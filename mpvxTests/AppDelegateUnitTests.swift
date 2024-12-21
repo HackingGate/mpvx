@@ -32,13 +32,13 @@ class AppDelegateUnitTests: XCTestCase {
 
     // MARK: - AppDelegate+Handlers tests
     func testPanelCompletionHandlerWithOK() {
-        appDelegate.handleCompletion(.OK, urls: [bigBuckBunnyURL])
+        appDelegate.handlePanelCompletion(.OK, urls: [bigBuckBunnyURL])
         sleep(5)
         XCTAssertFalse(appDelegate.panel.isVisible)
     }
 
     func testPanelCompletionHandlerWithCancel() {
-        appDelegate.handleCompletion(.cancel, urls: [])
+        appDelegate.handlePanelCompletion(.cancel, urls: [])
         XCTAssertFalse(appDelegate.panel.isVisible)
     }
 
