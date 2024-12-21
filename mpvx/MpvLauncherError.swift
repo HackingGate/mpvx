@@ -1,12 +1,12 @@
 import Foundation
 
 struct MpvLauncherErrorStrings {
-    static let mpvPathNotFoundDescription = "MPV executable path not found."
-    static let mpvAlreadyRunningDescription = "MPV is currently running."
-    static let mpvPathNotFoundReason = "The path to the MPV executable could not be located."
-    static let mpvAlreadyRunningReason = "Another instance of MPV is currently playing."
-    static let mpvPathNotFoundSuggestion = "Please verify the MPV installation and update the executable path."
-    static let mpvAlreadyRunningSuggestion = "Please close the current playing instance of MPV and try again."
+    static let mpvPathNotFoundDescription = "mpv executable path not found."
+    static let mpvAlreadyRunningDescription = "mpv is currently running."
+    static let mpvPathNotFoundReason = "The path to the mpv executable could not be located."
+    static let mpvAlreadyRunningReason = "Another instance of mpv is currently playing."
+    static let mpvPathNotFoundSuggestion = "Please verify the mpv installation and update the executable path."
+    static let mpvAlreadyRunningSuggestion = "Please close the current playing instance of mpv and try again."
     static let mpvPathNotFoundHelpAnchor = "mpvPathNotFoundHelp"
     static let mpvAlreadyRunningHelpAnchor = "mpvAlreadyRunningHelp"
 }

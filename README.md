@@ -8,7 +8,7 @@ Mac app for mpv inspired by [grsyncx](https://github.com/username0x0a/grsyncx)
 
 ## Requirements
 
-### MPV Homebrew Installation (Recommended)
+### mpv Homebrew Installation (Recommended)
 
 Install the command-line interface mpv with [Homebrew](https://brew.sh).
 
@@ -23,9 +23,9 @@ The mpvx app will automatically check the following paths, which means it suppor
 /usr/local/bin/mpv
 ```
 
-### Standalone MPV Executable
+### Standalone mpv Executable
 
-You can specify the `--mpvx-mpv-binary-path=` argument to indicate the MPV executable you'd like to use. For example:
+You can specify the `--mpvx-mpv-binary-path=` argument to indicate the mpv executable you'd like to use. For example:
 
 ```bash
 /Applications/mpvx.app/Contents/MacOS/mpvx --mpvx-mpv-binary-path=/Applications/mpv.app/Contents/MacOS/mpv

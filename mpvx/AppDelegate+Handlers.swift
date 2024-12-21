@@ -21,7 +21,7 @@ extension AppDelegate {
         if let error = error as? MpvLauncherError {
             showAlert(for: error)
         } else {
-            showGenericAlert(message: "Failed to launch MPV", description: error.localizedDescription)
+            showGenericAlert(message: "Failed to launch mpv", description: error.localizedDescription)
         }
     }
 
