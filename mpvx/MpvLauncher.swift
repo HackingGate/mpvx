@@ -2,8 +2,6 @@ import Cocoa
 
 enum CompletionType {
     case terminated(status: Int32)
-    case failure(error: any Error)
-    case mpvPathNotFound
 }
 
 actor MpvLauncher {
@@ -29,10 +27,16 @@ actor MpvLauncher {
     func launch(
         with urls: [URL],
         completion: @Sendable @escaping (CompletionType) -> Void
-    ) {
+    ) throws {
+        guard let mpvExecutableURL = mpvPathProvider.mpvExecutableURL() else {
+            throw MpvLauncherError.mpvPathNotFound
+        }
+        if mpvTask.isRunning {
+            throw MpvLauncherError.mpvAlreadyRunning
+        }
         isLaunching = true
         let args = urls.map { $0.absoluteString }
-        launchMpv(args, completion: completion)
+        try launchMpv(mpvExecutableURL, args, completion: completion)
     }
 
     func stop() {
@@ -42,37 +46,25 @@ actor MpvLauncher {
     }
 
     private func launchMpv(
+        _ mpvExecutableURL: URL,
         _ args: [String],
         completion: @escaping @Sendable (CompletionType) -> Void
-    ) {
-        if let mpvExecutableURL = mpvPathProvider.mpvExecutableURL() {
-            if mpvTask.isRunning {
-                completion(.failure(error: MpvLauncherError.mpvAlreadyRunning))
-                return
+    ) throws {
+        mpvTask.executableURL = mpvExecutableURL
+        let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
+        mpvTask.arguments = mpvxArgs + args
+        let pipe = Pipe()
+        mpvTask.standardOutput = pipe
+        mpvTask.terminationHandler = { task in
+            let terminationStatus = task.terminationStatus
+            print(terminationStatus)
+            print(task.terminationReason)
+            Task { [weak self] in
+                await self?.setLaunchingState(to: false)
+                completion(.terminated(status: terminationStatus))
             }
-            mpvTask.executableURL = mpvExecutableURL
-            let mpvxArgs = ["--screenshot-directory=\(NSHomeDirectory())/Desktop/"]
-            mpvTask.arguments = mpvxArgs + args
-            let pipe = Pipe()
-            mpvTask.standardOutput = pipe
-            mpvTask.terminationHandler = { task in
-                let terminationStatus = task.terminationStatus
-                print(terminationStatus)
-                print(task.terminationReason)
-                Task { [weak self] in
-                    await self?.setLaunchingState(to: false)
-                    completion(.terminated(status: terminationStatus))
-                }
-            }
-            do {
-                try mpvTask.run()
-            } catch {
-                isLaunching = false
-                completion(.failure(error: error))
-            }
-        } else {
-            isLaunching = false
-            completion(.mpvPathNotFound)
         }
+        try mpvTask.run()
+        isLaunching = false
     }
 }

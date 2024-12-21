@@ -22,10 +22,14 @@ extension AppDelegate: NSApplicationDelegate {
 
     func application(_ application: NSApplication, open urls: [URL]) {
         Task(priority: .userInitiated) {
-            await mpvLauncher.launch(with: urls) { result in
-                DispatchQueue.main.async {
-                    self.handleLaunchResult(result: result, urls: urls)
+            do {
+                try await mpvLauncher.launch(with: urls) { result in
+                    DispatchQueue.main.async {
+                        self.handleMpvLaunchResult(result: result, urls: urls)
+                    }
                 }
+            } catch {
+                self.handleMpvLaunchError(error: error)
             }
         }
     }

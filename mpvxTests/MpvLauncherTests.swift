@@ -18,10 +18,12 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
         Task {
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .terminated(let status) = result {
-                    XCTAssertEqual(status, 4)
-                    expectation.fulfill()
+            do {
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    if case .terminated(let status) = result {
+                        XCTAssertEqual(status, 4)
+                        expectation.fulfill()
+                    }
                 }
             }
             sleep(5)
@@ -34,17 +36,19 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
         Task {
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .terminated(let status) = result {
-                    XCTAssertEqual(status, 4)
+            do {
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    if case .terminated(let status) = result {
+                        XCTAssertEqual(status, 4)
+                    }
                 }
-            }
-            sleep(5)
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .failure(let error) = result {
-                    XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvAlreadyRunning)
-                    expectation.fulfill()
+                sleep(5)
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    XCTFail("The second launch should fail")
                 }
+            } catch {
+                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvAlreadyRunning)
+                expectation.fulfill()
             }
         }
         await fulfillment(of: [expectation], timeout: 10.0)
@@ -54,21 +58,25 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
         Task {
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .terminated(let status) = result {
-                    XCTAssertEqual(status, 4)
+            do {
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    if case .terminated(let status) = result {
+                        XCTAssertEqual(status, 4)
+                    }
                 }
-            }
-            sleep(5)
-            await launcher.stop()
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .terminated(let status) = result {
-                    XCTAssertEqual(status, 4)
-                    expectation.fulfill()
+                sleep(5)
+                await launcher.stop()
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    if case .terminated(let status) = result {
+                        XCTAssertEqual(status, 4)
+                        expectation.fulfill()
+                    }
                 }
+                sleep(5)
+                await launcher.stop()
+            } catch {
+                XCTFail("The second launch should succeed")
             }
-            sleep(5)
-            await launcher.stop()
         }
         await fulfillment(of: [expectation], timeout: 15.0)
     }
@@ -79,11 +87,13 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher(mpvPathProvider: mockPathProvider)
         let expectation = self.expectation(description: "Launch should fail")
         Task {
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .failure(let error) = result {
-                    XCTAssertEqual(error.localizedDescription, "The file “mpv” doesn’t exist.")
-                    expectation.fulfill()
+            do {
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    XCTFail("The launch should fail")
                 }
+            } catch {
+                XCTAssertEqual(error.localizedDescription, "The file “mpv” doesn’t exist.")
+                expectation.fulfill()
             }
         }
         await fulfillment(of: [expectation], timeout: 5.0)
@@ -94,10 +104,13 @@ class MpvLauncherTests: XCTestCase {
         let launcher = MpvLauncher(mpvPathProvider: mockPathProvider)
         let expectation = self.expectation(description: "Launch should fail")
         Task {
-            await launcher.launch(with: [bigBuckBunnyURL]) { result in
-                if case .mpvPathNotFound = result {
-                    expectation.fulfill()
+            do {
+                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                    XCTFail("The launch should fail")
                 }
+            } catch {
+                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvPathNotFound)
+                expectation.fulfill()
             }
         }
         await fulfillment(of: [expectation], timeout: 5.0)
