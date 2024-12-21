@@ -19,9 +19,17 @@ final class AppDelegateUITests: XCTestCase {
     }
 
     func testLaunchMpv() {
+        app.launch()
+        XCTAssertTrue(XCUIApplication().menuBars.menuBarItems["mpvx"].waitForExistence(timeout: 5))
+        XCUIApplication().menuBars.menuBarItems["mpvx"].click()
+        XCUIApplication().menuItems["Hide Others"].click()
+        var attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Launch open panel screen"
+        attachment.lifetime = .keepAlways
+        add(attachment)
         app.open(bigBuckBunnyURL)
         sleep(5)
-        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Launch URL screen"
         attachment.lifetime = .keepAlways
         add(attachment)
