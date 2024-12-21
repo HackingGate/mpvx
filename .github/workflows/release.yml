@@ -57,15 +57,26 @@ jobs:
             -configuration Release \
             -derivedDataPath build \
             -destination 'generic/platform=macOS'
-      - name: Create zip
+      - name: Install create-dmg
         run: |
-          cd build/Build/Products/Release/
-          zip -r mpvx.app.zip mpvx.app
-      - name: Upload artifact
+          brew install create-dmg
+      - name: Create .dmg with Applications folder
+        run: |
+          mkdir -p dist
+          create-dmg \
+            --volname "mpvx" \
+            --window-pos 200 200 \
+            --window-size 600 400 \
+            --icon-size 100 \
+            --app-drop-link 400 200 \
+            --icon "mpvx.app" 200 200 \
+            ./dist/mpvx.dmg \
+            ./build/Build/Products/Release/mpvx.app
+      - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mpvx.app.zip
-          path: ./build/Build/Products/Release/mpvx.app.zip
+          name: mpvx.dmg
+          path: ./dist/mpvx.dmg
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
@@ -75,7 +86,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v1
         with:
-          files: ./build/Build/Products/Release/mpvx.app.zip
+          files: ./dist/mpvx.dmg
           body_path: release_note.md
           prerelease: true
         env:
