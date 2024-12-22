@@ -1,6 +1,11 @@
 import Cocoa
+import FirebaseCore
 
 extension AppDelegate: NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        FirebaseApp.configure()
+    }
+
     func applicationDidBecomeActive(_ notification: Notification) {
         Task {
             let isRunning = await mpvLauncher.isRunning
