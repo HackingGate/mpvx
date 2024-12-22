@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define file paths
-CONFIG_FILE="mpvx/Config.xcconfig"
+CONFIG_FILE="Config.xcconfig"
 PLIST_FILE="mpvx/GoogleService-Info.plist"
 
 # Define dynamic values
@@ -15,9 +15,9 @@ GCM_SENDER_ID="${GCM_SENDER_ID}"
 
 # Generate Config.xcconfig
 echo "Generating ${CONFIG_FILE}..."
-cp ${CONFIG_FILE}.example ${CONFIG_FILE}
-sed -i '' "s/\(VERSION *= *\).*/\1$VERSION/" ${CONFIG_FILE}
-sed -i '' "s/\(BUILD *= *\).*/\1$BUILD/" ${CONFIG_FILE}
+cp ${CONFIG_FILE}.example mpvx/${CONFIG_FILE}
+sed -i '' "s/\(VERSION *= *\).*/\1$VERSION/" mpvx/${CONFIG_FILE}
+sed -i '' "s/\(BUILD *= *\).*/\1$BUILD/" mpvx/${CONFIG_FILE}
 
 # Update GoogleService-Info.plist
 echo "Updating ${PLIST_FILE}..."
