@@ -3,7 +3,9 @@ import FirebaseCore
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
+        #if RELEASE
         FirebaseApp.configure()
+        #endif
         AnalyticsLogger.logEvent(.appOpen)
     }
 
