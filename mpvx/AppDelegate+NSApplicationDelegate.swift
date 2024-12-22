@@ -34,7 +34,7 @@ extension AppDelegate: NSApplicationDelegate {
     func application(_ application: NSApplication, open urls: [URL]) {
         for url in urls {
             Analytics.logEvent("open_url", parameters: [
-                "url_path": url.path
+                "url_path": url.lastPathComponent.truncatedFilename(to: 100)
             ])
         }
         Task(priority: .userInitiated) {
