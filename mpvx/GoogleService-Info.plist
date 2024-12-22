@@ -3,17 +3,13 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>__API_KEY__</string>
-	<key>GCM_SENDER_ID</key>
-	<string>__GCM_SENDER_ID__</string>
-	<key>PLIST_VERSION</key>
-	<string>1</string>
+	<string></string>
 	<key>BUNDLE_ID</key>
 	<string>com.hackinggate.mpvx</string>
-	<key>PROJECT_ID</key>
-	<string>hackinggate-mpvx</string>
-	<key>STORAGE_BUCKET</key>
-	<string>hackinggate-mpvx.firebasestorage.app</string>
+	<key>GCM_SENDER_ID</key>
+	<string></string>
+	<key>GOOGLE_APP_ID</key>
+	<string></string>
 	<key>IS_ADS_ENABLED</key>
 	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -24,7 +20,11 @@
 	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
 	<true/>
-	<key>GOOGLE_APP_ID</key>
-	<string>__GOOGLE_APP_ID__</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>PROJECT_ID</key>
+	<string>hackinggate-mpvx</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hackinggate-mpvx.firebasestorage.app</string>
 </dict>
 </plist>
