@@ -1,15 +1,14 @@
 import Cocoa
-import FirebaseAnalytics
 
 extension AppDelegate {
     internal func handlePanelCompletion(_ response: NSApplication.ModalResponse, urls: [URL]) {
-        Analytics.logEvent("panel_completion", parameters: [
-            "response": response.rawValue,
-            "url_count": urls.count
+        AnalyticsLogger.logEvent(.panelCompletion, parameters: [
+            .response: response.rawValue,
+            .urlCount: urls.count
         ])
         for url in urls {
-            Analytics.logEvent("open_url", parameters: [
-                "url_path": url.lastPathComponent.truncatedFilename(to: 100)
+            AnalyticsLogger.logEvent(.openUrl, parameters: [
+                .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
             ])
         }
         if response == .OK {
@@ -29,8 +28,8 @@ extension AppDelegate {
 
     internal func handleMpvLaunchError(error: Error) {
         let errorDescription = error.localizedDescription
-        Analytics.logEvent("mpv_launch_error", parameters: [
-            "error_description": errorDescription
+        AnalyticsLogger.logEvent(.mpvLaunchError, parameters: [
+            .errorDescription: errorDescription
         ])
         if let error = error as? MpvLauncherError {
             showAlert(for: error)
@@ -40,8 +39,8 @@ extension AppDelegate {
     }
 
     private func showAlert(for error: MpvLauncherError) {
-        Analytics.logEvent("mpv_launcher_error", parameters: [
-            "error_type": String(describing: error)
+        AnalyticsLogger.logEvent(.mpvLauncherError, parameters: [
+            .errorType: String(describing: error)
         ])
         let alert = NSAlert()
         alert.messageText = error.localizedDescription
@@ -55,9 +54,9 @@ extension AppDelegate {
             alert.buttons[0].setAccessibilityIdentifier("Open Help")
             alert.buttons[1].setAccessibilityIdentifier("Cancel")
             let response = alert.runModal()
-            Analytics.logEvent("alert_response", parameters: [
-                "response": response.rawValue,
-                "error_type": "mpvPathNotFound"
+            AnalyticsLogger.logEvent(.alertResponse, parameters: [
+                .response: response.rawValue,
+                .errorType: "mpvPathNotFound"
             ])
             if response == .alertFirstButtonReturn {
                 NSWorkspace.shared.open(helpURL)
@@ -65,17 +64,17 @@ extension AppDelegate {
         case .mpvAlreadyRunning:
             alert.addButton(withTitle: "OK")
             alert.runModal()
-            Analytics.logEvent("alert_response", parameters: [
-                "response": "OK",
-                "error_type": "mpvAlreadyRunning"
+            AnalyticsLogger.logEvent(.alertResponse, parameters: [
+                .response: "OK",
+                .errorType: "mpvAlreadyRunning"
             ])
         }
     }
 
     private func showGenericAlert(message: String, description: String) {
-        Analytics.logEvent("generic_alert_shown", parameters: [
-            "message": message,
-            "description": description
+        AnalyticsLogger.logEvent(.genericAlertShown, parameters: [
+            .message: message,
+            .description: description
         ])
         let alert = NSAlert()
         alert.messageText = message
@@ -85,15 +84,15 @@ extension AppDelegate {
     }
 
     internal func handleMpvLaunchResult(result: CompletionType, urls: [URL]) {
-        Analytics.logEvent("mpv_launch_result", parameters: [
-            "result": String(describing: result),
-            "url_count": urls.count
+        AnalyticsLogger.logEvent(.mpvLaunchResult, parameters: [
+            .result: String(describing: result),
+            .urlCount: urls.count
         ])
         switch result {
         case .terminated(_):
             for url in urls {
-                Analytics.logEvent("recent_document_added", parameters: [
-                    "url_path": url.lastPathComponent.truncatedFilename(to: 100)
+                AnalyticsLogger.logEvent(.recentDocumentAdded, parameters: [
+                    .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
                 ])
                 NSDocumentController.shared.noteNewRecentDocumentURL(url)
             }
