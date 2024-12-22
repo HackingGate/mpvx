@@ -9,7 +9,7 @@ extension AppDelegate {
         ])
         for url in urls {
             Analytics.logEvent("open_url", parameters: [
-                "url_path": url.path
+                "url_path": url.lastPathComponent.truncatedFilename(to: 100)
             ])
         }
         if response == .OK {
@@ -93,7 +93,7 @@ extension AppDelegate {
         case .terminated(_):
             for url in urls {
                 Analytics.logEvent("recent_document_added", parameters: [
-                    "url_path": url.path
+                    "url_path": url.lastPathComponent.truncatedFilename(to: 100)
                 ])
                 NSDocumentController.shared.noteNewRecentDocumentURL(url)
             }
