@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSApplicationCrashOnExceptions</key>
-	<false/>
+	<true/>
 	<key>CFBundleDocumentTypes</key>
 	<array>
 		<dict>
