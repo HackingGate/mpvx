@@ -76,22 +76,21 @@ jobs:
             ./build/Build/Products/Release/mpvx.app
       - name: Download latest Sparkle CLI
         run: |
-          # 1) Query Sparkle's GitHub releases for the latest release
-          # 2) Filter for the Swift-Package-Manager zip
-          DOWNLOAD_URL=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" \
-            | jq -r '.assets[] | select(.name | endswith("Swift-Package-Manager.zip")).browser_download_url')
+          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
+          cat sparkle.json | jq
+          DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name | endswith(" Sparkle-for-Swift-Package-Manager.zip")).browser_download_url'`
           if [ -z "$DOWNLOAD_URL" ]; then
-            echo "Error: Could not find a Swift-Package-Manager.zip asset in the latest Sparkle release."
+            echo "Error: Could not find a Sparkle-for-Swift-Package-Manager.zip asset in the latest Sparkle release."
             exit 1
           fi
-          echo "Downloading Sparkle CLI from $DOWNLOAD_URL..."
-          curl -L -o /tmp/SparkleSPM.zip "$DOWNLOAD_URL"
-          # Unzip into /tmp/sparkle
-          unzip /tmp/SparkleSPM.zip -d /tmp/sparkle
-          # Make the CLI tools executable
+          echo "Downloading Sparkle CLI from \`${DOWNLOAD_URL}\`..."
+          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" -O /tmp/Sparkle-for-Swift-Package-Manager.zip "${DOWNLOAD_URL}"
+          echo "Unzipping Sparkle CLI to \`/tmp/sparkle\`..."
+          unzip /tmp/Sparkle-for-Swift-Package-Manager.zip -d /tmp/sparkle
+          echo "Making CLI tools executable..."
           chmod +x /tmp/sparkle/bin/generate_appcast
           chmod +x /tmp/sparkle/bin/sign_update
-          # Copy them into the GitHub Actions workspace for subsequent steps
+          echo "Copying \`generate_appcast\` and \`sign_update\` to \`${GITHUB_WORKSPACE}/\`..."
           cp /tmp/sparkle/bin/generate_appcast $GITHUB_WORKSPACE/
           cp /tmp/sparkle/bin/sign_update $GITHUB_WORKSPACE/
       - name: Decode and save private key
