@@ -76,7 +76,7 @@ jobs:
             ./build/Build/Products/Release/mpvx.app
       - name: Download latest Sparkle CLI
         run: |
-          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
+          wget ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
           cat sparkle.json | jq
           DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name | endswith(" Sparkle-for-Swift-Package-Manager.zip")).browser_download_url'`
           if [ -z "$DOWNLOAD_URL" ]; then
@@ -84,7 +84,7 @@ jobs:
             exit 1
           fi
           echo "Downloading Sparkle CLI from \`${DOWNLOAD_URL}\`..."
-          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" -O /tmp/Sparkle-for-Swift-Package-Manager.zip "${DOWNLOAD_URL}"
+          wget -O /tmp/Sparkle-for-Swift-Package-Manager.zip "${DOWNLOAD_URL}"
           echo "Unzipping Sparkle CLI to \`/tmp/sparkle\`..."
           unzip /tmp/Sparkle-for-Swift-Package-Manager.zip -d /tmp/sparkle
           echo "Making CLI tools executable..."
