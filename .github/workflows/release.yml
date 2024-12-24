@@ -74,12 +74,26 @@ jobs:
             --icon "mpvx.app" 200 200 \
             ./dist/mpvx.dmg \
             ./build/Build/Products/Release/mpvx.app
-      - name: Build Sparkle CLI
+      - name: Download latest Sparkle CLI
         run: |
-          git clone https://github.com/sparkle-project/Sparkle.git /tmp/sparkle
-          cd /tmp/sparkle
-          swift build --product generate_appcast --configuration release
-          cp .build/release/generate_appcast $GITHUB_WORKSPACE/
+          # 1) Query Sparkle's GitHub releases for the latest release
+          # 2) Filter for the Swift-Package-Manager zip
+          DOWNLOAD_URL=$(curl --silent "https://api.github.com/repos/sparkle-project/Sparkle/releases/latest" \
+            | jq -r '.assets[] | select(.name | endswith("Swift-Package-Manager.zip")).browser_download_url')
+          if [ -z "$DOWNLOAD_URL" ]; then
+            echo "Error: Could not find a Swift-Package-Manager.zip asset in the latest Sparkle release."
+            exit 1
+          fi
+          echo "Downloading Sparkle CLI from $DOWNLOAD_URL..."
+          curl -L -o /tmp/SparkleSPM.zip "$DOWNLOAD_URL"
+          # Unzip into /tmp/sparkle
+          unzip /tmp/SparkleSPM.zip -d /tmp/sparkle
+          # Make the CLI tools executable
+          chmod +x /tmp/sparkle/bin/generate_appcast
+          chmod +x /tmp/sparkle/bin/sign_update
+          # Copy them into the GitHub Actions workspace for subsequent steps
+          cp /tmp/sparkle/bin/generate_appcast $GITHUB_WORKSPACE/
+          cp /tmp/sparkle/bin/sign_update $GITHUB_WORKSPACE/
       - name: Decode and save private key
         run: |
           echo "${{ secrets.SPARKLE_ED25519_PRIVATE_BASE64 }}" | base64 --decode > ed25519_private.pem
