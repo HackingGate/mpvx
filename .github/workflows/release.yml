@@ -76,13 +76,15 @@ jobs:
             ./build/Build/Products/Release/mpvx.app
       - name: Download latest Sparkle CLI
         run: |
-          wget ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
-          cat sparkle.json | jq
-          DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name == "Sparkle-for-Swift-Package-Manager.zip").browser_download_url'`
-          if [ -z "$DOWNLOAD_URL" ]; then
-            echo "Error: Could not find a Sparkle-for-Swift-Package-Manager.zip asset in the latest Sparkle release."
-            exit 1
-          fi
+          # wget ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
+          # cat sparkle.json | jq
+          # DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name == "Sparkle-for-Swift-Package-Manager.zip").browser_download_url'`
+          # if [ -z "$DOWNLOAD_URL" ]; then
+          #   echo "Error: Could not find a Sparkle-for-Swift-Package-Manager.zip asset in the latest Sparkle release."
+          #   exit 1
+          # fi
+          # Workaround: Use a fixed version of Sparkle CLI for now to fix API rate limit issue
+          DOWNLOAD_URL="https://github.com/sparkle-project/Sparkle/releases/download/2.6.4/Sparkle-for-Swift-Package-Manager.zip"
           echo "Downloading Sparkle CLI from \`${DOWNLOAD_URL}\`..."
           wget -O /tmp/Sparkle-for-Swift-Package-Manager.zip "${DOWNLOAD_URL}"
           echo "Unzipping Sparkle CLI to \`/tmp/sparkle\`..."
