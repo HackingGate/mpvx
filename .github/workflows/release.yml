@@ -109,7 +109,7 @@ jobs:
           #   https://github.com/<OWNER>/<REPO>/releases/download/<TAG>/
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
-            --output-path dist/appcast/appcast.xml \
+            -o dist/appcast/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
             dist
       - name: Upload .dmg artifact
