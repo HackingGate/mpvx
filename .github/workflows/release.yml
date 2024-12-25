@@ -108,9 +108,9 @@ jobs:
           # The base URL for GitHub release downloads:
           #   https://github.com/<OWNER>/<REPO>/releases/download/<TAG>/
           ./generate_appcast \
-            -f ed25519_private.pem \
-            -o dist/appcast \
-            -u "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
+            --ed-key-file ed25519_private.pem \
+            --output-path dist/appcast/appcast.xml \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
             dist
       - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
