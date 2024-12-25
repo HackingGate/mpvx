@@ -78,7 +78,7 @@ jobs:
         run: |
           wget ${GITHUB_API_URL}/repos/sparkle-project/Sparkle/releases/latest -O sparkle.json
           cat sparkle.json | jq
-          DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name | endswith(" Sparkle-for-Swift-Package-Manager.zip")).browser_download_url'`
+          DOWNLOAD_URL=`cat sparkle.json | jq -r '.assets[] | select(.name == "Sparkle-for-Swift-Package-Manager.zip").browser_download_url'`
           if [ -z "$DOWNLOAD_URL" ]; then
             echo "Error: Could not find a Sparkle-for-Swift-Package-Manager.zip asset in the latest Sparkle release."
             exit 1
