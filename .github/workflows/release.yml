@@ -99,10 +99,8 @@ jobs:
           chmod 600 ed25519_private.pem
       - name: Get Tag
         id: get_tag
-        if: startsWith(github.ref, 'refs/tags/')
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Generate Appcast
-        if: startsWith(github.ref, 'refs/tags/')
         run: |
           mkdir -p dist/appcast
           # The base URL for GitHub release downloads:
