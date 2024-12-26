@@ -92,21 +92,26 @@ jobs:
           echo "Making CLI tools executable..."
           chmod +x /tmp/sparkle/bin/generate_appcast
           chmod +x /tmp/sparkle/bin/sign_update
-          echo "Copying \`generate_appcast\` and \`sign_update\` to \`${GITHUB_WORKSPACE}/\`..."
+          echo "Copying CLI tools to \`${GITHUB_WORKSPACE}\`..."
           cp /tmp/sparkle/bin/generate_appcast $GITHUB_WORKSPACE/
           cp /tmp/sparkle/bin/sign_update $GITHUB_WORKSPACE/
       - name: Decode and save private key
         run: |
           echo "${{ secrets.SPARKLE_ED25519_PRIVATE_BASE64 }}" | base64 --decode > ed25519_private.pem
           chmod 600 ed25519_private.pem
+      - name: Fetch existing appcast
+        run: |
+          mkdir -p dist/appcast
+          echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
+          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o dist/appcast/appcast.xml \
+            || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
       - name: Get Tag
         id: get_tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Generate Appcast
         run: |
           mkdir -p dist/appcast
-          # The base URL for GitHub release downloads:
-          #   https://github.com/<OWNER>/<REPO>/releases/download/<TAG>/
+          echo "Generating appcast (with signing enabled) ..."
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
             -o dist/appcast/appcast.xml \
