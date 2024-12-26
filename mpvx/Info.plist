@@ -424,5 +424,9 @@
 			<string>XML</string>
 		</dict>
 	</array>
+	<key>SUFeedURL</key>
+	<string>https://mpvx.hackinggate.com/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>gmIYuCy3rm4OuF9Wb/ojYW/5vcdIC7TSD1z0fr3FFrw=</string>
 </dict>
 </plist>

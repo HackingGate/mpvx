@@ -3,6 +3,7 @@ name: Promote Pre-release to Release
 on:
   schedule:
     - cron: '30 23 * * *'
+  workflow_dispatch:
 
 jobs:
   promote:
@@ -41,7 +42,6 @@ jobs:
             } catch (error) {
               core.setFailed(`Error checking release: ${error.message}`);
             }
-
       - name: Update to full release
         if: steps.check_release.outputs.release_id != ''
         uses: actions/github-script@v7
@@ -54,3 +54,79 @@ jobs:
               release_id: releaseId,
               prerelease: false
             });
+            console.log(`Promoted release ID ${releaseId} to a full release`);
+
+  update-pages:
+    runs-on: ubuntu-latest
+    needs: promote
+    if: always()
+    steps:
+      - name: Get latest official (non–prerelease) release
+        id: get_latest_official_release
+        uses: actions/github-script@v7
+        with:
+          script: |
+            /*
+              This calls the GitHub API endpoint:
+                GET /repos/{owner}/{repo}/releases/latest
+              which returns the most recent *non–prerelease* release.
+              If no official release exists yet, it 404s.
+            */
+            try {
+              const release = await github.rest.repos.getLatestRelease({
+                owner: context.repo.owner,
+                repo: context.repo.repo
+              });
+              core.setOutput('found', 'true');
+              core.setOutput('tag_name', release.data.tag_name);
+              console.log(`Latest official release: ${release.data.tag_name}`);
+            } catch (error) {
+              if (error.status === 404) {
+                // Means there's no official release yet
+                console.log('No official (non-prerelease) release found. Skipping...');
+                core.setOutput('found', 'false');
+              } else {
+                core.setFailed(error.message);
+              }
+            }
+      - name: Create dist folder
+        if: steps.get_latest_official_release.outputs.found == 'true'
+        run: |
+          mkdir -p dist/appcast
+          - name: Download appcast.xml
+          if: steps.get_latest_official_release.outputs.found == 'true'
+          uses: actions/github-script@v7
+          with:
+            script: |
+              const fs = require('fs');
+              const path = require('path');
+              const { data: releaseAssets } = await github.rest.repos.listReleaseAssets({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                release_id: (await github.rest.repos.getReleaseByTag({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  tag: core.getInput('tag_name')
+                })).data.id
+              });
+              const appcastAsset = releaseAssets.find(asset => asset.name === 'appcast.xml');
+              if (!appcastAsset) {
+                throw new Error('appcast.xml not found in the release assets.');
+              }
+              const { data: fileContent } = await github.rest.repos.getReleaseAsset({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                asset_id: appcastAsset.id,
+                headers: {
+                  Accept: 'application/octet-stream'
+                }
+              });
+              const outputDir = path.join(process.env.GITHUB_WORKSPACE, 'dist', 'appcast');
+              fs.mkdirSync(outputDir, { recursive: true });
+              fs.writeFileSync(path.join(outputDir, 'appcast.xml'), fileContent);
+              console.log('appcast.xml downloaded successfully.');  
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist/appcast
