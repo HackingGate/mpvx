@@ -1,7 +1,18 @@
 import Cocoa
+import FirebaseCore
 
 extension AppDelegate: NSApplicationDelegate {
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        #if DEBUG
+        print("Skipping Firebase configuration in DEBUG mode")
+        #else
+        FirebaseApp.configure()
+        #endif
+        AnalyticsLogger.logEvent(.appOpen)
+    }
+
     func applicationDidBecomeActive(_ notification: Notification) {
+        AnalyticsLogger.logEvent(.appBecameActive)
         Task {
             let isRunning = await mpvLauncher.isRunning
             if !panel.isVisible && !isRunning {
@@ -11,6 +22,9 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        AnalyticsLogger.logEvent(.appReopened, parameters: [
+            .hasVisibleWindows: flag
+        ])
         Task {
             let isRunning = await mpvLauncher.isRunning
             if !flag && !panel.isVisible && !isRunning {
@@ -21,6 +35,11 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
+        for url in urls {
+            AnalyticsLogger.logEvent(.openUrl, parameters: [
+                .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
+            ])
+        }
         Task(priority: .userInitiated) {
             do {
                 try await mpvLauncher.launch(with: urls) { result in
@@ -35,6 +54,7 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
+        AnalyticsLogger.logEvent(.appTerminated)
         Task {
             await mpvLauncher.stop()
         }

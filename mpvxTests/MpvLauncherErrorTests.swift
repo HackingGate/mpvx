@@ -2,7 +2,6 @@ import Testing
 @testable import mpvx
 
 struct MpvLauncherErrorTests {
-    
     @Test func testErrorDescription() async throws {
         let alreadyRunningError = MpvLauncherError.mpvAlreadyRunning
         #expect(alreadyRunningError.localizedDescription == MpvLauncherErrorStrings.mpvAlreadyRunningDescription, "Expected description for mpvAlreadyRunning doesn't match")

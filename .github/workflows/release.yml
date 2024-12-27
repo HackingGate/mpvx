@@ -48,6 +48,10 @@ jobs:
         with:
           xcode-version: latest-stable
       - name: Setup
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          GOOGLE_APP_ID: ${{ secrets.GOOGLE_APP_ID }}
+          GCM_SENDER_ID: ${{ secrets.GCM_SENDER_ID }}
         run: |
           ./setup.sh
       - name: Archive

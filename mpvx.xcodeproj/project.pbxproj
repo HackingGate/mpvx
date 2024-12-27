@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C728DBD32D199C42006FB321 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = C728DBD22D199C42006FB321 /* Sparkle */; };
+		C74755E42D1D9D940050D08F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = C74755E32D1D9D940050D08F /* FirebaseAnalyticsWithoutAdIdSupport */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C728DBD32D199C42006FB321 /* Sparkle in Frameworks */,
+				C74755E42D1D9D940050D08F /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,6 +141,7 @@
 			name = mpvx;
 			packageProductDependencies = (
 				C728DBD22D199C42006FB321 /* Sparkle */,
+				C74755E32D1D9D940050D08F /* FirebaseAnalyticsWithoutAdIdSupport */,
 			);
 			productName = mpvx;
 			productReference = C791FACC2D106DB4005A7265 /* mpvx.app */;
@@ -224,6 +227,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				C728DBD12D199C42006FB321 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				C74755E22D1D9D940050D08F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C791FACD2D106DB4005A7265 /* Products */;
@@ -441,6 +445,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = "$(VERSION)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -468,6 +473,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
 				MARKETING_VERSION = "$(VERSION)";
+				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvx;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -591,6 +597,14 @@
 				minimumVersion = 2.6.4;
 			};
 		};
+		C74755E22D1D9D940050D08F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -598,6 +612,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C728DBD12D199C42006FB321 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		C74755E32D1D9D940050D08F /* FirebaseAnalyticsWithoutAdIdSupport */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C74755E22D1D9D940050D08F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalyticsWithoutAdIdSupport;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
