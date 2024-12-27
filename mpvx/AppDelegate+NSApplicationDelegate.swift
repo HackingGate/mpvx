@@ -3,7 +3,9 @@ import FirebaseCore
 
 extension AppDelegate: NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        #if RELEASE
+        #if DEBUG
+        print("Skipping Firebase configuration in DEBUG mode")
+        #else
         FirebaseApp.configure()
         #endif
         AnalyticsLogger.logEvent(.appOpen)
