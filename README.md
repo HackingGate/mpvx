@@ -1,6 +1,6 @@
 # mpvx
 
-[![SwiftLint](https://github.com/HackingGate/mpvx/actions/workflows/swiftlint.yml/badge.svg)](https://github.com/HackingGate/mpvx/actions/workflows/swiftlint.yml)
+[![Lint](https://github.com/HackingGate/mpvx/actions/workflows/lint.yml/badge.svg)](https://github.com/HackingGate/mpvx/actions/workflows/lint.yml)
 [![Build and Test](https://github.com/HackingGate/mpvx/actions/workflows/test-and-coverage.yml/badge.svg)](https://github.com/HackingGate/mpvx/actions/workflows/test-and-coverage.yml)
 [![codecov](https://codecov.io/gh/HackingGate/mpvx/graph/badge.svg?token=TVGJ0H9CTZ)](https://codecov.io/gh/HackingGate/mpvx)
 [![Release](https://github.com/HackingGate/mpvx/workflows/Release/badge.svg)](https://github.com/HackingGate/mpvx/releases)
