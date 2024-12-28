@@ -47,8 +47,12 @@ class MpvLauncherTests: XCTestCase {
                     XCTFail("The second launch should fail")
                 }
             } catch {
-                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvAlreadyRunning)
-                expectation.fulfill()
+                if let mpvError = error as? MpvLauncherError {
+                    XCTAssertEqual(mpvError, MpvLauncherError.mpvAlreadyRunning)
+                    expectation.fulfill()
+                } else {
+                    XCTFail("Unexpected error: \(error)")
+                }
             }
         }
         await fulfillment(of: [expectation], timeout: 10.0)
@@ -109,8 +113,12 @@ class MpvLauncherTests: XCTestCase {
                     XCTFail("The launch should fail")
                 }
             } catch {
-                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvPathNotFound)
-                expectation.fulfill()
+                if let mpvError = error as? MpvLauncherError {
+                    XCTAssertEqual(mpvError, MpvLauncherError.mpvPathNotFound)
+                    expectation.fulfill()
+                } else {
+                    XCTFail("Unexpected error: \(error)")
+                }
             }
         }
         await fulfillment(of: [expectation], timeout: 5.0)
