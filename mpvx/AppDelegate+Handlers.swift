@@ -89,7 +89,7 @@ extension AppDelegate {
             .urlCount: urls.count
         ])
         switch result {
-        case .terminated(_):
+        case .terminated:
             for url in urls {
                 AnalyticsLogger.logEvent(.recentDocumentAdded, parameters: [
                     .urlPath: url.lastPathComponent.truncatedFilename(to: 100)

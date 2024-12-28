@@ -1,3 +1,8 @@
+pre-commit:
+  parallel: true
+  commands:
+    setup:
+      run: swiftlint --fix --strict
 post-commit:
   parallel: true
   commands:

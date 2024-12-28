@@ -31,7 +31,7 @@ class MpvLauncherTests: XCTestCase {
         }
         await fulfillment(of: [expectation], timeout: 10.0)
     }
-    
+
     func testLaunchSuccessAndAnotherLaunchFailure() async {
         let launcher = MpvLauncher()
         let expectation = self.expectation(description: "Launch should succeed")
@@ -43,12 +43,16 @@ class MpvLauncherTests: XCTestCase {
                     }
                 }
                 sleep(5)
-                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                try await launcher.launch(with: [bigBuckBunnyURL]) { _ in
                     XCTFail("The second launch should fail")
                 }
             } catch {
-                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvAlreadyRunning)
-                expectation.fulfill()
+                if let mpvError = error as? MpvLauncherError {
+                    XCTAssertEqual(mpvError, MpvLauncherError.mpvAlreadyRunning)
+                    expectation.fulfill()
+                } else {
+                    XCTFail("Unexpected error: \(error)")
+                }
             }
         }
         await fulfillment(of: [expectation], timeout: 10.0)
@@ -88,7 +92,7 @@ class MpvLauncherTests: XCTestCase {
         let expectation = self.expectation(description: "Launch should fail")
         Task {
             do {
-                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                try await launcher.launch(with: [bigBuckBunnyURL]) { _ in
                     XCTFail("The launch should fail")
                 }
             } catch {
@@ -105,12 +109,16 @@ class MpvLauncherTests: XCTestCase {
         let expectation = self.expectation(description: "Launch should fail")
         Task {
             do {
-                try await launcher.launch(with: [bigBuckBunnyURL]) { result in
+                try await launcher.launch(with: [bigBuckBunnyURL]) { _ in
                     XCTFail("The launch should fail")
                 }
             } catch {
-                XCTAssertEqual(error as! MpvLauncherError, MpvLauncherError.mpvPathNotFound)
-                expectation.fulfill()
+                if let mpvError = error as? MpvLauncherError {
+                    XCTAssertEqual(mpvError, MpvLauncherError.mpvPathNotFound)
+                    expectation.fulfill()
+                } else {
+                    XCTFail("Unexpected error: \(error)")
+                }
             }
         }
         await fulfillment(of: [expectation], timeout: 5.0)
