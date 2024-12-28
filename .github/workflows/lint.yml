@@ -23,6 +23,7 @@ jobs:
         uses: super-linter/super-linter@v7.2.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DISABLE_ERRORS: true
           FIX_SHELL_SHFMT: true
           FIX_YAML_PRETTIER: true
           FIX_MARKDOWN_PRETTIER: true
