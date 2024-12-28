@@ -10,9 +10,7 @@ on:
 jobs:
   Super-Linter:
     permissions:
-      # To write linting fixes
       contents: write
-      # To write Super-linter status checks
       statuses: write
     runs-on: ubuntu-latest
     steps:
@@ -28,9 +26,6 @@ jobs:
           FIX_YAML_PRETTIER: true
           FIX_MARKDOWN_PRETTIER: true
       - name: Commit and push linting fixes
-        # Run only on:
-        # - Pull requests
-        # - Not on the default branch
         if: >
           github.event_name == 'pull_request' &&
           github.ref_name != github.event.repository.default_branch
