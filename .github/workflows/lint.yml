@@ -1,0 +1,32 @@
+name: Lint
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/swiftlint.yml"
+      - ".swiftlint.yml"
+      - "**/*.swift"
+
+jobs:
+  Super-Linter:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Super-linter
+        uses: super-linter/super-linter@v7.2.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  SwiftLint:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "5"
+      - name: GitHub Actions for SwiftLint
+        uses: sinoru/actions-swiftlint@v6
+        with:
+          swiftlint-version: "0.57.1"

@@ -2,7 +2,12 @@ pre-commit:
   parallel: true
   commands:
     setup:
-      run: swiftlint --fix --strict
+      run: |
+        npx prettier --write "**/*.yml"
+        npx shfmt -w .
+        npx markdownlint "**/*.md" --fix
+        swiftlint --fix --strict
+
 post-commit:
   parallel: true
   commands:
