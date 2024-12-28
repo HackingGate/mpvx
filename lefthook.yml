@@ -3,9 +3,8 @@ pre-commit:
   commands:
     setup:
       run: |
-        npx prettier --write "**/*.yml"
         npx shfmt -w .
-        npx markdownlint "**/*.md" --fix
+        npx prettier --write "**/*.{yml,md,json}"
         swiftlint --fix --strict
 
 post-commit:
