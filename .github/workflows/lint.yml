@@ -56,7 +56,6 @@ jobs:
 
   SwiftLint:
     runs-on: macos-latest
-    needs: Super-Linter
     steps:
       - uses: actions/checkout@v3
       - uses: swift-actions/setup-swift@v2
