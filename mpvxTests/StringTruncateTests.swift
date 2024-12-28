@@ -36,7 +36,7 @@ struct StringTruncateTests {
         let filename = String(repeating: "a", count: 96) + ".mp4" // Total length: 100
         let result = filename.truncatedFilename(to: 100)
         #expect(result == filename, "Filenames at 100 characters should not be truncated")
-        
+
         let tooLongFilename = String(repeating: "a", count: 105) + ".mp4" // Total length: 109
         let truncatedResult = tooLongFilename.truncatedFilename(to: 100)
         #expect(truncatedResult == String(repeating: "a", count: 96) + ".mp4", "Filenames over 100 characters should be truncated to 100")

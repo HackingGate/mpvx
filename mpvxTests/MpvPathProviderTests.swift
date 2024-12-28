@@ -11,7 +11,7 @@ final class MockFileChecker: FileExistenceChecking {
     func fileExists(atPath path: String) -> Bool {
         return existingPaths.contains(path)
     }
-    
+
     func isReadableFile(atPath path: String) -> Bool {
         return existingPaths.contains(path)
     }
