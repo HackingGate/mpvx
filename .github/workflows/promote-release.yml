@@ -2,7 +2,7 @@ name: Promote Pre-release to Release
 
 on:
   schedule:
-    - cron: "30 23 * * *"
+    - cron: '30 23 * * *'
   workflow_dispatch:
 
 jobs:

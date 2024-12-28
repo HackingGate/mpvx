@@ -1,14 +1,14 @@
 name: Build and Test
 
-on:
+on: 
   push:
     paths:
-      - ".github/workflows/test-and-coverage.yml"
-      - ".test-and-coverage.yml"
-      - "**/*.sh"
-      - "**/*.swift"
-      - "mpvx/**"
-      - "mpvx.xcodeproj/**"
+      - '.github/workflows/test-and-coverage.yml'
+      - '.test-and-coverage.yml'
+      - '**/*.sh'
+      - '**/*.swift'
+      - 'mpvx/**'
+      - 'mpvx.xcodeproj/**'
 
 jobs:
   build_and_test:
@@ -19,136 +19,136 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-      - name: Install Dependencies
-        run: |
-          brew install --formula mpv
-          which mpv
-          brew info mpv --formula
-      - name: Setup
-        run: |
-          ./setup.sh
-      - name: Run Tests
-        run: |
-          xcodebuild clean test \
-            -scheme mpvx \
-            -configuration Debug \
-            -derivedDataPath build \
-            -destination "platform=macOS,arch=${{ matrix.arch }}" \
-            -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
-      - name: Upload Result Bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
-          path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
-        if: always()
-      - name: Install Dependencies
-        run: |
-          brew install --formula xcresultparser
-      - name: Convert Merged Result to Coverage
-        run: |
-          xcresultparser \
-            --output-format cobertura \
-            artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult > artifacts/coverage-${{ matrix.os }}-${{ matrix.arch }}.xml
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: artifacts/coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: ${{ matrix.os }}_${{ matrix.arch }}_tests
-          fail_ci_if_error: true
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    - name: Install Dependencies
+      run: |
+        brew install --formula mpv
+        which mpv
+        brew info mpv --formula
+    - name: Setup
+      run: |
+        ./setup.sh
+    - name: Run Tests
+      run: |
+        xcodebuild clean test \
+          -scheme mpvx \
+          -configuration Debug \
+          -derivedDataPath build \
+          -destination "platform=macOS,arch=${{ matrix.arch }}" \
+          -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+    - name: Upload Result Bundle
+      uses: actions/upload-artifact@v4
+      with:
+        name: "ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+        path: "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+      if: always()
+    - name: Install Dependencies
+      run: |
+        brew install --formula xcresultparser
+    - name: Convert Merged Result to Coverage
+      run: |
+        xcresultparser \
+          --output-format cobertura \
+          artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult > artifacts/coverage-${{ matrix.os }}-${{ matrix.arch }}.xml
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: artifacts/coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: ${{ matrix.os }}_${{ matrix.arch }}_tests
+        fail_ci_if_error: true
 
   merge:
     runs-on: macos-latest
     needs: build_and_test
     steps:
-      - name: List and download all .xcresult artifacts
-        run: |
-          # Get a list of all artifacts for the current run
-          ARTS=$(curl -s \
+    - name: List and download all .xcresult artifacts
+      run: |
+        # Get a list of all artifacts for the current run
+        ARTS=$(curl -s \
+          -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Accept: application/vnd.github+json" \
+          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+          | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | [.name, .archive_download_url] | @tsv')
+        mkdir -p artifacts
+        # Loop through each artifact and download it
+        while IFS=$'\t' read -r NAME URL; do
+          echo "Downloading artifact: $NAME"
+          curl -L \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
-            | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | [.name, .archive_download_url] | @tsv')
-          mkdir -p artifacts
-          # Loop through each artifact and download it
-          while IFS=$'\t' read -r NAME URL; do
-            echo "Downloading artifact: $NAME"
-            curl -L \
-              -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-              -o "$NAME.zip" "$URL"
-            unzip "$NAME.zip" -d "artifacts/$NAME"
-            rm "$NAME.zip"
-          done <<< "$ARTS"
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-      - name: Merge Result Bundles
-        run: |
-          # Dynamically find all .xcresult directories in artifacts
-          XCBUNDLES=($(find artifacts -type d -name '*.xcresult'))
-          if [ ${#XCBUNDLES[@]} -gt 1 ]; then
-            xcrun xcresulttool merge "${XCBUNDLES[@]}" --output-path artifacts/ResultBundle.xcresult
-          else
-            # If there's only one bundle, just rename it as the merged output
-            mv "${XCBUNDLES[0]}" artifacts/ResultBundle.xcresult
-          fi
-      - name: Cleanup Old Artifacts from GitHub
-        run: |
-          curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-            -H 'Accept: application/vnd.github+json' \
-            "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
-            | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | .id' \
-            | while read artifact_id; do
-                echo "Deleting artifact ID: $artifact_id"
-                curl -X DELETE -s \
-                  -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
-                  -H 'Accept: application/vnd.github+json' \
-                  "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
-              done
-      - name: Re-upload Merged Result
-        uses: actions/upload-artifact@v4
-        with:
-          name: ResultBundle.xcresult
-          path: artifacts/ResultBundle.xcresult
+            -o "$NAME.zip" "$URL"
+          unzip "$NAME.zip" -d "artifacts/$NAME"
+          rm "$NAME.zip"
+        done <<< "$ARTS"
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    - name: Merge Result Bundles
+      run: |
+        # Dynamically find all .xcresult directories in artifacts
+        XCBUNDLES=($(find artifacts -type d -name '*.xcresult'))
+        if [ ${#XCBUNDLES[@]} -gt 1 ]; then
+          xcrun xcresulttool merge "${XCBUNDLES[@]}" --output-path artifacts/ResultBundle.xcresult
+        else
+          # If there's only one bundle, just rename it as the merged output
+          mv "${XCBUNDLES[0]}" artifacts/ResultBundle.xcresult
+        fi
+    - name: Cleanup Old Artifacts from GitHub
+      run: |
+        curl -s -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+          -H 'Accept: application/vnd.github+json' \
+          "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
+          | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | .id' \
+          | while read artifact_id; do
+              echo "Deleting artifact ID: $artifact_id"
+              curl -X DELETE -s \
+                -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
+                -H 'Accept: application/vnd.github+json' \
+                "https://api.github.com/repos/${{ github.repository }}/actions/artifacts/$artifact_id"
+            done
+    - name: Re-upload Merged Result
+      uses: actions/upload-artifact@v4
+      with:
+        name: ResultBundle.xcresult
+        path: artifacts/ResultBundle.xcresult
 
   coverage:
     runs-on: macos-latest
     needs: merge
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Download Merged Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: ResultBundle.xcresult
-          path: artifacts/ResultBundle.xcresult
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: latest-stable
-      - uses: slidoapp/xcresulttool@v3.1.0
-        with:
-          path: artifacts/ResultBundle.xcresult
-          show-passed-tests: false
-          upload-bundles: never
-      - name: Install Dependencies
-        run: |
-          brew install --formula xcresultparser
-      - name: Convert Merged Result to Coverage
-        run: |
-          xcresultparser \
-            --output-format cobertura \
-            artifacts/ResultBundle.xcresult > artifacts/coverage.xml
-      - name: Upload Coverage to Codecov
-        uses: codecov/codecov-action@v5
-        with:
-          files: artifacts/coverage.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
-          flags: all_tests
-          fail_ci_if_error: true
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Download Merged Artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: ResultBundle.xcresult
+        path: artifacts/ResultBundle.xcresult
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest-stable
+    - uses: slidoapp/xcresulttool@v3.1.0
+      with:
+        path: artifacts/ResultBundle.xcresult
+        show-passed-tests: false
+        upload-bundles: never
+    - name: Install Dependencies
+      run: |
+        brew install --formula xcresultparser
+    - name: Convert Merged Result to Coverage
+      run: |
+        xcresultparser \
+          --output-format cobertura \
+          artifacts/ResultBundle.xcresult > artifacts/coverage.xml
+    - name: Upload Coverage to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+        files: artifacts/coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
+        flags: all_tests
+        fail_ci_if_error: true
