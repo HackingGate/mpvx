@@ -9,6 +9,11 @@ on:
 
 jobs:
   Super-Linter:
+    permissions:
+      # To write linting fixes
+      contents: write
+      # To write Super-linter status checks
+      statuses: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
