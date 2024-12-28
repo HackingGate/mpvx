@@ -3,10 +3,7 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "weekly"
-    commit-message:
-      prefix: "deps"
-    automerge: true
+      interval: "daily"
     labels:
       - "dependencies"
       - "automerge"
