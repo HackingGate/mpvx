@@ -45,6 +45,7 @@ jobs:
             echo "## Changes from \`${LATEST_TAG}\` to \`${HEAD_HASH}\`" >> release_note.md
             echo "" >> release_note.md
             git log --pretty="* %h - %s" ${LATEST_TAG}..HEAD | tee -a release_note.md
+          fi
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
         with:
