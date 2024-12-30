@@ -162,7 +162,7 @@ jobs:
       - name: Remove versioned DMGs
         run: |
           echo "Removing DMGs with version pattern..."
-          find ./dist -type f -regextype posix-extended -regex ".*/mpvx-[0-9]+\.[0-9]+\.[0-9]+\.dmg" -delete
+          find ./dist -type f -name "mpvx-*.dmg" -exec rm -v {} +
           ls -al ./dist
       - name: Save Build Cache
         uses: actions/cache@v3
@@ -170,10 +170,10 @@ jobs:
           path: build
           key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload dist folder as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: ./dist
+          path: ./dist/*
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
