@@ -54,6 +54,13 @@ jobs:
           GCM_SENDER_ID: ${{ secrets.GCM_SENDER_ID }}
         run: |
           ./setup.sh
+      - name: Restore Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
       - name: Archive
         run: |
           xcodebuild clean archive \
@@ -63,6 +70,11 @@ jobs:
             -destination "platform=macOS"
           mkdir -p build/Build/Products/Release
           cp -R build/mpvx.xcarchive/Products/Applications/mpvx.app build/Build/Products/Release/mpvx.app
+      - name: Save Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Install create-dmg
         run: |
           brew install create-dmg

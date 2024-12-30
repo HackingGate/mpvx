@@ -33,14 +33,26 @@ jobs:
       - name: Setup
         run: |
           ./setup.sh
+      - name: Restore Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          restore-keys: |
+            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
       - name: Run Tests
         run: |
-          xcodebuild clean test \
+          xcodebuild test \
             -scheme mpvx \
             -configuration Debug \
             -derivedDataPath build \
             -destination "platform=macOS,arch=${{ matrix.arch }}" \
             -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
+      - name: Save Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload Result Bundle
         uses: actions/upload-artifact@v4
         with:
