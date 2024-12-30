@@ -117,6 +117,37 @@ jobs:
           echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
           curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./dist/appcast.xml \
             || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
+      - name: Fetch and download last 3 DMGs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Set up variables
+          OWNER="HackingGate"
+          REPO="mpvx"
+          DIST_FOLDER="./dist"
+          API_URL="https://api.github.com/repos/$OWNER/$REPO/releases"
+          HEADERS="Authorization: token $GITHUB_TOKEN"
+          # Create the dist folder
+          # Fetch the last 3 non-pre-releases
+          echo "Fetching releases..."
+          releases=$(curl -s -H "$HEADERS" "$API_URL" | jq '[.[] | select(.prerelease == false)] | .[:3]')
+          # Process each release
+          echo "$releases" | jq -c '.[]' | while read -r release; do
+            version=$(echo "$release" | jq -r '.tag_name')
+            asset=$(echo "$release" | jq -c '.assets[] | select(.name | endswith(".dmg"))' | head -n 1)
+            if [ -z "$asset" ]; then
+              echo "No .dmg file found for release $version"
+              continue
+            fi
+            # Extract download URL
+            download_url=$(echo "$asset" | jq -r '.browser_download_url')
+            # Set output file name
+            output_file="$DIST_FOLDER/mpvx-$version.dmg"
+            # Download the .dmg file
+            echo "Downloading $download_url as $output_file..."
+            curl -L -H "$HEADERS" -o "$output_file" "$download_url"
+            echo "Saved $output_file"
+          done
       - name: Get Tag
         id: get_tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
