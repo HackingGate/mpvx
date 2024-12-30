@@ -21,22 +21,25 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Generate Release Note
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Fetch Releases
+        id: fetch_releases
         run: |
-          wget --header="Authorization: Bearer ${GITHUB_TOKEN}" ${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases\?per_page\=1 -O releases.json
-          cat releases.json | jq
-          LATEST_TAG=`cat releases.json | jq -r '.[0].tag_name'`
+          API_URL="https://api.github.com/repos/${{ github.repository }}/releases"
+          HEADERS="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
+          releases=$(curl -s -H "$HEADERS" "$API_URL" | jq '.')
+          echo "$releases" > releases.json
+      - name: Generate Release Note
+        run: |
+          LATEST_TAG=$(cat releases.json | jq -r '[.[] | select(.prerelease == false)][0].tag_name')
           if [[ $GITHUB_REF == refs/tags/* ]]; then
-            NEXT_TAG=`echo ${GITHUB_REF} | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+'`
+            NEXT_TAG=$(echo ${GITHUB_REF} | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+')
             echo "# Release ${NEXT_TAG}" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${NEXT_TAG}\`" >> release_note.md
             echo "" >> release_note.md
             git log --pretty="* %h - %s" ${LATEST_TAG}..${NEXT_TAG} | tee -a release_note.md
           else
-            HEAD_HASH=`git rev-parse --short HEAD`
+            HEAD_HASH=$(git rev-parse --short HEAD)
             echo "# Development Build" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${HEAD_HASH}\`" >> release_note.md
@@ -48,33 +51,22 @@ jobs:
         with:
           xcode-version: latest-stable
       - name: Setup
-        env:
-          API_KEY: ${{ secrets.API_KEY }}
-          GOOGLE_APP_ID: ${{ secrets.GOOGLE_APP_ID }}
-          GCM_SENDER_ID: ${{ secrets.GCM_SENDER_ID }}
         run: |
-          ./setup.sh
+          API_KEY=${{ secrets.API_KEY }} GOOGLE_APP_ID=${{ secrets.GOOGLE_APP_ID }} GCM_SENDER_ID=${{ secrets.GCM_SENDER_ID }} ./setup.sh
       - name: Restore Build Cache
         uses: actions/cache@v3
         with:
           path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
+            release-build-cache-${{ runner.os }}-
       - name: Archive
         run: |
-          xcodebuild clean archive \
+          xcodebuild archive \
             -scheme mpvx \
             -configuration Release \
             -archivePath build/mpvx.xcarchive \
             -destination "platform=macOS"
-          mkdir -p build/Build/Products/Release
-          cp -R build/mpvx.xcarchive/Products/Applications/mpvx.app build/Build/Products/Release/mpvx.app
-      - name: Save Build Cache
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Install create-dmg
         run: |
           brew install create-dmg
@@ -89,30 +81,21 @@ jobs:
             --app-drop-link 400 200 \
             --icon "mpvx.app" 200 200 \
             ./dist/mpvx.dmg \
-            ./build/Build/Products/Release/mpvx.app
+            ./build/mpvx.xcarchive/Products/Applications/mpvx.app
       - name: Download Sparkle CLI (version from Package.resolved)
         run: |
-          # Extract Sparkle version from Package.resolved
-          SPARKLE_VERSION=$(jq -r '.pins[] | select(.identity == "sparkle") | .state.version' \
-            mpvx.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+          SPARKLE_VERSION=$(jq -r '.pins[] | select(.identity == "sparkle") | .state.version' mpvx.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
           if [ -z "$SPARKLE_VERSION" ]; then
             echo "Error: Could not determine Sparkle version from Package.resolved."
             exit 1
           fi
           echo "Detected Sparkle version: $SPARKLE_VERSION"
-          # Construct download URL
           DOWNLOAD_URL="https://github.com/sparkle-project/Sparkle/releases/download/${SPARKLE_VERSION}/Sparkle-for-Swift-Package-Manager.zip"
           echo "Downloading Sparkle CLI from \`${DOWNLOAD_URL}\`..."
-          # Download and unzip Sparkle CLI
           wget -O /tmp/Sparkle-for-Swift-Package-Manager.zip "${DOWNLOAD_URL}"
-          echo "Unzipping Sparkle CLI to \`/tmp/sparkle\`..."
           unzip /tmp/Sparkle-for-Swift-Package-Manager.zip -d /tmp/sparkle
-          # Make CLI tools executable
-          echo "Making CLI tools executable..."
           chmod +x /tmp/sparkle/bin/generate_appcast
           chmod +x /tmp/sparkle/bin/sign_update
-          # Copy CLI tools to the workspace
-          echo "Copying CLI tools to \`${GITHUB_WORKSPACE}\`..."
           cp /tmp/sparkle/bin/generate_appcast $GITHUB_WORKSPACE/
           cp /tmp/sparkle/bin/sign_update $GITHUB_WORKSPACE/
       - name: Decode and save private key
@@ -121,32 +104,57 @@ jobs:
           chmod 600 ed25519_private.pem
       - name: Fetch existing appcast
         run: |
-          mkdir -p dist/appcast
           echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
-          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o dist/appcast/appcast.xml \
-            || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
+          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./dist/appcast.xml || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
+      - name: Fetch and download last 3 DMGs
+        run: |
+          DIST_FOLDER="./dist"
+          releases=$(cat releases.json | jq '[.[] | select(.prerelease == false)] | .[:3]')
+          echo "$releases" | jq -c '.[]' | while read -r release; do
+            version=$(echo "$release" | jq -r '.tag_name')
+            asset=$(echo "$release" | jq -c '.assets[] | select(.name | endswith(".dmg"))' | head -n 1)
+            if [ -z "$asset" ]; then
+              echo "No .dmg file found for release $version"
+              continue
+            fi
+            download_url=$(echo "$asset" | jq -r '.browser_download_url')
+            output_file="$DIST_FOLDER/mpvx-$version.dmg"
+            echo "Downloading $download_url as $output_file..."
+            curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o "$output_file" "$download_url"
+            echo "Saved $output_file"
+          done
       - name: Get Tag
         id: get_tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Generate Appcast
         run: |
-          mkdir -p dist/appcast
           echo "Generating appcast (with signing enabled) ..."
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
-            -o dist/appcast/appcast.xml \
+            -o ./dist/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
-            dist
-      - name: Upload .dmg artifact
+            ./dist
+          ls -alR ./dist
+      - name: Save Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
+      - name: Upload mpvx.dmg as artifact
         uses: actions/upload-artifact@v4
         with:
           name: mpvx.dmg
           path: ./dist/mpvx.dmg
-      - name: Upload appcast artifact
+      - name: Upload appcast.xml as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: appcast
-          path: ./dist/appcast/appcast.xml
+          name: appcast.xml
+          path: ./dist/appcast.xml
+      - name: Upload delta files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: delta_files
+          path: ./dist/*.delta
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
@@ -157,8 +165,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./dist/mpvx.dmg
-            ./dist/appcast/appcast.xml
+            ./dist/*
           body_path: release_note.md
           prerelease: true
         env:

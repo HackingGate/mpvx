@@ -39,7 +39,7 @@ jobs:
           path: build
           key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
+            test-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
       - name: Run Tests
         run: |
           xcodebuild test \
@@ -52,7 +52,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: test-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload Result Bundle
         uses: actions/upload-artifact@v4
         with:
@@ -81,14 +81,12 @@ jobs:
     steps:
       - name: List and download all .xcresult artifacts
         run: |
-          # Get a list of all artifacts for the current run
           ARTS=$(curl -s \
             -H "Authorization: Bearer ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github+json" \
             "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/artifacts" \
             | jq -r '.artifacts[] | select(.name | endswith(".xcresult")) | [.name, .archive_download_url] | @tsv')
           mkdir -p artifacts
-          # Loop through each artifact and download it
           while IFS=$'\t' read -r NAME URL; do
             echo "Downloading artifact: $NAME"
             curl -L \
@@ -102,12 +100,10 @@ jobs:
           xcode-version: latest-stable
       - name: Merge Result Bundles
         run: |
-          # Dynamically find all .xcresult directories in artifacts
           XCBUNDLES=($(find artifacts -type d -name '*.xcresult'))
           if [ ${#XCBUNDLES[@]} -gt 1 ]; then
             xcrun xcresulttool merge "${XCBUNDLES[@]}" --output-path artifacts/ResultBundle.xcresult
           else
-            # If there's only one bundle, just rename it as the merged output
             mv "${XCBUNDLES[0]}" artifacts/ResultBundle.xcresult
           fi
       - name: Cleanup Old Artifacts from GitHub
