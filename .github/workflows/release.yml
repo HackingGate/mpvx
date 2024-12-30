@@ -134,10 +134,12 @@ jobs:
             -o ./dist/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
             ./dist
+          ls -alR ./dist
       - name: Remove versioned DMGs
         run: |
           echo "Removing DMGs with version pattern..."
           find ./dist -type f -name "mpvx-*.dmg" -exec rm -v {} +
+          rm -rf old_updates
           ls -alR ./dist
       - name: Save Build Cache
         uses: actions/cache@v3
