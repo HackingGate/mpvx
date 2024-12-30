@@ -144,13 +144,11 @@ jobs:
         with:
           path: build
           key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
-      - name: Upload dist folder files as artifacts
-        run: |
-          for file in ./dist/*; do
-            filename=$(basename "$file")
-            echo "Uploading $filename"
-            gh artifact upload --name "$filename" "$file"
-          done
+      - name: Upload dist folder as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: ./dist/*
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
