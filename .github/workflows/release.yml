@@ -63,7 +63,7 @@ jobs:
             release-build-cache-${{ runner.os }}-
       - name: Archive
         run: |
-          xcodebuild clean archive \
+          xcodebuild archive \
             -scheme mpvx \
             -configuration Release \
             -archivePath build/mpvx.xcarchive \
