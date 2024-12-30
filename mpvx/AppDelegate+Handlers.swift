@@ -6,11 +6,6 @@ extension AppDelegate {
             .response: response.rawValue,
             .urlCount: urls.count
         ])
-        for url in urls {
-            AnalyticsLogger.logEvent(.openUrl, parameters: [
-                .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
-            ])
-        }
         if response == .OK {
             Task(priority: .userInitiated) {
                 do {
@@ -91,9 +86,6 @@ extension AppDelegate {
         switch result {
         case .terminated:
             for url in urls {
-                AnalyticsLogger.logEvent(.recentDocumentAdded, parameters: [
-                    .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
-                ])
                 NSDocumentController.shared.noteNewRecentDocumentURL(url)
             }
         }

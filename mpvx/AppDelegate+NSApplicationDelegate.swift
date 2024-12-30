@@ -35,11 +35,6 @@ extension AppDelegate: NSApplicationDelegate {
     }
 
     func application(_ application: NSApplication, open urls: [URL]) {
-        for url in urls {
-            AnalyticsLogger.logEvent(.openUrl, parameters: [
-                .urlPath: url.lastPathComponent.truncatedFilename(to: 100)
-            ])
-        }
         Task(priority: .userInitiated) {
             do {
                 try await mpvLauncher.launch(with: urls) { result in
