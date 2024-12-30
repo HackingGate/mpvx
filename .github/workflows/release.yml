@@ -81,7 +81,7 @@ jobs:
             --icon-size 100 \
             --app-drop-link 400 200 \
             --icon "mpvx.app" 200 200 \
-            ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg \
+            ./dist/mpvx.dmg \
             ./build/mpvx.xcarchive/Products/Applications/mpvx.app
       - name: Download Sparkle CLI (version from Package.resolved)
         run: |
@@ -115,7 +115,7 @@ jobs:
       - name: Fetch existing appcast
         run: |
           echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
-          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./build/mpvx.xcarchive/Products/Applications/appcast.xml \
+          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./dist/appcast.xml \
             || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
       - name: Get Tag
         id: get_tag
@@ -125,10 +125,10 @@ jobs:
           echo "Generating appcast (with signing enabled) ..."
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
-            -o ./build/mpvx.xcarchive/Products/Applications/appcast.xml \
+            -o ./dist/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
-            ./build/mpvx.xcarchive/Products/Applications
-          ls -al ./build/mpvx.xcarchive/Products/Applications
+            ./dist
+          ls -al ./dist
       - name: Save Build Cache
         uses: actions/cache@v3
         with:
@@ -138,12 +138,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: mpvx.dmg
-          path: ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg
+          path: ./dist/mpvx.dmg
       - name: Upload appcast artifact
         uses: actions/upload-artifact@v4
         with:
           name: appcast
-          path: ./build/mpvx.xcarchive/Products/Applications/appcast.xml
+          path: ./dist/appcast.xml
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
@@ -154,8 +154,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg
-            ./build/mpvx.xcarchive/Products/Applications/appcast/appcast.xml
+            ./dist/mpvx.dmg
+            ./dist/appcast.xml
           body_path: release_note.md
           prerelease: true
         env:
