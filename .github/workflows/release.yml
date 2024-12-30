@@ -58,9 +58,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build
-          key: release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
+            release-build-cache-${{ runner.os }}-
       - name: Archive
         run: |
           xcodebuild clean archive \
@@ -133,7 +133,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build
-          key: release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
         with:
