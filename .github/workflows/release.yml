@@ -135,22 +135,26 @@ jobs:
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
             ./dist
           ls -alR ./dist
-      - name: Remove versioned DMGs
-        run: |
-          echo "Removing DMGs with version pattern..."
-          find ./dist -type f -name "mpvx-*.dmg" -exec rm -v {} +
-          rm -rf old_updates
-          ls -alR ./dist
       - name: Save Build Cache
         uses: actions/cache@v3
         with:
           path: build
           key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
-      - name: Upload dist folder as artifact
+      - name: Upload mpvx.dmg as artifact
         uses: actions/upload-artifact@v4
         with:
-          name: dist
-          path: ./dist/**/*
+          name: mpvx.dmg
+          path: ./dist/mpvx.dmg
+      - name: Upload appcast.xml as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: appcast.xml
+          path: ./dist/appcast.xml
+      - name: Upload delta files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: delta_files
+          path: ./dist/*.delta
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
