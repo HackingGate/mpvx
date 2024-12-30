@@ -138,7 +138,7 @@ jobs:
         run: |
           echo "Removing DMGs with version pattern..."
           find ./dist -type f -name "mpvx-*.dmg" -exec rm -v {} +
-          ls -al ./dist
+          ls -alR ./dist
       - name: Save Build Cache
         uses: actions/cache@v3
         with:
