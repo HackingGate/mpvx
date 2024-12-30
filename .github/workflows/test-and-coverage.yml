@@ -39,7 +39,7 @@ jobs:
           path: build
           key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
+            test-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
       - name: Run Tests
         run: |
           xcodebuild test \
@@ -52,7 +52,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: test-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload Result Bundle
         uses: actions/upload-artifact@v4
         with:

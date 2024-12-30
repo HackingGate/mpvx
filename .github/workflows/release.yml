@@ -58,9 +58,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
+          key: release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
+            release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-
       - name: Archive
         run: |
           xcodebuild clean archive \
@@ -68,13 +68,6 @@ jobs:
             -configuration Release \
             -archivePath build/mpvx.xcarchive \
             -destination "platform=macOS"
-          mkdir -p build/Build/Products/Release
-          cp -R build/mpvx.xcarchive/Products/Applications/mpvx.app build/Build/Products/Release/mpvx.app
-      - name: Save Build Cache
-        uses: actions/cache@v3
-        with:
-          path: build
-          key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Install create-dmg
         run: |
           brew install create-dmg
@@ -88,8 +81,8 @@ jobs:
             --icon-size 100 \
             --app-drop-link 400 200 \
             --icon "mpvx.app" 200 200 \
-            ./dist/mpvx.dmg \
-            ./build/Build/Products/Release/mpvx.app
+            ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg \
+            ./build/mpvx.xcarchive/Products/Applications/mpvx.app
       - name: Download Sparkle CLI (version from Package.resolved)
         run: |
           # Extract Sparkle version from Package.resolved
@@ -121,32 +114,36 @@ jobs:
           chmod 600 ed25519_private.pem
       - name: Fetch existing appcast
         run: |
-          mkdir -p dist/appcast
           echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
-          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o dist/appcast/appcast.xml \
+          curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./build/mpvx.xcarchive/Products/Applications/appcast.xml \
             || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
       - name: Get Tag
         id: get_tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Generate Appcast
         run: |
-          mkdir -p dist/appcast
           echo "Generating appcast (with signing enabled) ..."
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
-            -o dist/appcast/appcast.xml \
+            -o ./build/mpvx.xcarchive/Products/Applications/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
-            dist
+            ./build/mpvx.xcarchive/Products/Applications
+          ls -al ./build/mpvx.xcarchive/Products/Applications
+      - name: Save Build Cache
+        uses: actions/cache@v3
+        with:
+          path: build
+          key: release-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload .dmg artifact
         uses: actions/upload-artifact@v4
         with:
           name: mpvx.dmg
-          path: ./dist/mpvx.dmg
+          path: ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg
       - name: Upload appcast artifact
         uses: actions/upload-artifact@v4
         with:
           name: appcast
-          path: ./dist/appcast/appcast.xml
+          path: ./build/mpvx.xcarchive/Products/Applications/appcast.xml
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
@@ -157,8 +154,8 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./dist/mpvx.dmg
-            ./dist/appcast/appcast.xml
+            ./build/mpvx.xcarchive/Products/Applications/mpvx.dmg
+            ./build/mpvx.xcarchive/Products/Applications/appcast/appcast.xml
           body_path: release_note.md
           prerelease: true
         env:
