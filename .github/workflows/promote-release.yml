@@ -67,12 +67,6 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            /*
-              This calls the GitHub API endpoint:
-                GET /repos/{owner}/{repo}/releases/latest
-              which returns the most recent *non–prerelease* release.
-              If no official release exists yet, it 404s.
-            */
             try {
               const release = await github.rest.repos.getLatestRelease({
                 owner: context.repo.owner,
@@ -83,7 +77,6 @@ jobs:
               console.log(`Latest official release: ${release.data.tag_name}`);
             } catch (error) {
               if (error.status === 404) {
-                // Means there's no official release yet
                 console.log('No official (non-prerelease) release found. Skipping...');
                 core.setOutput('found', 'false');
               } else {
@@ -102,7 +95,6 @@ jobs:
             const tagName = "${{ steps.get_latest_official_release.outputs.tag_name }}";
             const fs = require('fs');
             const path = require('path');
-            // Get the release assets for the specified tag
             const { data: releaseData } = await github.rest.repos.getReleaseByTag({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -114,12 +106,10 @@ jobs:
               repo: context.repo.repo,
               release_id: releaseId
             });
-            // Look for the 'appcast.xml' asset
             const appcastAsset = releaseAssets.find(asset => asset.name === 'appcast.xml');
             if (!appcastAsset) {
               throw new Error('appcast.xml not found in the release assets.');
             }
-            // Download the file content (as an ArrayBuffer)
             const { data: fileContent } = await github.rest.repos.getReleaseAsset({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -128,7 +118,6 @@ jobs:
                 Accept: 'application/octet-stream'
               }
             });
-            // Convert ArrayBuffer -> Buffer, then write to disk
             const outputDir = path.join(process.env.GITHUB_WORKSPACE, 'dist', 'appcast');
             fs.mkdirSync(outputDir, { recursive: true });
             fs.writeFileSync(path.join(outputDir, 'appcast.xml'), Buffer.from(fileContent));
