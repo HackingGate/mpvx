@@ -148,7 +148,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: dist
-          path: ./dist/*
+          path: ./dist/**/*
       - name: Upload release note
         uses: actions/upload-artifact@v4
         with:
