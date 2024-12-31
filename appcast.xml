@@ -3,6 +3,14 @@
     <channel>
         <title>mpvx</title>
         <item>
+            <title>0.7.1</title>
+            <pubDate>Tue, 31 Dec 2024 01:55:16 +0000</pubDate>
+            <sparkle:version>20241230054536</sparkle:version>
+            <sparkle:shortVersionString>0.7.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.1/mpvx.dmg" length="4469959" type="application/octet-stream" sparkle:edSignature="/RUS67Ylwd9ayRHej8+WFpY4d/q6rTehyQWWyjgRqWXVhc2SaeyZsu5YheCz8sTyGI1CuN8MuXepQMb4ETE9Ag=="/>
+        </item>
+        <item>
             <title>0.7.0</title>
             <pubDate>Fri, 27 Dec 2024 16:38:32 +0000</pubDate>
             <sparkle:version>20241227163537</sparkle:version>
