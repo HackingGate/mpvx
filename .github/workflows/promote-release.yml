@@ -118,7 +118,7 @@ jobs:
                 Accept: 'application/octet-stream'
               }
             });
-            const outputDir = path.join(process.env.GITHUB_WORKSPACE, 'dist', 'appcast.xml');
+            const outputDir = path.join(process.env.GITHUB_WORKSPACE, 'dist', 'appcast');
             fs.mkdirSync(outputDir, { recursive: true });
             fs.writeFileSync(path.join(outputDir, 'appcast.xml'), Buffer.from(fileContent));
             console.log('appcast.xml downloaded successfully.');

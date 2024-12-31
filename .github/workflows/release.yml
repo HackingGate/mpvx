@@ -165,7 +165,9 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            ./dist/*
+            ./dist/mpvx.dmg
+            ./dist/appcast.xml
+            ./dist/*.delta
           body_path: release_note.md
           prerelease: true
         env:
