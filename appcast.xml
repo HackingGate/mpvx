@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>mpvx</title>
+        <item>
+            <title>0.7.0</title>
+            <pubDate>Fri, 27 Dec 2024 16:38:32 +0000</pubDate>
+            <sparkle:version>20241227163537</sparkle:version>
+            <sparkle:shortVersionString>0.7.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.0/mpvx.dmg" length="2251639" type="application/octet-stream" sparkle:edSignature="YIvnFR2X86kd3u0Z7zFf3JZzDA4U0YCWpPGEhW9FZU2NKF1UXpwrnVOAQDt2SWHtd7DvWFaTcnnqAyBkd/M6BQ=="/>
+        </item>
+        <item>
+            <title>0.6.0</title>
+            <pubDate>Fri, 27 Dec 2024 01:48:58 +0000</pubDate>
+            <sparkle:version>20241227014806</sparkle:version>
+            <sparkle:shortVersionString>0.6.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.6.0/mpvx.dmg" length="1006199" type="application/octet-stream" sparkle:edSignature="f/ZggYfUcquiKmMGfgLwXvTh6ft+cF9FW59kjXSajv54umc+w1Fy033KH5Xm5XT+dzlQQlfpWVpIu7F/+2pgCA=="/>
+        </item>
+    </channel>
+</rss>
