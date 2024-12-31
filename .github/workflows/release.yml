@@ -9,10 +9,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_run:
-    workflows: ["Build and Test"]
-    types:
-      - completed
 
 jobs:
   build:
