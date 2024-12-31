@@ -54,7 +54,7 @@ jobs:
         run: |
           API_KEY=${{ secrets.API_KEY }} GOOGLE_APP_ID=${{ secrets.GOOGLE_APP_ID }} GCM_SENDER_ID=${{ secrets.GCM_SENDER_ID }} ./setup.sh
       - name: Restore Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build
           key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
@@ -136,7 +136,7 @@ jobs:
             ./dist
           ls -alR ./dist
       - name: Save Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build
           key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}

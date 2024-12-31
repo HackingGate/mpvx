@@ -34,7 +34,7 @@ jobs:
         run: |
           ./setup.sh
       - name: Restore Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build
           key: build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
@@ -49,7 +49,7 @@ jobs:
             -destination "platform=macOS,arch=${{ matrix.arch }}" \
             -resultBundlePath "artifacts/ResultBundle-${{ matrix.os }}-${{ matrix.arch }}.xcresult"
       - name: Save Build Cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: build
           key: test-build-cache-${{ runner.os }}-${{ matrix.os }}-${{ matrix.arch }}-${{ hashFiles('**/Package.resolved') }}
