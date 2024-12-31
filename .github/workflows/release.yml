@@ -130,7 +130,7 @@ jobs:
             --ed-key-file ed25519_private.pem \
             -o ./dist/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/" \
-            ./dist
+            ./dist/**/*.dmg
           ls -alR ./dist
       - name: Save Build Cache
         uses: actions/cache@v4
