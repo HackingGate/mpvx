@@ -66,9 +66,12 @@ jobs:
       - name: Install create-dmg
         run: |
           brew install create-dmg
+      - name: Get Tag
+        id: get_tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Create .dmg with Applications folder
         run: |
-          mkdir -p dist
+          mkdir -p dist/${{ steps.get_tag.outputs.tag }}
           create-dmg \
             --volname "mpvx" \
             --window-pos 200 200 \
@@ -76,7 +79,7 @@ jobs:
             --icon-size 100 \
             --app-drop-link 400 200 \
             --icon "mpvx.app" 200 200 \
-            ./dist/mpvx.dmg \
+            ./dist/${{ steps.get_tag.outputs.tag }}/mpvx.dmg \
             ./build/mpvx.xcarchive/Products/Applications/mpvx.app
       - name: Download Sparkle CLI (version from Package.resolved)
         run: |
@@ -114,21 +117,19 @@ jobs:
               continue
             fi
             download_url=$(echo "$asset" | jq -r '.browser_download_url')
-            output_file="$DIST_FOLDER/mpvx-$version.dmg"
+            mkdir -p "$DIST_FOLDER/$version"
+            output_file="$DIST_FOLDER/$version/$(basename $download_url)"
             echo "Downloading $download_url as $output_file..."
             curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o "$output_file" "$download_url"
             echo "Saved $output_file"
           done
-      - name: Get Tag
-        id: get_tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Generate Appcast
         run: |
           echo "Generating appcast (with signing enabled) ..."
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
             -o ./dist/appcast.xml \
-            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/" \
             ./dist
           ls -alR ./dist
       - name: Save Build Cache
