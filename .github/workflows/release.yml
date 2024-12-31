@@ -66,12 +66,9 @@ jobs:
       - name: Install create-dmg
         run: |
           brew install create-dmg
-      - name: Get Tag
-        id: get_tag
-        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Create .dmg with Applications folder
         run: |
-          mkdir -p dist/${{ steps.get_tag.outputs.tag }}
+          mkdir -p dist
           create-dmg \
             --volname "mpvx" \
             --window-pos 200 200 \
@@ -79,7 +76,7 @@ jobs:
             --icon-size 100 \
             --app-drop-link 400 200 \
             --icon "mpvx.app" 200 200 \
-            ./dist/${{ steps.get_tag.outputs.tag }}/mpvx.dmg \
+            ./dist/mpvx.dmg \
             ./build/mpvx.xcarchive/Products/Applications/mpvx.app
       - name: Download Sparkle CLI (version from Package.resolved)
         run: |
@@ -105,6 +102,9 @@ jobs:
         run: |
           echo "Fetching existing appcast.xml from https://mpvx.hackinggate.com/appcast.xml ..."
           curl -fSL "https://mpvx.hackinggate.com/appcast.xml" -o ./dist/appcast.xml || echo "No existing appcast.xml found at https://mpvx.hackinggate.com/appcast.xml."
+      - name: Get Tag
+        id: get_tag
+        run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
       - name: Fetch and download last 3 DMGs
         run: |
           DIST_FOLDER="./dist"
@@ -119,7 +119,7 @@ jobs:
             fi
             download_url=$(echo "$asset" | jq -r '.browser_download_url')
             mkdir -p "$DIST_FOLDER/$version"
-            output_file="$DIST_FOLDER/$version/$(basename $download_url)"
+            output_file="$DIST_FOLDER/mpvx-${version}.dmg"
             echo "Downloading $download_url as $output_file..."
             curl -L -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -o "$output_file" "$download_url"
             echo "Saved $output_file"
@@ -130,9 +130,14 @@ jobs:
           ./generate_appcast \
             --ed-key-file ed25519_private.pem \
             -o ./dist/appcast.xml \
-            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/" \
+            --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/${{ steps.get_tag.outputs.tag }}/" \
             ./dist
           ls -alR ./dist
+      - name: Fix Appcast
+        run: |
+          # Replace ${{ steps.get_tag.outputs.tag }}/mpvx-x.x.x.dmg with x.x.x/mpvx.dmg
+          sed -i '' -e "s|${{ steps.get_tag.outputs.tag }}/mpvx-|mpvx-|g" ./dist/appcast.xml
+          cat ./dist/appcast.xml
       - name: Save Build Cache
         uses: actions/cache@v4
         with:
