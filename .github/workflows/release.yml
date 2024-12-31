@@ -136,8 +136,8 @@ jobs:
           cat ./dist/appcast.xml
       - name: Fix Appcast
         run: |
-          # Replace mpvx-x.x.x.dmg with x.x.x/mpvx.dmg
-          sed -i '' -E 's|mpvx-([0-9]+\.[0-9]+\.[0-9]+)\.dmg|\1/mpvx.dmg|g' ./dist/appcast.xml
+          TAG=${{ steps.get_tag.outputs.tag }}
+          sed -i '' -E "s|${TAG}/mpvx-([0-9]+\.[0-9]+\.[0-9]+)\.dmg|\1/mpvx.dmg|g" ./dist/appcast.xml
           cat ./dist/appcast.xml
       - name: Save Build Cache
         uses: actions/cache@v4
