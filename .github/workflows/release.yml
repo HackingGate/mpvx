@@ -108,7 +108,8 @@ jobs:
       - name: Fetch and download last 3 DMGs
         run: |
           DIST_FOLDER="./dist"
-          releases=$(cat releases.json | jq '[.[] | select(.prerelease == false)] | .[:3]')
+          EXCLUDE_TAG="${{ steps.get_tag.outputs.tag }}"
+          releases=$(cat releases.json | jq "[.[] | select(.prerelease == false and .tag_name != \"$EXCLUDE_TAG\")] | .[:3]")
           echo "$releases" | jq -c '.[]' | while read -r release; do
             version=$(echo "$release" | jq -r '.tag_name')
             asset=$(echo "$release" | jq -c '.assets[] | select(.name | endswith(".dmg"))' | head -n 1)
@@ -130,7 +131,7 @@ jobs:
             --ed-key-file ed25519_private.pem \
             -o ./dist/appcast.xml \
             --download-url-prefix "https://github.com/${{ github.repository }}/releases/download/" \
-            ./dist/**/*.dmg
+            ./dist/${{ steps.get_tag.outputs.tag }}/mpvx.dmg
           ls -alR ./dist
       - name: Save Build Cache
         uses: actions/cache@v4
