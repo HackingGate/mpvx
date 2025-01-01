@@ -3,6 +3,19 @@
     <channel>
         <title>mpvx</title>
         <item>
+            <title>0.7.2</title>
+            <pubDate>Tue, 31 Dec 2024 05:41:41 +0000</pubDate>
+            <sparkle:version>20241231053855</sparkle:version>
+            <sparkle:shortVersionString>0.7.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.2/mpvx.dmg" length="2242041" type="application/octet-stream" sparkle:edSignature="ZQWPw6DOMrr25I6Ag4aYqU40O72wOpm/ot2YgqhNXtSMzu3Y86yGqcdr6VGjMZpDcdkC8RAKbsovL07zIcMsAg=="/>
+            <sparkle:deltas>
+                <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.2/mpvx20241231053855-20241230054536.delta" sparkle:deltaFrom="20241230054536" length="3230" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="864560" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="VPrt9rXnBKiJqhJQg+w+syttHasRXxLNJiZfcMVSnwoy89CHT48CpAWc3RoyXc6laYIAliyheSi3ESMJhgGmBQ=="/>
+                <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.2/mpvx20241231053855-20241227163537.delta" sparkle:deltaFrom="20241227163537" length="173734" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="864560" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="J9RHtcXntxPa9ZkXs1S/l9LsfZt/FYgGVpIgNucUFWEc2zuMAGL4wgKapQH395Impv4k1lXY08QmltPmgRG9AQ=="/>
+                <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.2/mpvx20241231053855-20241227014806.delta" sparkle:deltaFrom="20241227014806" length="1003426" type="application/octet-stream" sparkle:deltaFromSparkleExecutableSize="864560" sparkle:deltaFromSparkleLocales="de,he,ar,el,ja,fa,en" sparkle:edSignature="QYIjk6+85CrmK+FACTvD6wi6FErpn/iD9Os3qYNei0WVmc8pc7L8D0FnXOWLhezLsHPpqcSTQPgd7Hqda9rTBw=="/>
+            </sparkle:deltas>
+        </item>
+        <item>
             <title>0.7.1</title>
             <pubDate>Tue, 31 Dec 2024 01:55:16 +0000</pubDate>
             <sparkle:version>20241230054536</sparkle:version>
@@ -17,14 +30,6 @@
             <sparkle:shortVersionString>0.7.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
             <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.7.0/mpvx.dmg" length="2251639" type="application/octet-stream" sparkle:edSignature="YIvnFR2X86kd3u0Z7zFf3JZzDA4U0YCWpPGEhW9FZU2NKF1UXpwrnVOAQDt2SWHtd7DvWFaTcnnqAyBkd/M6BQ=="/>
-        </item>
-        <item>
-            <title>0.6.0</title>
-            <pubDate>Fri, 27 Dec 2024 01:48:58 +0000</pubDate>
-            <sparkle:version>20241227014806</sparkle:version>
-            <sparkle:shortVersionString>0.6.0</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>13.5</sparkle:minimumSystemVersion>
-            <enclosure url="https://github.com/HackingGate/mpvx/releases/download/0.6.0/mpvx.dmg" length="1006199" type="application/octet-stream" sparkle:edSignature="f/ZggYfUcquiKmMGfgLwXvTh6ft+cF9FW59kjXSajv54umc+w1Fy033KH5Xm5XT+dzlQQlfpWVpIu7F/+2pgCA=="/>
         </item>
     </channel>
 </rss>
