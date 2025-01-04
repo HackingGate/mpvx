@@ -1,4 +1,5 @@
 import Cocoa
+import SwiftUI
 
 extension AppDelegate {
     internal func displayOpenPanel() {
@@ -12,6 +13,26 @@ extension AppDelegate {
                 self?.handlePanelCompletion(response, urls: panel.urls)
             }
         }
+    }
+
+    internal func launchPlayerWindow(with url: URL) {
+        let viewModel = MPVViewModel()
+        viewModel.playUrl = url
+
+        let contentView = MPVPlayerView(viewModel: viewModel)
+
+        let playerWindow = NSWindow(
+            contentRect: NSRect(x: 100, y: 100, width: 800, height: 600),
+            styleMask: [.titled, .closable, .resizable, .miniaturizable],
+            backing: .buffered,
+            defer: false
+        )
+        playerWindow.title = url.lastPathComponent.truncatedFilename(to: 100)
+        playerWindow.contentView = NSHostingView(rootView: contentView)
+        playerWindow.makeKeyAndOrderFront(nil)
+
+        // Retain the window to avoid it being deallocated
+        self.playerWindow = playerWindow
     }
 
     @IBAction func handleMenuOpen(_ sender: Any) {
