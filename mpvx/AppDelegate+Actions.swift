@@ -16,10 +16,10 @@ extension AppDelegate {
     }
 
     internal func launchPlayerWindow(with url: URL) {
-        let viewModel = MPVViewModel()
+        let viewModel = MPVXViewModel()
         viewModel.playUrl = url
 
-        let contentView = MPVPlayerView(viewModel: viewModel)
+        let contentView = MPVXPlayerView(viewModel: viewModel)
 
         let playerWindow = NSWindow(
             contentRect: NSRect(x: 100, y: 100, width: 800, height: 600),

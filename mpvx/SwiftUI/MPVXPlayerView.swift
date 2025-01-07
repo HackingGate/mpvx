@@ -1,15 +1,11 @@
 import SwiftUI
 
-struct MPVPlayerView: View {
-    @ObservedObject var viewModel: MPVViewModel
-
-    init(viewModel: MPVViewModel) {
-        self.viewModel = viewModel
-    }
+struct MPVXPlayerView: View {
+    @ObservedObject var viewModel: MPVXViewModel
 
     var body: some View {
         VStack {
-            MPVMetalView(playUrl: $viewModel.playUrl)
+            MPVXView(playUrl: $viewModel.playUrl)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             HStack {

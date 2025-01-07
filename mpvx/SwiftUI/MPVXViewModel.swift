@@ -1,7 +1,7 @@
 import AppKit
 import Combine
 
-class MPVViewModel: ObservableObject {
+class MPVXViewModel: ObservableObject {
     @Published var playUrl: URL?
     @Published var isPlaying: Bool = false
 
