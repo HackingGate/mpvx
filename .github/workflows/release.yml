@@ -98,11 +98,11 @@ jobs:
       - name: Get Tag
         id: get_tag
         run: echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
-      - name: Fetch and download last 3 DMGs
+      - name: Fetch and download last 5 DMGs
         run: |
           DIST_FOLDER="./dist"
           EXCLUDE_TAG="${{ steps.get_tag.outputs.tag }}"
-          releases=$(cat releases.json | jq "[.[] | select(.prerelease == false and .tag_name != \"$EXCLUDE_TAG\")] | .[:3]")
+          releases=$(cat releases.json | jq "[.[] | select(.prerelease == false and .tag_name != \"$EXCLUDE_TAG\")] | .[:5]")
           echo "$releases" | jq -c '.[]' | while read -r release; do
             version=$(echo "$release" | jq -r '.tag_name')
             asset=$(echo "$release" | jq -c '.assets[] | select(.name | endswith(".dmg"))' | head -n 1)
