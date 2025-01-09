@@ -495,7 +495,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mpvx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/mpvx";
 			};
 			name = Debug;
@@ -512,7 +512,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mpvx.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/mpvx";
 			};
 			name = Release;
@@ -528,7 +528,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = mpvx;
 			};
 			name = Debug;
@@ -544,7 +544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.hackinggate.mpvxUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 				TEST_TARGET_NAME = mpvx;
 			};
 			name = Release;
