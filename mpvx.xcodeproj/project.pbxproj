@@ -438,7 +438,7 @@
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 HackingGate. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 HackingGate. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -466,7 +466,7 @@
 				CURRENT_PROJECT_VERSION = "$(BUILD)";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = mpvx/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2024 HackingGate. All rights reserved.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2025 HackingGate. All rights reserved.";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
