@@ -40,7 +40,7 @@ jobs:
             echo "" >> release_note.md
             # Generate the log from the normalized tags
             # Note: This assumes the local repo has both tags (with or without `v`) checked out.
-            git log --pretty="* %h - %s" "${LATEST_TAG_NORMALIZED}..${NEXT_TAG_NORMALIZED}" | tee -a release_note.md
+            git log --pretty="* %h - %s" "${LATEST_TAG}..${NEXT_TAG}" | tee -a release_note.md
           else
             # Otherwise, we're on a branch (not a tag), so we do a "Development Build"
             HEAD_HASH=$(git rev-parse --short HEAD)
