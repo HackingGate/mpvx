@@ -25,22 +25,34 @@ jobs:
           releases=$(curl -s -H "$HEADERS" "$API_URL" | jq '.')
           echo "$releases" > releases.json
       - name: Generate Release Note
+        shell: bash
         run: |
-          LATEST_TAG=$(cat releases.json | jq -r '[.[] | select(.prerelease == false)][0].tag_name')
+          # Retrieve the latest released tag (skipping pre-releases) from releases.json
+          LATEST_TAG=$(jq -r '[.[] | select(.prerelease == false)][0].tag_name' < releases.json)
+          # Check if the current ref is a tag
           if [[ $GITHUB_REF == refs/tags/* ]]; then
-            NEXT_TAG=$(echo ${GITHUB_REF} | grep -E -o '[0-9]+\.[0-9]+\.[0-9]+')
+            # Extract the semantic version with or without a `v` prefix
+            # e.g., from refs/tags/v0.7.3 -> v0.7.3
+            NEXT_TAG=$(echo "${GITHUB_REF}" | grep -Eo 'v?[0-9]+\.[0-9]+\.[0-9]+')
+            # Normalize both tags to strip off the leading `v` for the actual Git log comparison
+            NEXT_TAG_NORMALIZED=$(echo "${NEXT_TAG}" | sed 's/^v//')
+            LATEST_TAG_NORMALIZED=$(echo "${LATEST_TAG}" | sed 's/^v//')
             echo "# Release ${NEXT_TAG}" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${NEXT_TAG}\`" >> release_note.md
             echo "" >> release_note.md
-            git log --pretty="* %h - %s" ${LATEST_TAG}..${NEXT_TAG} | tee -a release_note.md
+            # Generate the log from the normalized tags
+            # Note: This assumes the local repo has both tags (with or without `v`) checked out.
+            git log --pretty="* %h - %s" "${LATEST_TAG_NORMALIZED}..${NEXT_TAG_NORMALIZED}" | tee -a release_note.md
           else
+            # Otherwise, we're on a branch (not a tag), so we do a "Development Build"
             HEAD_HASH=$(git rev-parse --short HEAD)
+            LATEST_TAG_NORMALIZED=$(echo "${LATEST_TAG}" | sed 's/^v//')
             echo "# Development Build" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${HEAD_HASH}\`" >> release_note.md
             echo "" >> release_note.md
-            git log --pretty="* %h - %s" ${LATEST_TAG}..HEAD | tee -a release_note.md
+            git log --pretty="* %h - %s" "${LATEST_TAG_NORMALIZED}..HEAD" | tee -a release_note.md
           fi
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
