@@ -61,6 +61,11 @@ jobs:
       - name: Setup
         run: |
           API_KEY=${{ secrets.API_KEY }} GOOGLE_APP_ID=${{ secrets.GOOGLE_APP_ID }} GCM_SENDER_ID=${{ secrets.GCM_SENDER_ID }} ./setup.sh
+      - name: Cache Build
+        uses: actions/cache@v4
+        with:
+          path: build
+          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
       - name: Archive
         run: |
           xcodebuild archive \
@@ -144,11 +149,6 @@ jobs:
           TAG=${{ steps.get_tag.outputs.tag }}
           sed -i '' -E "s|${TAG}/mpvx-([0-9]+\.[0-9]+\.[0-9]+)\.dmg|\1/mpvx.dmg|g" ./dist/appcast.xml
           cat ./dist/appcast.xml
-      - name: Cache Build
-        uses: actions/cache@v4
-        with:
-          path: build
-          key: release-build-cache-${{ runner.os }}-${{ hashFiles('**/Package.resolved') }}
       - name: Upload mpvx.dmg as artifact
         uses: actions/upload-artifact@v4
         with:
