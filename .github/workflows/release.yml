@@ -34,9 +34,6 @@ jobs:
             # Extract the semantic version with or without a `v` prefix
             # e.g., from refs/tags/v0.7.3 -> v0.7.3
             NEXT_TAG=$(echo "${GITHUB_REF}" | grep -Eo 'v?[0-9]+\.[0-9]+\.[0-9]+')
-            # Normalize both tags to strip off the leading `v` for the actual Git log comparison
-            NEXT_TAG_NORMALIZED=$(echo "${NEXT_TAG}" | sed 's/^v//')
-            LATEST_TAG_NORMALIZED=$(echo "${LATEST_TAG}" | sed 's/^v//')
             echo "# Release ${NEXT_TAG}" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${NEXT_TAG}\`" >> release_note.md
