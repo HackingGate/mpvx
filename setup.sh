@@ -3,7 +3,7 @@
 CONFIG_FILE="Config.xcconfig"
 PLIST_FILE="mpvx/GoogleService-Info.plist"
 
-VERSION=$(git describe --abbrev=0 --tags --match "[0-9]*")
+VERSION=$(git describe --abbrev=0 --tags --match "v[0-9]*" --match "[0-9]*")
 BUILD=$(date -u +%Y%m%d%H%M%S)
 
 echo "Generating ${CONFIG_FILE}..."
