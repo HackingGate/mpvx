@@ -44,12 +44,11 @@ jobs:
           else
             # Otherwise, we're on a branch (not a tag), so we do a "Development Build"
             HEAD_HASH=$(git rev-parse --short HEAD)
-            LATEST_TAG_NORMALIZED=$(echo "${LATEST_TAG}" | sed 's/^v//')
             echo "# Development Build" > release_note.md
             echo "" >> release_note.md
             echo "## Changes from \`${LATEST_TAG}\` to \`${HEAD_HASH}\`" >> release_note.md
             echo "" >> release_note.md
-            git log --pretty="* %h - %s" "${LATEST_TAG_NORMALIZED}..HEAD" | tee -a release_note.md
+            git log --pretty="* %h - %s" "${LATEST_TAG}..HEAD" | tee -a release_note.md
           fi
       - name: Setup Xcode
         uses: maxim-lobanov/setup-xcode@v1
